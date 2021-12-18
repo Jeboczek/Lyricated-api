@@ -1,7 +1,7 @@
 from typing import Optional
 from pydantic import BaseModel
 
-from response_model.enums.original_lang import OriginalLang
+from models.enums.original_lang import OriginalLang
 
 
 class MovieModel(BaseModel):

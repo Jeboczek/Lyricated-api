@@ -1,10 +1,11 @@
 from typing import Optional
 import fastapi
 from fastapi.exceptions import HTTPException
+from models.request.find_lyrics_request import FindLyricsRequest
 import repository
-from response_model.enums.source import Source
-from response_model.episode_model import ListEpisodeModel
-from response_model.movie_model import ListMovieModel
+from models.enums.source import Source
+from models.response.episode_model import ListEpisodeModel
+from models.response.movie_model import ListMovieModel
 import settings
 
 app = fastapi.FastAPI(title="Lyricated API")
@@ -37,3 +38,7 @@ async def get_episodes(movie_id: str):
         for episode in episodes:
             episode["movie_id"] = episode["movie"]
         return {"episodes": episodes}
+
+@app.get("/find_lyrics")
+async def find_lyrics(request: FindLyricsRequest):
+    pass
