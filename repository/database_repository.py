@@ -176,3 +176,18 @@ class DatabaseRepository:
         self.cursor.execute(query, (parameter,))
         movie_data =  self.cursor.fetchone()
         return movie_data
+
+    def get_episode(self, episode_id: int, table_name="episodes") -> Optional[dict]:
+        """Get one episode from database
+
+        Args:
+            episode_id ([type], optional): Defaults to int.
+            table_name (str, optional): Only for debugging. Defaults to "episodes".
+
+        Returns:
+            Optional[dict]: Episode from database
+        """
+        query = f"SELECT * FROM {table_name} WHERE id = %s;"
+        self.cursor.execute(query, (episode_id,))
+
+        return self.cursor.fetchone()
