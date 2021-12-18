@@ -145,3 +145,13 @@ class TestDatabaseRepositoryGetLyrics(unittest.TestCase):
 
         for lyric in only_series_lyrics["main_results"]:
             self.assertIn(lyric["movie_id_fk"], series)
+
+    def test_getting_only_specific_movie(self):
+        lyrics = self.dbrepo.get_lyrics("auto", "pl", "en", SortingMode.BEST_MATCH, movie="KEP")
+        movie_id = list(filter(lambda x: x["movie"] == "KEP", self.dbrepo.get_movies()))[0]["id"]
+
+        for lyric in lyrics["main_results"]:
+            self.assertEqual(lyric["movie_id_fk"], movie_id)
+
+        for lyric in lyrics["similiar_results"]:
+            self.assertEqual(lyric["movie_id_fk"], movie_id)

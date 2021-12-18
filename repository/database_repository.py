@@ -54,6 +54,7 @@ class DatabaseRepository:
         translation_language: str,
         sorting_mode: SortingMode,
         only_movies: Optional[bool] = None,
+        movie: Optional[str] = None,
         table_name="lyrics",
     ) -> dict:
         """Get lyrics from database
@@ -64,6 +65,7 @@ class DatabaseRepository:
             translation_language (str):
             sorting_mode (SortingMode):
             only_movies (Optional[bool]): If only_movies is None return all data. Otherwise return only movies or series. Defaults to None.
+            movie (Optional[str] = None): Get lyrics for only provided movie
             table_name (str, optional): Only for debugging. Defaults to "lyrics".
 
         Returns:
@@ -71,8 +73,10 @@ class DatabaseRepository:
         """
 
         # Get all lyrics
-        regexp_querry = f"SELECT id, movie_id_fk, episode_id_fk, seconds, {main_language}, {translation_language} FROM lyrics"
-        if only_movies is not None:
+        regexp_querry = f"SELECT {table_name}.id, movie_id_fk, episode_id_fk, seconds, {table_name}.{main_language}, {table_name}.{translation_language} FROM {table_name}"
+        if movie is not None:
+            regexp_querry += f" INNER JOIN movies ON movies.id = {table_name}.episode_id_fk WHERE movies.movie = '{movie}'"        
+        elif only_movies is not None:
             regexp_querry += (
                 f" WHERE episode_id_fk IS {'' if only_movies else 'NOT'} NULL"
             )
