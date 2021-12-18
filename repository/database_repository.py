@@ -2,7 +2,6 @@ from typing import Optional
 from unittest.main import main
 import mysql.connector
 import re
-import math
 from mysql.connector.connection import MySQLConnection
 from mysql.connector.cursor import MySQLCursorDict
 
@@ -136,3 +135,15 @@ class DatabaseRepository:
             abs(len(main_lang) - len(translation_lang)),
             abs(round(len(main_lang) / 10) * 10 - 25),
         )
+
+    def get_episodes(self, serie_name: str) -> list[dict]:
+        """Get episodes from database
+
+        Args:
+            serie_name (str): Name of serie 
+
+        Returns:
+            list[dict]: List of episodes
+        """
+        self.cursor.execute("SELECT episodes.id, season, episode, movies.movie as 'movie' FROM episodes INNER JOIN movies ON episodes.movie_id_fk=movies.id WHERE movies.movie = %s;", (serie_name,))
+        return self.cursor.fetchall()
