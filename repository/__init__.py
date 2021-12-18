@@ -1,2 +1,1 @@
 from .database_repository import DatabaseRepository
-from .sorting_mode import SortingMode

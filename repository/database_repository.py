@@ -152,7 +152,7 @@ class DatabaseRepository:
         self.cursor.execute("SELECT episodes.id, season, episode, movies.movie as 'movie' FROM episodes INNER JOIN movies ON episodes.movie_id_fk=movies.id WHERE movies.movie = %s;", (serie_name,))
         return self.cursor.fetchall()
 
-    def get_movie(self, movie_name: str, table_name = "movies") -> Optional[dict]:
+    def get_movie(self, movie_name: Optional[str] = None, movie_id: Optional[str] = None, table_name = "movies") -> Optional[dict]:
         """Get one movie from database
 
         Args:
@@ -161,6 +161,18 @@ class DatabaseRepository:
         Returns:
             Optional[dict]: Movie from database 
         """
-        self.cursor.execute(f"SELECT * FROM {table_name} WHERE {table_name}.movie = %s", (movie_name,))
+
+        query = f"SELECT * FROM {table_name} "
+
+        if movie_name is not None:
+            query += f"WHERE {table_name}.movie = %s"
+            parameter = movie_name
+        elif movie_id is not None:
+            query += f"WHERE {table_name}.id = %s"
+            parameter = movie_id
+        else: 
+            return None
+
+        self.cursor.execute(query, (parameter,))
         movie_data =  self.cursor.fetchone()
         return movie_data

@@ -11,5 +11,5 @@ class FindLyricsRequest(BaseModel):
     translation_language_id: LanguageID
     sorting_mode: SortingMode = SortingMode.BEST_MATCH
     curses: bool
-    source: Optional[Source]
-    movie_id: Optional[str]
+    source: Optional[Source] = None
+    movie_id: Optional[str] = None
