@@ -4,7 +4,7 @@ from mysql.connector.connection import MySQLConnection
 from mysql.connector.cursor import MySQLCursorDict
 
 from repository.database_repository import DatabaseRepository
-from repository.sorting_mode import SortingMode
+from models.enums.sorting_mode import SortingMode
 
 
 class TestDatabaseRepositoryGetMovies(unittest.TestCase):
@@ -50,6 +50,14 @@ class TestDatabaseRepositoryGetMovies(unittest.TestCase):
         movie_names = [data["movie"] for data in all_series]
 
         self.assertIn("LD", movie_names)
+
+    def test_getting_one_exists_movie(self):
+        one_movie = self.dbrepo.get_movie("AP13", table_name="tmp_movies")
+        self.assertEqual(one_movie["movie"], "AP13")
+
+    def test_getting_one_non_exists_movie(self):
+        one_movie = self.dbrepo.get_movie("TEST", table_name="tmp_movies")
+        self.assertIs(one_movie, None)
 
 
 class TestDatabaseRepositoryGetLyrics(unittest.TestCase):

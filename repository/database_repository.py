@@ -5,7 +5,7 @@ import re
 from mysql.connector.connection import MySQLConnection
 from mysql.connector.cursor import MySQLCursorDict
 
-from .sorting_mode import SortingMode
+from models.enums.sorting_mode import SortingMode
 
 
 class DatabaseRepository:
@@ -151,3 +151,16 @@ class DatabaseRepository:
         """
         self.cursor.execute("SELECT episodes.id, season, episode, movies.movie as 'movie' FROM episodes INNER JOIN movies ON episodes.movie_id_fk=movies.id WHERE movies.movie = %s;", (serie_name,))
         return self.cursor.fetchall()
+
+    def get_movie(self, movie_name: str, table_name = "movies") -> Optional[dict]:
+        """Get one movie from database
+
+        Args:
+            movie_name (str): Name of movie in database
+
+        Returns:
+            Optional[dict]: Movie from database 
+        """
+        self.cursor.execute(f"SELECT * FROM {table_name} WHERE {table_name}.movie = %s", (movie_name,))
+        movie_data =  self.cursor.fetchone()
+        return movie_data
