@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class SortingMode(Enum):
     SHORTESTS = 1
     LONGESTS = 2

@@ -2,6 +2,7 @@ import os
 import json
 import logging
 
+
 class Settings:
     def __init__(self):
         self.dbuser = ""
@@ -13,16 +14,13 @@ class Settings:
             self._create_new_file()
         else:
             self._open_current_file()
-        
+
     def _create_new_file(self):
         logging.info("Creating new settings.json")
         with open("settings.json", "w") as f:
-            f.write(json.dumps({
-                "dbhost": "",
-                "dbuser": "",
-                "dbpass": "",
-                "dbname": ""
-            }))
+            f.write(
+                json.dumps({"dbhost": "", "dbuser": "", "dbpass": "", "dbname": ""})
+            )
             f.close()
         raise FileNotFoundError("I can't find settings.json")
 
@@ -36,7 +34,9 @@ class Settings:
                 self.dbhost = file_data["dbhost"]
                 self.dbname = file_data["dbname"]
             except KeyError:
-                raise KeyError("settings.json file is corrupted. Delete it and run api another time.")
+                raise KeyError(
+                    "settings.json file is corrupted. Delete it and run api another time."
+                )
 
     def get_db_user(self):
         return self.dbuser
@@ -49,6 +49,3 @@ class Settings:
 
     def get_db_name(self):
         return self.dbname
-
-            
-
