@@ -66,7 +66,7 @@ async def find_lyrics(request: FindLyricsRequest):
         source_lang=request.main_language_id,
         target_lang=request.translation_language_id,
     )
-    translations = client.get_translations(request.searched_phrase)
+    translations = list(client.get_translations(request.searched_phrase))
 
     # Get lyrics
     only_movies = None
@@ -85,6 +85,15 @@ async def find_lyrics(request: FindLyricsRequest):
         only_movies=only_movies,
         movie=movie_id,
     )
+
+    # Mark translated words
+    for result in lyrics["main_results"]:
+        for word in translations:
+            result[request.translation_language_id] = result[request.translation_language_id].replace(word, f"$%{word}$%")
+
+    for result in lyrics["similiar_results"]:
+        for word in translations:
+            result[request.translation_language_id] = result[request.translation_language_id].replace(word, f"$%{word}$%")
 
     main_results = [
         {
@@ -114,6 +123,7 @@ async def find_lyrics(request: FindLyricsRequest):
         }
         for lyric in lyrics["similiar_results"]
     ]
+
 
     return {
         "main_language_id": request.main_language_id,
