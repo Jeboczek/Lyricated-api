@@ -93,6 +93,12 @@ class DatabaseRepository:
             filter(lambda x: r.search(x[main_language].lower()), all_data)
         )
 
+        # Mark main_results
+        for result in main_results:
+            words_to_replace = set(r.findall(result[main_language]))
+            for word in words_to_replace:
+                result[main_language] = result[main_language].replace(word, f"$%{word}$%")
+
         # Get similiar results
         # searched_phrase = searched_phrase[0:-1]
         if len(searched_phrase) == 4:
@@ -111,6 +117,12 @@ class DatabaseRepository:
         similiar_results = list(
             filter(lambda x: r.search(x[main_language].lower()), all_data)
         )
+
+        # Mark similiar
+        for result in similiar_results:
+            words_to_replace = set(r.findall(result[main_language]))
+            for word in words_to_replace:
+                result[main_language] = result[main_language].replace(word, f"$%{word}$%")
 
         # Sort resulsts
         if sorting_mode is SortingMode.BEST_MATCH:
