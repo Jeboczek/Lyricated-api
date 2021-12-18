@@ -1,7 +1,6 @@
 from typing import Optional
 import fastapi
 from fastapi.exceptions import HTTPException
-from models.enums.sorting_mode import SortingMode
 from models.request.find_lyrics_request import FindLyricsRequest
 import repository
 from models.enums.source import Source
@@ -92,8 +91,10 @@ async def find_lyrics(request: FindLyricsRequest):
             "main_sentence": lyric[request.main_language_id],
             "translated_sentence": lyric[request.translation_language_id],
             "time": lyric["seconds"],
-            "movie": db.get_movie(movie_id = lyric["movie_id_fk"]),
-            "episode": db.get_episode(episode_id = lyric["episode_id_fk"]) if lyric["episode_id_fk"] is not None else None
+            "movie": db.get_movie(movie_id=lyric["movie_id_fk"]),
+            "episode": db.get_episode(episode_id=lyric["episode_id_fk"])
+            if lyric["episode_id_fk"] is not None
+            else None,
         }
         for lyric in lyrics["main_results"]
     ]
@@ -105,8 +106,10 @@ async def find_lyrics(request: FindLyricsRequest):
             "main_sentence": lyric[request.main_language_id],
             "translated_sentence": lyric[request.translation_language_id],
             "time": lyric["seconds"],
-            "movie": db.get_movie(movie_id =lyric["movie_id_fk"]),
-            "episode": db.get_episode(episode_id = lyric["episode_id_fk"]) if lyric["episode_id_fk"] is not None else None
+            "movie": db.get_movie(movie_id=lyric["movie_id_fk"]),
+            "episode": db.get_episode(episode_id=lyric["episode_id_fk"])
+            if lyric["episode_id_fk"] is not None
+            else None,
         }
         for lyric in lyrics["similiar_results"]
     ]
@@ -116,5 +119,5 @@ async def find_lyrics(request: FindLyricsRequest):
         "translation_language_id": request.translation_language_id,
         "translations": translations,
         "main_results": main_results,
-        "similiar_results": similiar_results
+        "similiar_results": similiar_results,
     }

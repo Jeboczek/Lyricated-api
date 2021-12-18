@@ -84,6 +84,9 @@ class DatabaseRepository:
         self.cursor.execute(regexp_querry)
         all_data = self.cursor.fetchall()
 
+        # Get all rows with translated sentence
+        all_data = list(filter(lambda x: x[translation_language] is not None, all_data))
+
         # Get main results
         r = re.compile(rf"\b{searched_phrase}\b[^']")
         main_results = list(
@@ -91,7 +94,7 @@ class DatabaseRepository:
         )
 
         # Get similiar results
-        searched_phrase = searched_phrase[0:-1]
+        # searched_phrase = searched_phrase[0:-1]
         if len(searched_phrase) == 4:
             r = re.compile(
                 rf"\b\S{searched_phrase}\S*|\b\S?{searched_phrase}?[^{searched_phrase[-1]}.,?! ]\S*"
