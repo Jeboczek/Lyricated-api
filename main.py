@@ -1,4 +1,3 @@
-import re
 from typing import Optional
 import fastapi
 from fastapi.exceptions import HTTPException
