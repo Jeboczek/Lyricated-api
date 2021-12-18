@@ -9,3 +9,4 @@ class OriginalLang(str, Enum):
     dr = "dr"
     it = "it"
     pt = "pt"
+    jp = "jp"
