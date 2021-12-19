@@ -74,11 +74,17 @@ class DatabaseRepository:
         # Get all lyrics
         regexp_querry = f"SELECT {table_name}.id, movie_id_fk, episode_id_fk, seconds, {table_name}.{main_language}, {table_name}.{translation_language} FROM {table_name}"
         if movie is not None:
-            regexp_querry += f" INNER JOIN movies ON movies.id = {table_name}.episode_id_fk WHERE movies.movie = '{movie}'"        
+            regexp_querry += f" INNER JOIN movies ON movies.id = {table_name}.episode_id_fk WHERE movies.movie = '{movie}' AND"        
         elif only_movies is not None:
             regexp_querry += (
-                f" WHERE episode_id_fk IS {'' if only_movies else 'NOT'} NULL"
+                f" WHERE episode_id_fk IS {'' if only_movies else 'NOT'} NULL AND"
             )
+        else:
+            regexp_querry += f" WHERE "
+
+        regexp_querry += f" {table_name}.{main_language} IS NOT NULL AND {table_name}.{translation_language} IS NOT NULL"
+
+        # raise ValueError(regexp_querry)
 
         self.cursor.execute(regexp_querry)
         all_data = self.cursor.fetchall()
