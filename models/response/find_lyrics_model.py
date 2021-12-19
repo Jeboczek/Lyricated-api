@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import List
 from models.enums.language_id import LanguageID
 from models.response.lyric_model import LyricModel
 
@@ -6,6 +7,6 @@ from models.response.lyric_model import LyricModel
 class FindLyricsModel(BaseModel):
      main_language_id : LanguageID
      translation_language_id: LanguageID
-     translations: list[str] = []
-     main_results: list[LyricModel] = []
-     similiar_results: list[LyricModel] = []
+     translations: List[str] = []
+     main_results: List[LyricModel] = []
+     similiar_results: List[LyricModel] = []

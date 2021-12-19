@@ -1,5 +1,4 @@
-from typing import Optional
-from unittest.main import main
+from typing import List, Optional
 import mysql.connector
 import re
 from mysql.connector.connection import MySQLConnection
@@ -28,7 +27,7 @@ class DatabaseRepository:
 
     def get_movies(
         self, only_movies: Optional[bool] = None, table_name="movies"
-    ) -> list[dict]:
+    ) -> List[dict]:
         """Get movies from database
 
         Args:
@@ -155,7 +154,7 @@ class DatabaseRepository:
             abs(round(len(main_lang) / 10) * 10 - 25),
         )
 
-    def get_episodes(self, serie_name: str) -> list[dict]:
+    def get_episodes(self, serie_name: str) -> List[dict]:
         """Get episodes from database
 
         Args:

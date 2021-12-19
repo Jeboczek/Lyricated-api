@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 from pydantic import BaseModel
 
 from models.enums.original_lang import OriginalLang
@@ -19,4 +19,4 @@ class MovieModel(BaseModel):
 
 
 class ListMovieModel(BaseModel):
-    movies: list[MovieModel]
+    movies: List[MovieModel]

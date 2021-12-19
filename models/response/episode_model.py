@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import List
 
 
 class EpisodeModel(BaseModel):
@@ -7,4 +8,4 @@ class EpisodeModel(BaseModel):
 
 
 class ListEpisodeModel(BaseModel):
-    episodes: list[EpisodeModel]
+    episodes: List[EpisodeModel]
