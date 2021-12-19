@@ -70,8 +70,8 @@ async def find_lyrics(request: FindLyricsRequest):
     # Get lyrics
     only_movies = None
     movie_id = None
-    if request.source is not None and len(request.source) == 2:
-        only_movies = request.source
+    if request.source is not None:
+        only_movies = request.source == "only_movies"
 
     if request.movie_id is not None:
         movie_id = request.movie_id

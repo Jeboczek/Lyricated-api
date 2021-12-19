@@ -195,6 +195,7 @@ class DatabaseRepository:
 
         self.cursor.execute(query, (parameter,))
         movie_data =  self.cursor.fetchone()
+        movie_data["id"] = movie_data["movie"]
         return movie_data
 
     def get_episode(self, episode_id: int, table_name="episodes") -> Optional[dict]:
