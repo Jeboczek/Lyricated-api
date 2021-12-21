@@ -14,18 +14,19 @@ class DatabaseRepository:
         dbuser="root",
         dbpass="",
         dbname="",
-        db: Optional[MySQLConnection] = None,
+        db_config: Optional[dict] = None,
     ) -> None:
-        if db is None:
-            self.db: MySQLConnection = mysql.connector.connect(
-                host=dbhost, user=dbuser, database=dbname, password=dbpass
-            )
+        if db_config is None:
+            self.db_config = {
+                "host":dbhost, "user":dbuser, "database":dbname, "password":dbpass
+            }
         else:
-            self.db = db
+            self.db_config = db_config
     def get_movies(
         self, only_movies: Optional[bool] = None, table_name="movies"
     ) -> List[dict]:
-        cursor: MySQLCursorDict = self.db.cursor(dictionary=True, buffered=True)
+        db = mysql.connector.connect(**self.db_config)
+        cursor: MySQLCursorDict = db.cursor(dictionary=True)
 
         """Get movies from database
 
@@ -71,7 +72,8 @@ class DatabaseRepository:
         Returns:
             dict: Dicts with keys main_results and similiar_results
         """
-        cursor: MySQLCursorDict = self.db.cursor(dictionary=True, buffered=True)
+        db = mysql.connector.connect(**self.db_config)
+        cursor: MySQLCursorDict = db.cursor(dictionary=True)
 
         # Get all lyrics
         regexp_querry = f"SELECT {table_name}.id, movie_id_fk, episode_id_fk, seconds, {table_name}.{main_language}, {table_name}.{translation_language} FROM {table_name}"
@@ -173,7 +175,8 @@ class DatabaseRepository:
         Returns:
             list[dict]: List of episodes
         """
-        cursor: MySQLCursorDict = self.db.cursor(dictionary=True, buffered=True)
+        db = mysql.connector.connect(**self.db_config)
+        cursor: MySQLCursorDict = db.cursor(dictionary=True)
 
         cursor.execute("SELECT episodes.id, season, episode, movies.movie as 'movie' FROM episodes INNER JOIN movies ON episodes.movie_id_fk=movies.id WHERE movies.movie = %s;", (serie_name,))
         return cursor.fetchall()
@@ -187,7 +190,8 @@ class DatabaseRepository:
         Returns:
             Optional[dict]: Movie from database 
         """
-        cursor: MySQLCursorDict = self.db.cursor(dictionary=True, buffered=True)
+        db = mysql.connector.connect(**self.db_config)
+        cursor: MySQLCursorDict = db.cursor(dictionary=True)
 
         query = f"SELECT * FROM {table_name} "
 
@@ -220,11 +224,14 @@ class DatabaseRepository:
         Returns:
             Optional[dict]: Episode from database
         """
-        cursor: MySQLCursorDict = self.db.cursor(dictionary=True, buffered=True)
+        db = mysql.connector.connect(**self.db_config)
+        cursor: MySQLCursorDict = db.cursor(dictionary=True)
 
         query = f"SELECT * FROM {table_name} WHERE id = %s;"
         cursor.execute(query, (episode_id,))
 
+        data = cursor.fetchone()
+
         cursor.reset()
         cursor.close()
-        return cursor.fetchone()
+        return data
