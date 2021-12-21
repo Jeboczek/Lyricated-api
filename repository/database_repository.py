@@ -25,7 +25,7 @@ class DatabaseRepository:
     def get_movies(
         self, only_movies: Optional[bool] = None, table_name="movies"
     ) -> List[dict]:
-        cursor: MySQLCursorDict = self.db.cursor(dictionary=True)
+        cursor: MySQLCursorDict = self.db.cursor(dictionary=True, buffered=True)
 
         """Get movies from database
 
@@ -70,7 +70,7 @@ class DatabaseRepository:
         Returns:
             dict: Dicts with keys main_results and similiar_results
         """
-        cursor: MySQLCursorDict = self.db.cursor(dictionary=True)
+        cursor: MySQLCursorDict = self.db.cursor(dictionary=True, buffered=True)
 
         # Get all lyrics
         regexp_querry = f"SELECT {table_name}.id, movie_id_fk, episode_id_fk, seconds, {table_name}.{main_language}, {table_name}.{translation_language} FROM {table_name}"
@@ -170,7 +170,7 @@ class DatabaseRepository:
         Returns:
             list[dict]: List of episodes
         """
-        cursor: MySQLCursorDict = self.db.cursor(dictionary=True)
+        cursor: MySQLCursorDict = self.db.cursor(dictionary=True, buffered=True)
 
         cursor.execute("SELECT episodes.id, season, episode, movies.movie as 'movie' FROM episodes INNER JOIN movies ON episodes.movie_id_fk=movies.id WHERE movies.movie = %s;", (serie_name,))
         return cursor.fetchall()
@@ -184,7 +184,7 @@ class DatabaseRepository:
         Returns:
             Optional[dict]: Movie from database 
         """
-        cursor: MySQLCursorDict = self.db.cursor(dictionary=True)
+        cursor: MySQLCursorDict = self.db.cursor(dictionary=True, buffered=True)
 
         query = f"SELECT * FROM {table_name} "
 
@@ -212,7 +212,7 @@ class DatabaseRepository:
         Returns:
             Optional[dict]: Episode from database
         """
-        cursor: MySQLCursorDict = self.db.cursor(dictionary=True)
+        cursor: MySQLCursorDict = self.db.cursor(dictionary=True, buffered=True)
 
         query = f"SELECT * FROM {table_name} WHERE id = %s;"
         cursor.execute(query, (episode_id,))

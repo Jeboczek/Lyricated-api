@@ -12,7 +12,7 @@ class TestDatabaseRepositoryGetMovies(unittest.TestCase):
         self.db: MySQLConnection = mysql.connector.connect(
             host="localhost", user="root", password="", database="lyricated"
         )
-        cursor: MySQLCursorDict = self.db.cursor(dictionary=True)
+        cursor: MySQLCursorDict = self.db.cursor(dictionary=True, buffered=True)
 
         # Create temp tables
         cursor.execute(
@@ -65,7 +65,7 @@ class TestDatabaseRepositoryGetLyrics(unittest.TestCase):
         self.db: MySQLConnection = mysql.connector.connect(
             host="localhost", user="root", password="", database="lyricated"
         )
-        cursor: MySQLCursorDict = self.db.cursor(dictionary=True)
+        cursor: MySQLCursorDict = self.db.cursor(dictionary=True, buffered=True)
 
         # Create temp tables
         cursor.execute(
