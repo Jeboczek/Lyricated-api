@@ -12,10 +12,10 @@ class TestDatabaseRepositoryGetMovies(unittest.TestCase):
         self.db: MySQLConnection = mysql.connector.connect(
             host="localhost", user="root", password="", database="lyricated"
         )
-        self.cursor: MySQLCursorDict = self.db.cursor(dictionary=True)
+        cursor: MySQLCursorDict = self.db.cursor(dictionary=True)
 
         # Create temp tables
-        self.cursor.execute(
+        cursor.execute(
             "CREATE TEMPORARY TABLE tmp_movies SELECT * FROM movies WHERE movie IN ('AP13', 'TT', 'LD')"
         )
 
@@ -65,10 +65,10 @@ class TestDatabaseRepositoryGetLyrics(unittest.TestCase):
         self.db: MySQLConnection = mysql.connector.connect(
             host="localhost", user="root", password="", database="lyricated"
         )
-        self.cursor: MySQLCursorDict = self.db.cursor(dictionary=True)
+        cursor: MySQLCursorDict = self.db.cursor(dictionary=True)
 
         # Create temp tables
-        self.cursor.execute(
+        cursor.execute(
             "CREATE TEMPORARY TABLE tmp_lyrics SELECT * FROM lyrics WHERE pl LIKE '%auto%'"
         )
 

@@ -22,12 +22,11 @@ class DatabaseRepository:
             )
         else:
             self.db = db
-
-        self.cursor: MySQLCursorDict = self.db.cursor(dictionary=True)
-
     def get_movies(
         self, only_movies: Optional[bool] = None, table_name="movies"
     ) -> List[dict]:
+        cursor: MySQLCursorDict = self.db.cursor(dictionary=True)
+
         """Get movies from database
 
         Args:
@@ -37,14 +36,15 @@ class DatabaseRepository:
             list[dict]: List of data from database
         """
         if only_movies is None:
-            self.cursor.execute(f"SELECT * FROM {table_name};")
+            cursor.execute(f"SELECT * FROM {table_name};")
         else:
-            self.cursor.execute(
+            cursor.execute(
                 f"SELECT * FROM {table_name} WHERE type=%s;",
                 ("movie" if only_movies else "serie",),
             )
 
-        return list(self.cursor.fetchall())
+        cursor.close()
+        return list(cursor.fetchall())
 
     def get_lyrics(
         self,
@@ -70,6 +70,7 @@ class DatabaseRepository:
         Returns:
             dict: Dicts with keys main_results and similiar_results
         """
+        cursor: MySQLCursorDict = self.db.cursor(dictionary=True)
 
         # Get all lyrics
         regexp_querry = f"SELECT {table_name}.id, movie_id_fk, episode_id_fk, seconds, {table_name}.{main_language}, {table_name}.{translation_language} FROM {table_name}"
@@ -86,8 +87,8 @@ class DatabaseRepository:
 
         # raise ValueError(regexp_querry)
 
-        self.cursor.execute(regexp_querry)
-        all_data = self.cursor.fetchall()
+        cursor.execute(regexp_querry)
+        all_data = cursor.fetchall()
 
         # Get all rows with translated sentence
         all_data = list(filter(lambda x: x[translation_language] is not None, all_data))
@@ -169,8 +170,10 @@ class DatabaseRepository:
         Returns:
             list[dict]: List of episodes
         """
-        self.cursor.execute("SELECT episodes.id, season, episode, movies.movie as 'movie' FROM episodes INNER JOIN movies ON episodes.movie_id_fk=movies.id WHERE movies.movie = %s;", (serie_name,))
-        return self.cursor.fetchall()
+        cursor: MySQLCursorDict = self.db.cursor(dictionary=True)
+
+        cursor.execute("SELECT episodes.id, season, episode, movies.movie as 'movie' FROM episodes INNER JOIN movies ON episodes.movie_id_fk=movies.id WHERE movies.movie = %s;", (serie_name,))
+        return cursor.fetchall()
 
     def get_movie(self, movie_name: Optional[str] = None, movie_id: Optional[str] = None, table_name = "movies") -> Optional[dict]:
         """Get one movie from database
@@ -181,6 +184,7 @@ class DatabaseRepository:
         Returns:
             Optional[dict]: Movie from database 
         """
+        cursor: MySQLCursorDict = self.db.cursor(dictionary=True)
 
         query = f"SELECT * FROM {table_name} "
 
@@ -193,8 +197,8 @@ class DatabaseRepository:
         else: 
             return None
 
-        self.cursor.execute(query, (parameter,))
-        movie_data =  self.cursor.fetchone()
+        cursor.execute(query, (parameter,))
+        movie_data =  cursor.fetchone()
         movie_data["id"] = movie_data["movie"]
         return movie_data
 
@@ -208,7 +212,9 @@ class DatabaseRepository:
         Returns:
             Optional[dict]: Episode from database
         """
-        query = f"SELECT * FROM {table_name} WHERE id = %s;"
-        self.cursor.execute(query, (episode_id,))
+        cursor: MySQLCursorDict = self.db.cursor(dictionary=True)
 
-        return self.cursor.fetchone()
+        query = f"SELECT * FROM {table_name} WHERE id = %s;"
+        cursor.execute(query, (episode_id,))
+
+        return cursor.fetchone()
