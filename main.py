@@ -22,7 +22,7 @@ db = repository.DatabaseRepository(
     response_model=ListMovieModel,
     description="Get list of movies from database",
 )
-async def get_movies(source: Optional[Source] = None):
+def get_movies(source: Optional[Source] = None):
     if source is None:
         only_movies = None
     else:
@@ -40,7 +40,7 @@ async def get_movies(source: Optional[Source] = None):
     response_model=ListEpisodeModel,
     description="Get episodes for serie from database",
 )
-async def get_episodes(movie_id: str):
+def get_episodes(movie_id: str):
     # Validate movie_id
     series_id = [serie["movie"] for serie in db.get_movies(only_movies=False)]
     if movie_id not in series_id:
@@ -59,7 +59,7 @@ async def get_episodes(movie_id: str):
     response_model=FindLyricsModel,
     description="Get lyrics from database",
 )
-async def find_lyrics(request: FindLyricsRequest):
+def find_lyrics(request: FindLyricsRequest):
     # Get translations
     client = Client(
         source_lang=request.main_language_id,

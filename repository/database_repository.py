@@ -43,6 +43,7 @@ class DatabaseRepository:
                 ("movie" if only_movies else "serie",),
             )
 
+        cursor.reset()
         cursor.close()
         return list(cursor.fetchall())
 
@@ -153,6 +154,8 @@ class DatabaseRepository:
                 similiar_results, key=lambda x: len(x[main_language]), reverse=reverse
             )
 
+        cursor.reset()
+        cursor.close()
         return {"main_results": main_results, "similiar_results": similiar_results}
 
     def _best_match_sort_key(self, main_lang, translation_lang):
@@ -195,11 +198,16 @@ class DatabaseRepository:
             query += f"WHERE {table_name}.id = %s"
             parameter = movie_id
         else: 
+            cursor.reset()
+            cursor.close()
             return None
 
         cursor.execute(query, (parameter,))
         movie_data =  cursor.fetchone()
         movie_data["id"] = movie_data["movie"]
+        
+        cursor.reset()
+        cursor.close()
         return movie_data
 
     def get_episode(self, episode_id: int, table_name="episodes") -> Optional[dict]:
@@ -217,4 +225,6 @@ class DatabaseRepository:
         query = f"SELECT * FROM {table_name} WHERE id = %s;"
         cursor.execute(query, (episode_id,))
 
+        cursor.reset()
+        cursor.close()
         return cursor.fetchone()
