@@ -115,7 +115,7 @@ def find_lyrics(request: FindLyricsRequest):
             else None,
         }
         for lyric in lyrics["main_results"]
-    ]
+    ][:100]
 
     # FIXME: Remove redundancy
     similar_results = [
@@ -130,7 +130,7 @@ def find_lyrics(request: FindLyricsRequest):
             else None,
         }
         for lyric in lyrics["similar_results"]
-    ]
+    ][:100]
 
 
     return {
