@@ -44,9 +44,11 @@ class DatabaseRepository:
                 ("movie" if only_movies else "serie",),
             )
 
+        data = cursor.fetchall()
+
         cursor.reset()
         cursor.close()
-        return list(cursor.fetchall())
+        return data
 
     def get_lyrics(
         self,
@@ -208,7 +210,8 @@ class DatabaseRepository:
 
         cursor.execute(query, (parameter,))
         movie_data =  cursor.fetchone()
-        movie_data["id"] = movie_data["movie"]
+        if movie_data is not None:
+            movie_data["id"] = movie_data["movie"]
         
         cursor.reset()
         cursor.close()

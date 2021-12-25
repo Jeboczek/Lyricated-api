@@ -9,24 +9,13 @@ from models.enums.sorting_mode import SortingMode
 
 class TestDatabaseRepositoryGetMovies(unittest.TestCase):
     def setUp(self) -> None:
-        self.db: MySQLConnection = mysql.connector.connect(
-            host="localhost", user="root", password="", database="lyricated"
-        )
-        cursor: MySQLCursorDict = self.db.cursor(dictionary=True)
-
-        # Create temp tables
-        cursor.execute(
-            "CREATE TEMPORARY TABLE tmp_movies SELECT * FROM movies WHERE movie IN ('AP13', 'TT', 'LD')"
-        )
-
-        self.dbrepo = DatabaseRepository(db=self.db)
+        self.dbrepo = DatabaseRepository(dbname="lyricated")
 
         return super().setUp()
 
     def test_getting_all_data(self):
-        all_data = self.dbrepo.get_movies(table_name="tmp_movies")
-        print(all_data)
-        self.assertEqual(len(all_data), 3)
+        all_data = self.dbrepo.get_movies()
+        self.assertGreater(len(all_data), 0)
 
         movie_names = [data["movie"] for data in all_data]
 
@@ -35,8 +24,8 @@ class TestDatabaseRepositoryGetMovies(unittest.TestCase):
         self.assertIn("LD", movie_names)
 
     def test_getting_only_movies(self):
-        all_movies = self.dbrepo.get_movies(only_movies=True, table_name="tmp_movies")
-        self.assertEqual(len(all_movies), 2)
+        all_movies = self.dbrepo.get_movies(only_movies=True)
+        self.assertGreater(len(all_movies), 0)
 
         movie_names = [data["movie"] for data in all_movies]
 
@@ -44,40 +33,30 @@ class TestDatabaseRepositoryGetMovies(unittest.TestCase):
         self.assertIn("TT", movie_names)
 
     def test_getting_only_series(self):
-        all_series = self.dbrepo.get_movies(only_movies=False, table_name="tmp_movies")
-        self.assertEqual(len(all_series), 1)
+        all_series = self.dbrepo.get_movies(only_movies=False)
+        self.assertTrue(len(all_series), 0)
 
         movie_names = [data["movie"] for data in all_series]
 
         self.assertIn("LD", movie_names)
 
     def test_getting_one_exists_movie(self):
-        one_movie = self.dbrepo.get_movie("AP13", table_name="tmp_movies")
+        one_movie = self.dbrepo.get_movie("AP13")
         self.assertEqual(one_movie["movie"], "AP13")
 
     def test_getting_one_non_exists_movie(self):
-        one_movie = self.dbrepo.get_movie("TEST", table_name="tmp_movies")
+        one_movie = self.dbrepo.get_movie("TEST")
         self.assertIs(one_movie, None)
 
 
 class TestDatabaseRepositoryGetLyrics(unittest.TestCase):
     def setUp(self) -> None:
-        self.db: MySQLConnection = mysql.connector.connect(
-            host="localhost", user="root", password="", database="lyricated"
-        )
-        cursor: MySQLCursorDict = self.db.cursor(dictionary=True)
-
-        # Create temp tables
-        cursor.execute(
-            "CREATE TEMPORARY TABLE tmp_lyrics SELECT * FROM lyrics WHERE pl LIKE '%auto%'"
-        )
-
-        self.dbrepo = DatabaseRepository(db=self.db)
+        self.dbrepo = DatabaseRepository(dbname="lyricated")
         return super().setUp()
 
     def test_getting_lyrics(self):
         lyrics = self.dbrepo.get_lyrics(
-            "auto", "pl", "en", SortingMode.SHORTESTS, table_name="tmp_lyrics"
+            "auto", "pl", "en", SortingMode.SHORTESTS
         )
 
         self.assertIn("main_results", lyrics.keys())
@@ -91,13 +70,13 @@ class TestDatabaseRepositoryGetLyrics(unittest.TestCase):
 
     def test_soring_lyrics(self):
         lyrics_shortests = self.dbrepo.get_lyrics(
-            "auto", "pl", "en", SortingMode.SHORTESTS, table_name="tmp_lyrics"
+            "auto", "pl", "en", SortingMode.SHORTESTS
         )
         lyrics_longests = self.dbrepo.get_lyrics(
-            "auto", "pl", "en", SortingMode.LONGESTS, table_name="tmp_lyrics"
+            "auto", "pl", "en", SortingMode.LONGESTS
         )
         lyrics_bests = self.dbrepo.get_lyrics(
-            "auto", "pl", "en", SortingMode.BEST_MATCH, table_name="tmp_lyrics"
+            "auto", "pl", "en", SortingMode.BEST_MATCH
         )
 
         shortests_len = len(lyrics_shortests["main_results"])
@@ -134,7 +113,6 @@ class TestDatabaseRepositoryGetLyrics(unittest.TestCase):
             "en",
             SortingMode.LONGESTS,
             only_movies=True,
-            table_name="tmp_lyrics",
         )
         only_series_lyrics = self.dbrepo.get_lyrics(
             "auto",
@@ -142,7 +120,6 @@ class TestDatabaseRepositoryGetLyrics(unittest.TestCase):
             "en",
             SortingMode.LONGESTS,
             only_movies=False,
-            table_name="tmp_lyrics",
         )
 
         movies = [movie["id"] for movie in self.dbrepo.get_movies(only_movies=True)]
