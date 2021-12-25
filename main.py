@@ -118,19 +118,22 @@ def find_lyrics(request: FindLyricsRequest):
     ][:100]
 
     # FIXME: Remove redundancy
-    similar_results = [
-        {
-            "id": lyric["id"],
-            "main_sentence": lyric[request.main_language_id],
-            "translated_sentence": lyric[request.translation_language_id],
-            "time": lyric["seconds"],
-            "movie": db.get_movie(movie_id=lyric["movie_id_fk"]),
-            "episode": db.get_episode(episode_id=lyric["episode_id_fk"])
-            if lyric["episode_id_fk"] is not None
-            else None,
-        }
-        for lyric in lyrics["similar_results"]
-    ][:100]
+    if len(request.searched_phrase) == 1:
+        similar_results = []
+    else:
+        similar_results = [
+            {
+                "id": lyric["id"],
+                "main_sentence": lyric[request.main_language_id],
+                "translated_sentence": lyric[request.translation_language_id],
+                "time": lyric["seconds"],
+                "movie": db.get_movie(movie_id=lyric["movie_id_fk"]),
+                "episode": db.get_episode(episode_id=lyric["episode_id_fk"])
+                if lyric["episode_id_fk"] is not None
+                else None,
+            }
+            for lyric in lyrics["similar_results"]
+        ][:100]
 
 
     return {
