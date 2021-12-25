@@ -5,7 +5,7 @@ from models.request.find_lyrics_request import FindLyricsRequest
 import repository
 from models.enums.source import Source
 from models.response.episode_model import ListEpisodeModel
-from models.response.movie_model import ListMovieModel
+from models.response.movie_model import ListMovieModel, MovieModel
 from models.response.find_lyrics_model import FindLyricsModel
 import settings
 from reverso_context_api import Client
@@ -34,6 +34,15 @@ def get_movies(source: Optional[Source] = None):
 
     return {"movies": movies}
 
+
+@app.get(
+    "/get_movie",
+    response_model=MovieModel,
+    description="Get single movie from database"
+)
+def get_movie(movie_id: str):
+    movie = db.get_movie(movie_name=movie_id)
+    return movie    
 
 @app.get(
     "/get_episodes",
