@@ -6,7 +6,7 @@ from models.enums.original_lang import OriginalLang
 
 class MovieModel(BaseModel):
     id: str
-    original_lang: OriginalLang
+    lang: OriginalLang
     type: str
     minutes: int
     en: Optional[str] = None
