@@ -72,7 +72,7 @@ class DatabaseRepository:
             table_name (str, optional): Only for debugging. Defaults to "lyrics".
 
         Returns:
-            dict: Dicts with keys main_results and similiar_results
+            dict: Dicts with keys main_results and similar_results
         """
         db = mysql.connector.connect(**self.db_config)
         cursor: MySQLCursorDict = db.cursor(dictionary=True)
@@ -125,12 +125,12 @@ class DatabaseRepository:
                 rf"\b\S{searched_phrase}\S?[^\s]*|\b\S?{searched_phrase}[^.,?! ][^\s]*",
             )
 
-        similiar_results = list(
+        similar_results = list(
             filter(lambda x: r.search(x[main_language].lower()), all_data)
         )
 
         # Mark similiar
-        for result in similiar_results:
+        for result in similar_results:
             words_to_replace = set(r.findall(result[main_language]))
             for word in words_to_replace:
                 result[main_language] = result[main_language].replace(word, f"$%{word}$%")
@@ -143,8 +143,8 @@ class DatabaseRepository:
                     x[main_language], x[translation_language]
                 ),
             )
-            similiar_results = sorted(
-                similiar_results,
+            similar_results = sorted(
+                similar_results,
                 key=lambda x: self._best_match_sort_key(
                     x[main_language], x[translation_language]
                 ),
@@ -154,13 +154,13 @@ class DatabaseRepository:
             main_results = sorted(
                 main_results, key=lambda x: len(x[main_language]), reverse=reverse
             )
-            similiar_results = sorted(
-                similiar_results, key=lambda x: len(x[main_language]), reverse=reverse
+            similar_results = sorted(
+                similar_results, key=lambda x: len(x[main_language]), reverse=reverse
             )
 
         cursor.reset()
         cursor.close()
-        return {"main_results": main_results, "similiar_results": similiar_results}
+        return {"main_results": main_results, "similar_results": similar_results}
 
     def _best_match_sort_key(self, main_lang, translation_lang):
         return (

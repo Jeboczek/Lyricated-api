@@ -60,10 +60,10 @@ class TestDatabaseRepositoryGetLyrics(unittest.TestCase):
         )
 
         self.assertIn("main_results", lyrics.keys())
-        self.assertIn("similiar_results", lyrics.keys())
+        self.assertIn("similar_results", lyrics.keys())
 
         self.assertGreater(len(lyrics["main_results"]), 0)
-        self.assertGreater(len(lyrics["similiar_results"]), 0)
+        self.assertGreater(len(lyrics["similar_results"]), 0)
 
         self.assertIn("pl", lyrics["main_results"][0].keys())
         self.assertIn("en", lyrics["main_results"][0].keys())
@@ -138,5 +138,5 @@ class TestDatabaseRepositoryGetLyrics(unittest.TestCase):
         for lyric in lyrics["main_results"]:
             self.assertEqual(lyric["movie_id_fk"], movie_id)
 
-        for lyric in lyrics["similiar_results"]:
+        for lyric in lyrics["similar_results"]:
             self.assertEqual(lyric["movie_id_fk"], movie_id)

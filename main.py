@@ -99,7 +99,7 @@ def find_lyrics(request: FindLyricsRequest):
         for word in translations:
             result[request.translation_language_id] = result[request.translation_language_id].replace(word, f"$%{word}$%")
 
-    for result in lyrics["similiar_results"]:
+    for result in lyrics["similar_results"]:
         for word in translations:
             result[request.translation_language_id] = result[request.translation_language_id].replace(word, f"$%{word}$%")
 
@@ -118,7 +118,7 @@ def find_lyrics(request: FindLyricsRequest):
     ]
 
     # FIXME: Remove redundancy
-    similiar_results = [
+    similar_results = [
         {
             "id": lyric["id"],
             "main_sentence": lyric[request.main_language_id],
@@ -129,7 +129,7 @@ def find_lyrics(request: FindLyricsRequest):
             if lyric["episode_id_fk"] is not None
             else None,
         }
-        for lyric in lyrics["similiar_results"]
+        for lyric in lyrics["similar_results"]
     ]
 
 
@@ -138,5 +138,5 @@ def find_lyrics(request: FindLyricsRequest):
         "translation_language_id": request.translation_language_id,
         "translations": translations,
         "main_results": main_results,
-        "similiar_results": similiar_results,
+        "similar_results": similar_results,
     }

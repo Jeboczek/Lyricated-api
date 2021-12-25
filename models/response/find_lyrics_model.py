@@ -9,4 +9,4 @@ class FindLyricsModel(BaseModel):
      translation_language_id: LanguageID
      translations: List[str] = []
      main_results: List[LyricModel] = []
-     similiar_results: List[LyricModel] = []
+     similar_results: List[LyricModel] = []
