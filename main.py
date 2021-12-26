@@ -156,5 +156,6 @@ async def find_lyrics(req: FindLyricsRequest):
 
 @app.on_event("startup")
 async def startup():
+    # TODO: Add redis ip to settings
     redis = aioredis.from_url("redis://localhost", encoding="utf8", decode_responses=True)
     FastAPICache.init(RedisBackend(redis), prefix="lyricatedapi-cache")

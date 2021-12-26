@@ -96,6 +96,7 @@ class DatabaseRepository:
 
         # Get all rows with translated sentence
         all_data = list(filter(lambda x: x[translation_language] is not None, all_data))
+        all_data = all_data[:2000]
 
         # Get main results
         r = re.compile(rf"\b{searched_phrase}\b[^']")
