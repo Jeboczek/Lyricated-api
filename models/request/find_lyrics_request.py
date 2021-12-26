@@ -13,3 +13,6 @@ class FindLyricsRequest(BaseModel):
     curses: bool
     source: Optional[Source] = None
     movie_id: Optional[str] = None
+
+    def __str__(self) -> str:
+        return f"{self.searched_phrase}{self.main_language_id}{self.translation_language_id}"

@@ -1,5 +1,6 @@
 import re
 from typing import Optional
+import aioredis
 import fastapi
 from fastapi.exceptions import HTTPException
 from models.request.find_lyrics_request import FindLyricsRequest
@@ -10,6 +11,9 @@ from models.response.movie_model import ListMovieModel, MovieModel
 from models.response.find_lyrics_model import FindLyricsModel
 import settings
 from reverso_context_api import Client
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
+from fastapi_cache.decorator import cache
 
 from word_marker.word_marker import WordMarker
 
@@ -71,28 +75,29 @@ def get_episodes(movie_id: str):
     response_model=FindLyricsModel,
     description="Get lyrics from database",
 )
-def find_lyrics(request: FindLyricsRequest):
+@cache()
+async def find_lyrics(req: FindLyricsRequest):
     # Get translations
     client = Client(
-        source_lang=request.main_language_id,
-        target_lang=request.translation_language_id,
+        source_lang=req.main_language_id,
+        target_lang=req.translation_language_id,
     )
-    translations = list(client.get_translations(request.searched_phrase))
+    translations = list(client.get_translations(req.searched_phrase))
 
     # Get lyrics
     only_movies = None
     movie_id = None
-    if request.source is not None:
-        only_movies = request.source == "only_movies"
+    if req.source is not None:
+        only_movies = req.source == "only_movies"
 
-    if request.movie_id is not None:
-        movie_id = request.movie_id
+    if req.movie_id is not None:
+        movie_id = req.movie_id
 
     lyrics = db.get_lyrics(
-        request.searched_phrase,
-        request.main_language_id,
-        request.translation_language_id,
-        sorting_mode=request.sorting_mode,
+        req.searched_phrase,
+        req.main_language_id,
+        req.translation_language_id,
+        sorting_mode=req.sorting_mode,
         only_movies=only_movies,
         movie=movie_id,
     )
@@ -101,18 +106,18 @@ def find_lyrics(request: FindLyricsRequest):
     for result in lyrics["main_results"]:
         for word in translations:
             r = re.compile(f"{word}")
-            result[request.translation_language_id] = WordMarker.mark_word(result[request.translation_language_id], r)
+            result[req.translation_language_id] = WordMarker.mark_word(result[req.translation_language_id], r)
 
     for result in lyrics["similar_results"]:
         for word in translations:
             r = re.compile(f"{word}")
-            result[request.translation_language_id] = WordMarker.mark_word(result[request.translation_language_id], r)
+            result[req.translation_language_id] = WordMarker.mark_word(result[req.translation_language_id], r)
 
     main_results = [
         {
             "id": lyric["id"],
-            "main_sentence": lyric[request.main_language_id],
-            "translated_sentence": lyric[request.translation_language_id],
+            "main_sentence": lyric[req.main_language_id],
+            "translated_sentence": lyric[req.translation_language_id],
             "time": lyric["seconds"],
             "movie": db.get_movie(movie_id=lyric["movie_id_fk"]),
             "episode": db.get_episode(episode_id=lyric["episode_id_fk"])
@@ -123,14 +128,14 @@ def find_lyrics(request: FindLyricsRequest):
     ][:100]
 
     # FIXME: Remove redundancy
-    if len(request.searched_phrase) == 1:
+    if len(req.searched_phrase) == 1:
         similar_results = []
     else:
         similar_results = [
             {
                 "id": lyric["id"],
-                "main_sentence": lyric[request.main_language_id],
-                "translated_sentence": lyric[request.translation_language_id],
+                "main_sentence": lyric[req.main_language_id],
+                "translated_sentence": lyric[req.translation_language_id],
                 "time": lyric["seconds"],
                 "movie": db.get_movie(movie_id=lyric["movie_id_fk"]),
                 "episode": db.get_episode(episode_id=lyric["episode_id_fk"])
@@ -142,9 +147,14 @@ def find_lyrics(request: FindLyricsRequest):
 
 
     return {
-        "main_language_id": request.main_language_id,
-        "translation_language_id": request.translation_language_id,
+        "main_language_id": req.main_language_id,
+        "translation_language_id": req.translation_language_id,
         "translations": translations,
         "main_results": main_results,
         "similar_results": similar_results,
     }
+
+@app.on_event("startup")
+async def startup():
+    redis = aioredis.from_url("redis://localhost", encoding="utf8", decode_responses=True)
+    FastAPICache.init(RedisBackend(redis), prefix="lyricatedapi-cache")
