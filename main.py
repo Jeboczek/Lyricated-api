@@ -1,3 +1,4 @@
+import re
 from typing import Optional
 import fastapi
 from fastapi.exceptions import HTTPException
@@ -9,6 +10,8 @@ from models.response.movie_model import ListMovieModel, MovieModel
 from models.response.find_lyrics_model import FindLyricsModel
 import settings
 from reverso_context_api import Client
+
+from word_marker.word_marker import WordMarker
 
 app = fastapi.FastAPI(title="Lyricated API")
 sett = settings.Settings()
@@ -97,11 +100,13 @@ def find_lyrics(request: FindLyricsRequest):
     # Mark translated words
     for result in lyrics["main_results"]:
         for word in translations:
-            result[request.translation_language_id] = result[request.translation_language_id].replace(word, f"$%{word}$%")
+            r = re.compile(f"{word}")
+            result[request.translation_language_id] = WordMarker.mark_word(result[request.translation_language_id], r)
 
     for result in lyrics["similar_results"]:
         for word in translations:
-            result[request.translation_language_id] = result[request.translation_language_id].replace(word, f"$%{word}$%")
+            r = re.compile(f"{word}")
+            result[request.translation_language_id] = WordMarker.mark_word(result[request.translation_language_id], r)
 
     main_results = [
         {

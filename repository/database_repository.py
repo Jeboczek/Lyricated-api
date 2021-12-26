@@ -1,7 +1,7 @@
 from typing import List, Optional
 import mysql.connector
 import re
-from mysql.connector.connection import MySQLConnection
+from word_marker.word_marker import WordMarker
 from mysql.connector.cursor import MySQLCursorDict
 
 from models.enums.sorting_mode import SortingMode
@@ -22,6 +22,7 @@ class DatabaseRepository:
             }
         else:
             self.db_config = db_config
+
     def get_movies(
         self, only_movies: Optional[bool] = None, table_name="movies"
     ) -> List[dict]:
@@ -90,8 +91,6 @@ class DatabaseRepository:
 
         regexp_querry += f" {table_name}.{main_language} IS NOT NULL AND {table_name}.{translation_language} IS NOT NULL"
 
-        # raise ValueError(regexp_querry)
-
         cursor.execute(regexp_querry)
         all_data = cursor.fetchall()
 
@@ -106,12 +105,9 @@ class DatabaseRepository:
 
         # Mark main_results
         for result in main_results:
-            words_to_replace = set(r.findall(result[main_language]))
-            for word in words_to_replace:
-                result[main_language] = result[main_language].replace(word, f"$%{word}$%")
+                result[main_language] = WordMarker.mark_word(result[main_language], r)
 
         # Get similiar results
-        # searched_phrase = searched_phrase[0:-1]
         if len(searched_phrase) == 4:
             r = re.compile(
                 rf"\b\S{searched_phrase}\S*|\b\S?{searched_phrase}?[^{searched_phrase[-1]}.,?! ]\S*"
@@ -131,9 +127,7 @@ class DatabaseRepository:
 
         # Mark similiar
         for result in similar_results:
-            words_to_replace = set(r.findall(result[main_language]))
-            for word in words_to_replace:
-                result[main_language] = result[main_language].replace(word, f"$%{word}$%")
+                result[main_language] = WordMarker.mark_word(result[main_language], r)
 
         # Sort resulsts
         if sorting_mode is SortingMode.BEST_MATCH:
