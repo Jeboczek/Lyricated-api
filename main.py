@@ -103,21 +103,14 @@ async def find_lyrics(req: FindLyricsRequest):
     )
 
     # Mark translated words
-    for result in lyrics["main_results"]:
-        for word in translations:
-            r = re.compile(f"{word}")
-            marked_result = WordMarker.mark_word(result[req.translation_language_id], r)
-            if marked_result != result[req.translation_language_id]:
-                result[req.translation_language_id] = marked_result
-                break
-
-    for result in lyrics["similar_results"]:
-        for word in translations:
-            r = re.compile(f"{word}")
-            marked_result = WordMarker.mark_word(result[req.translation_language_id], r)
-            if marked_result != result[req.translation_language_id]:
-                result[req.translation_language_id] = marked_result
-                break
+    for result_name in ["main_results", "similar_results"]:
+        for result in lyrics[result_name]:
+            for word in translations:
+                r = re.compile(f"{word}")
+                marked_result = WordMarker.mark_word(result[req.translation_language_id], r)
+                if marked_result != result[req.translation_language_id]:
+                    result[req.translation_language_id] = marked_result
+                    break
 
     main_results = [
         {

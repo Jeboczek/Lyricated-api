@@ -103,7 +103,8 @@ class DatabaseRepository:
             filter(lambda x: r.search(x[main_language].lower()), all_data)
         )
 
-        all_data = [x for x in all_data if x not in main_results]
+        # FIXME: This is very slow
+        # all_data = [x for x in all_data if x not in main_results]
 
         # Mark main_results
         for result in main_results:
