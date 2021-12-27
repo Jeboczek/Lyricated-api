@@ -1,7 +1,7 @@
 from typing import Any
 
 class WordMarker:
-    MARK_SYMBOL = "$%"
+    MARK_SYMBOL = "¦"
 
     @staticmethod
     def mark_word(sentence : str, r : Any):
