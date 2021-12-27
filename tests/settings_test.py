@@ -31,6 +31,7 @@ class TestSettings(unittest.TestCase):
                         "dbuser": "testUser",
                         "dbpass": "testPass",
                         "dbname": "testName",
+                        "redisip": "testIP",
                     }
                 )
             )
@@ -41,3 +42,4 @@ class TestSettings(unittest.TestCase):
         self.assertEqual(settings.dbuser, "testUser")
         self.assertEqual(settings.dbhost, "testHost")
         self.assertEqual(settings.dbpassword, "testPass")
+        self.assertEqual(settings.redisip, "testIP")

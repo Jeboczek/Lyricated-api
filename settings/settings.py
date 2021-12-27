@@ -9,6 +9,7 @@ class Settings:
         self.dbpassword = ""
         self.dbname = ""
         self.dbhost = ""
+        self.redisip = ""
 
         if not os.path.exists("settings.json"):
             self._create_new_file()
@@ -19,7 +20,7 @@ class Settings:
         logging.info("Creating new settings.json")
         with open("settings.json", "w") as f:
             f.write(
-                json.dumps({"dbhost": "", "dbuser": "", "dbpass": "", "dbname": ""})
+                json.dumps({"dbhost": "", "dbuser": "", "dbpass": "", "dbname": "", "redisip": ""})
             )
             f.close()
         raise FileNotFoundError("I can't find settings.json")
@@ -33,6 +34,7 @@ class Settings:
                 self.dbpassword = file_data["dbpass"]
                 self.dbhost = file_data["dbhost"]
                 self.dbname = file_data["dbname"]
+                self.redisip = file_data["redisip"]
             except KeyError:
                 raise KeyError(
                     "settings.json file is corrupted. Delete it and run api another time."
@@ -49,3 +51,6 @@ class Settings:
 
     def get_db_name(self):
         return self.dbname
+
+    def get_redis_ip(self):
+        return self.redisip

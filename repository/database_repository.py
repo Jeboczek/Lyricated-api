@@ -154,7 +154,7 @@ class DatabaseRepository:
 
         cursor.reset()
         cursor.close()
-        return {"main_results": main_results, "similar_results": similar_results}
+        return {"main_results": main_results[:100], "similar_results": similar_results[:100]}
 
     def _best_match_sort_key(self, main_lang, translation_lang):
         return (

@@ -131,7 +131,7 @@ async def find_lyrics(req: FindLyricsRequest):
             else None,
         }
         for lyric in lyrics["main_results"]
-    ][:100]
+    ]
 
     # FIXME: Remove redundancy
     if len(req.searched_phrase) == 1:
@@ -149,7 +149,7 @@ async def find_lyrics(req: FindLyricsRequest):
                 else None,
             }
             for lyric in lyrics["similar_results"]
-        ][:100]
+        ]
 
 
     return {
@@ -162,6 +162,5 @@ async def find_lyrics(req: FindLyricsRequest):
 
 @app.on_event("startup")
 async def startup():
-    # TODO: Add redis ip to settings
-    redis = aioredis.from_url("redis://localhost", encoding="utf8", decode_responses=True)
+    redis = aioredis.from_url(f"redis://{sett.get_redis_ip()}", encoding="utf8", decode_responses=True)
     FastAPICache.init(RedisBackend(redis), prefix="lyricatedapi-cache")
