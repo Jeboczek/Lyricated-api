@@ -148,6 +148,7 @@ async def find_lyrics(req: FindLyricsRequest):
     return {
         "main_language_id": req.main_language_id,
         "translation_language_id": req.translation_language_id,
+        "search_word": req.searched_phrase,
         "translations": translations,
         "main_results": main_results,
         "similar_results": similar_results,
