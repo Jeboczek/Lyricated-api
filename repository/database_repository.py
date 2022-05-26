@@ -165,6 +165,20 @@ class DatabaseRepository:
             abs(round(len(main_lang) / 10) * 10 - 25),
         )
 
+    def get_random_lyric(self, main_lang, translation_lang, lang_length):
+        db = mysql.connector.connect(**self.db_config)
+        cursor: MySQLCursorDict = db.cursor(dictionary=True)
+
+        cursor.execute(f"SELECT {main_lang}, {translation_lang} FROM lyrics WHERE LENGTH({main_lang}) = {lang_length} AND LENGTH({translation_lang}) = {lang_length};")
+
+        data = cursor.fetchall()
+
+        cursor.reset()
+        cursor.close()
+
+        return data
+
+
     def get_episodes(self, serie_name: str) -> List[dict]:
         """Get episodes from database
 

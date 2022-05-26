@@ -1,3 +1,4 @@
+import random
 import re
 from typing import Optional
 import aioredis
@@ -6,7 +7,9 @@ from fastapi.exceptions import HTTPException
 from models.request.find_lyrics_request import FindLyricsRequest
 import repository
 from models.enums.source import Source
+from models.request.find_random_lryic_requrest import FindRandomLyricRequest
 from models.response.episode_model import ListEpisodeModel
+from models.response.find_random_lyric_model import FindRandomLyricModel
 from models.response.movie_model import ListMovieModel, MovieModel
 from models.response.find_lyrics_model import FindLyricsModel
 import settings
@@ -49,7 +52,8 @@ def get_movies(source: Optional[Source] = None):
 )
 def get_movie(movie_id: str):
     movie = db.get_movie(movie_name=movie_id)
-    return movie    
+    return movie
+
 
 @app.get(
     "/get_episodes",
@@ -144,7 +148,6 @@ async def find_lyrics(req: FindLyricsRequest):
             for lyric in lyrics["similar_results"]
         ]
 
-
     return {
         "main_language_id": req.main_language_id,
         "translation_language_id": req.translation_language_id,
@@ -153,6 +156,19 @@ async def find_lyrics(req: FindLyricsRequest):
         "main_results": main_results,
         "similar_results": similar_results,
     }
+
+
+@app.post("/get_random_lyric", response_model=FindRandomLyricModel)
+async def get_random_lyric(req: FindRandomLyricRequest):
+    lyrics = db.get_random_lyric(req.main_language_id, req.translation_language_id, req.lyric_length)
+    if len(lyrics) > 0:
+        rand = random.Random()
+        random_lyric = rand.choice(lyrics)
+        print(random_lyric)
+        return {"main_sentence": random_lyric[req.main_language_id], "translated_sentence": random_lyric[req.translation_language_id]}
+    else:
+        return {"main_Sentence": "", "translated_sentence": ""}
+
 
 @app.on_event("startup")
 async def startup():
