@@ -5,11 +5,13 @@ import aioredis
 import fastapi
 from fastapi.exceptions import HTTPException
 from models.request.find_lyrics_request import FindLyricsRequest
+from models.request.find_random_lryic_requrest import GetRandomLyricRequest
 import repository
 from models.enums.source import Source
-from models.request.find_random_lryic_requrest import FindRandomLyricRequest
 from models.response.episode_model import ListEpisodeModel
-from models.response.find_random_lyric_model import FindRandomLyricModel
+from models.response.get_random_lyric_model import (
+    GetRandomLyricModel,
+)
 from models.response.movie_model import ListMovieModel, MovieModel
 from models.response.find_lyrics_model import FindLyricsModel
 import settings
@@ -48,7 +50,7 @@ def get_movies(source: Optional[Source] = None):
 @app.get(
     "/get_movie",
     response_model=MovieModel,
-    description="Get single movie from database"
+    description="Get single movie from database",
 )
 def get_movie(movie_id: str):
     movie = db.get_movie(movie_name=movie_id)
@@ -111,7 +113,9 @@ async def find_lyrics(req: FindLyricsRequest):
         for result in lyrics[result_name]:
             for word in translations:
                 r = re.compile(f"{word}")
-                marked_result = WordMarker.mark_word(result[req.translation_language_id], r)
+                marked_result = WordMarker.mark_word(
+                    result[req.translation_language_id], r
+                )
                 if marked_result != result[req.translation_language_id]:
                     result[req.translation_language_id] = marked_result
                     break
@@ -158,19 +162,30 @@ async def find_lyrics(req: FindLyricsRequest):
     }
 
 
-@app.post("/get_random_lyric", response_model=FindRandomLyricModel)
-async def get_random_lyric(req: FindRandomLyricRequest):
-    lyrics = db.get_random_lyric(req.main_language_id, req.translation_language_id, req.lyric_length)
+@app.post("/get_random_lyric", response_model=GetRandomLyricModel)
+async def get_random_lyric(req: GetRandomLyricRequest):
+    lyrics = db.get_random_lyric(
+        req.main_language_id, req.translation_language_id, req.lyric_length
+    )
     if len(lyrics) > 0:
         rand = random.Random()
         random_lyric = rand.choice(lyrics)
-        print(random_lyric)
-        return {"main_sentence": random_lyric[req.main_language_id], "translated_sentence": random_lyric[req.translation_language_id]}
+        return {
+            "main_sentence": random_lyric[req.main_language_id],
+            "translated_sentence": random_lyric[req.translation_language_id],
+            "movie": db.get_movie(movie_id=random_lyric["movie_id_fk"]),
+            "episode": db.get_episode(episode_id=random_lyric["episode_id_fk"]),
+        }
     else:
-        return {"main_Sentence": "", "translated_sentence": ""}
+        return {
+            "main_Sentence": "",
+            "translated_sentence": "",
+        }
 
 
 @app.on_event("startup")
 async def startup():
-    redis = aioredis.from_url(f"redis://{sett.get_redis_ip()}", encoding="utf8", decode_responses=True)
+    redis = aioredis.from_url(
+        f"redis://{sett.get_redis_ip()}", encoding="utf8", decode_responses=True
+    )
     FastAPICache.init(RedisBackend(redis), prefix="lyricatedapi-cache")

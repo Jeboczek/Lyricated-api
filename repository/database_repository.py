@@ -18,7 +18,10 @@ class DatabaseRepository:
     ) -> None:
         if db_config is None:
             self.db_config = {
-                "host":dbhost, "user":dbuser, "database":dbname, "password":dbpass
+                "host": dbhost,
+                "user": dbuser,
+                "database": dbname,
+                "password": dbpass,
             }
         else:
             self.db_config = db_config
@@ -81,7 +84,7 @@ class DatabaseRepository:
         # Get all lyrics
         regexp_querry = f"SELECT {table_name}.id, movie_id_fk, episode_id_fk, seconds, {table_name}.{main_language}, {table_name}.{translation_language} FROM {table_name}"
         if movie is not None:
-            regexp_querry += f" INNER JOIN movies ON movies.id = {table_name}.episode_id_fk WHERE movies.movie = '{movie}' AND"        
+            regexp_querry += f" INNER JOIN movies ON movies.id = {table_name}.episode_id_fk WHERE movies.movie = '{movie}' AND"
         elif only_movies is not None:
             regexp_querry += (
                 f" WHERE episode_id_fk IS {'' if only_movies else 'NOT'} NULL AND"
@@ -108,7 +111,7 @@ class DatabaseRepository:
 
         # Mark main_results
         for result in main_results:
-                result[main_language] = WordMarker.mark_word(result[main_language], r)
+            result[main_language] = WordMarker.mark_word(result[main_language], r)
 
         # Get similiar results
         if len(searched_phrase) == 4:
@@ -130,7 +133,7 @@ class DatabaseRepository:
 
         # Mark similiar
         for result in similar_results:
-                result[main_language] = WordMarker.mark_word(result[main_language], r)
+            result[main_language] = WordMarker.mark_word(result[main_language], r)
 
         # Sort resulsts
         if sorting_mode is SortingMode.BEST_MATCH:
@@ -157,7 +160,10 @@ class DatabaseRepository:
 
         cursor.reset()
         cursor.close()
-        return {"main_results": main_results[:100], "similar_results": similar_results[:100]}
+        return {
+            "main_results": main_results[:100],
+            "similar_results": similar_results[:100],
+        }
 
     def _best_match_sort_key(self, main_lang, translation_lang):
         return (
@@ -169,7 +175,9 @@ class DatabaseRepository:
         db = mysql.connector.connect(**self.db_config)
         cursor: MySQLCursorDict = db.cursor(dictionary=True)
 
-        cursor.execute(f"SELECT {main_lang}, {translation_lang} FROM lyrics WHERE LENGTH({main_lang}) = {lang_length} AND LENGTH({translation_lang}) = {lang_length};")
+        cursor.execute(
+            f"SELECT movie_id_fk, episode_id_fk, {main_lang}, {translation_lang} FROM lyrics WHERE LENGTH({main_lang}) = {lang_length} AND LENGTH({translation_lang}) = {lang_length};"
+        )
 
         data = cursor.fetchall()
 
@@ -178,12 +186,11 @@ class DatabaseRepository:
 
         return data
 
-
     def get_episodes(self, serie_name: str) -> List[dict]:
         """Get episodes from database
 
         Args:
-            serie_name (str): Name of serie 
+            serie_name (str): Name of serie
 
         Returns:
             list[dict]: List of episodes
@@ -191,17 +198,25 @@ class DatabaseRepository:
         db = mysql.connector.connect(**self.db_config)
         cursor: MySQLCursorDict = db.cursor(dictionary=True)
 
-        cursor.execute("SELECT episodes.id, season, episode, movies.movie as 'movie' FROM episodes INNER JOIN movies ON episodes.movie_id_fk=movies.id WHERE movies.movie = %s;", (serie_name,))
+        cursor.execute(
+            "SELECT episodes.id, season, episode, movies.movie as 'movie' FROM episodes INNER JOIN movies ON episodes.movie_id_fk=movies.id WHERE movies.movie = %s;",
+            (serie_name,),
+        )
         return cursor.fetchall()
 
-    def get_movie(self, movie_name: Optional[str] = None, movie_id: Optional[str] = None, table_name = "movies") -> Optional[dict]:
+    def get_movie(
+        self,
+        movie_name: Optional[str] = None,
+        movie_id: Optional[str] = None,
+        table_name="movies",
+    ) -> Optional[dict]:
         """Get one movie from database
 
         Args:
             movie_name (str): Name of movie in database
 
         Returns:
-            Optional[dict]: Movie from database 
+            Optional[dict]: Movie from database
         """
         db = mysql.connector.connect(**self.db_config)
         cursor: MySQLCursorDict = db.cursor(dictionary=True)
@@ -214,16 +229,16 @@ class DatabaseRepository:
         elif movie_id is not None:
             query += f"WHERE {table_name}.id = %s"
             parameter = movie_id
-        else: 
+        else:
             cursor.reset()
             cursor.close()
             return None
 
         cursor.execute(query, (parameter,))
-        movie_data =  cursor.fetchone()
+        movie_data = cursor.fetchone()
         if movie_data is not None:
             movie_data["id"] = movie_data["movie"]
-        
+
         cursor.reset()
         cursor.close()
         return movie_data
