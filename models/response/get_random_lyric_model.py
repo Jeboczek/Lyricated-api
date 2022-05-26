@@ -5,6 +5,8 @@ from models.response.movie_model import MovieModel
 
 
 class GetRandomLyricModel(BaseModel):
+    id: int
+    time: int
     main_sentence: str
     translated_sentence: str
     movie: Optional[MovieModel]

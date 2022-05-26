@@ -176,7 +176,7 @@ class DatabaseRepository:
         cursor: MySQLCursorDict = db.cursor(dictionary=True)
 
         cursor.execute(
-            f"SELECT movie_id_fk, episode_id_fk, {main_lang}, {translation_lang} FROM lyrics WHERE LENGTH({main_lang}) = {lang_length} AND LENGTH({translation_lang}) = {lang_length};"
+            f"SELECT id, seconds, movie_id_fk, episode_id_fk, {main_lang}, {translation_lang} FROM lyrics WHERE LENGTH({main_lang}) = {lang_length} AND LENGTH({translation_lang}) = {lang_length};"
         )
 
         data = cursor.fetchall()

@@ -171,6 +171,8 @@ async def get_random_lyric(req: GetRandomLyricRequest):
         rand = random.Random()
         random_lyric = rand.choice(lyrics)
         return {
+            "id": random_lyric["id"],
+            "time": random_lyric["seconds"],
             "main_sentence": random_lyric[req.main_language_id],
             "translated_sentence": random_lyric[req.translation_language_id],
             "movie": db.get_movie(movie_id=random_lyric["movie_id_fk"]),
@@ -178,6 +180,7 @@ async def get_random_lyric(req: GetRandomLyricRequest):
         }
     else:
         return {
+            "id": 0,
             "main_Sentence": "",
             "translated_sentence": "",
         }
