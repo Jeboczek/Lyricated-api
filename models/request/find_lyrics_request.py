@@ -1,9 +1,11 @@
 from typing import Optional
+
 from pydantic import BaseModel
 
 from models.enums.language_id import LanguageID
 from models.enums.sorting_mode import SortingMode
 from models.enums.source import Source
+
 
 class FindLyricsRequest(BaseModel):
     searched_phrase: str

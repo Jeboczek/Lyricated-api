@@ -1,10 +1,11 @@
-from typing import List, Optional
-import mysql.connector
 import re
-from word_marker.word_marker import WordMarker
+from typing import List, Optional
+
+import mysql.connector
 from mysql.connector.cursor import MySQLCursorDict
 
 from models.enums.sorting_mode import SortingMode
+from word_marker.word_marker import WordMarker
 
 
 class DatabaseRepository:

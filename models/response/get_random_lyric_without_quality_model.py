@@ -1,7 +1,4 @@
-from typing import Optional
-from models.response.episode_model import EpisodeModel
 from pydantic import BaseModel
-from models.response.movie_model import MovieModel
 
 
 class GetRandomLyricWithoutQualityModel(BaseModel):

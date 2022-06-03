@@ -1,24 +1,25 @@
 import random
 import re
 from typing import Optional
+
 import aioredis
 import fastapi
 from fastapi.exceptions import HTTPException
-from models.request.find_lyrics_request import FindLyricsRequest
-from models.request.find_random_lryic_requrest import GetRandomLyricRequest
-import repository
-from models.enums.source import Source
-from models.response.episode_model import ListEpisodeModel
-from models.response.get_random_lyric_model import GetRandomLyricModel
-from models.response.get_random_lyric_without_quality_model import GetRandomLyricWithoutQualityModel
-from models.response.movie_model import ListMovieModel, MovieModel
-from models.response.find_lyrics_model import FindLyricsModel
-import settings
-from reverso_context_api import Client
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
 from fastapi_cache.decorator import cache
+from reverso_context_api import Client
 
+import repository
+import settings
+from models.enums.source import Source
+from models.request.find_lyrics_request import FindLyricsRequest
+from models.request.find_random_lryic_requrest import GetRandomLyricRequest
+from models.response.episode_model import ListEpisodeModel
+from models.response.find_lyrics_model import FindLyricsModel
+from models.response.get_random_lyric_model import GetRandomLyricModel
+from models.response.get_random_lyric_without_quality_model import GetRandomLyricWithoutQualityModel
+from models.response.movie_model import ListMovieModel, MovieModel
 from word_marker.word_marker import WordMarker
 
 app = fastapi.FastAPI(title="Lyricated API")

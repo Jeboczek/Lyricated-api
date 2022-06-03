@@ -1,5 +1,7 @@
-from pydantic import BaseModel
 from typing import List
+
+from pydantic import BaseModel
+
 from models.enums.language_id import LanguageID
 from models.response.lyric_model import LyricModel
 
