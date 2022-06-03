@@ -191,7 +191,7 @@ class DatabaseRepository:
         cursor: MySQLCursorDict = db.cursor(dictionary=True)
  
         cursor.execute(
-            f"SELECT id, en, pl, de, es, fr, pt, it FROM lyrics WHERE abs(LENGTH(pl)-LENGTH(en))<10 AND quality = null;"
+            f"SELECT id, en, pl, de, es, fr, pt, it FROM lyrics WHERE abs(LENGTH(pl)-LENGTH(en))<10 AND quality IS Null;"
         )
  
         data = cursor.fetchall()
