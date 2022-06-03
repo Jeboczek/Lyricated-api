@@ -1,0 +1,26 @@
+name: Deploy on VPS
+
+on:
+  push:
+    branches: ["master"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: "Deploy project on VPS 🌐"
+        uses: wangyucode/sftp-upload-action@main
+        with:
+          host: "${{ secrets.SFTP_ADDRESS }}"
+          username: "${{ secrets.SFTP_USERNAME }}"
+          password: "${{ secrets.SFTP_PASSWORD }}"
+          localDir: "./"
+          remoteDir: "/home/${{ secrets.SFTP_USERNAME }}/Lyricated-api/"
+      - name: "Restart project's service on VPS 🔄"
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: "cd ~/ && ./installProject.sh"
+          host: "${{ secrets.SFTP_ADDRESS }}"
+          username: "${{ secrets.SFTP_USERNAME }}"
+          password: "${{ secrets.SFTP_PASSWORD }}"
