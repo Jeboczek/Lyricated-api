@@ -214,7 +214,7 @@ class DatabaseRepository:
         cursor.reset()
         cursor.close()
  
-        return 
+        return data
 
     def get_episodes(self, serie_name: str) -> List[dict]:
         """Get episodes from database
