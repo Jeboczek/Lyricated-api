@@ -184,6 +184,7 @@ async def get_random_lyric(req: GetRandomLyricRequest):
             "translated_sentence": "",
         }
 
+
 @app.get("/get_random_lyric", response_model=GetRandomLyricWithoutQualityModel, description="Get random lyric without quality")
 async def get_random_lyric():
     lyrics = db.get_random_lyric_without_quality()
@@ -211,6 +212,7 @@ async def get_random_lyric():
             "pt": "",
             "it": ""
         }
+
 
 @app.on_event("startup")
 async def startup():
