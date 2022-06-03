@@ -1,9 +1,6 @@
-from pickle import FALSE
-from pydoc import describe
 import random
 import re
 from typing import Optional
-from urllib import response
 
 import aioredis
 import fastapi
@@ -220,10 +217,11 @@ async def get_random_lyric_without_quality():
             "it": ""
         }
 
+
 @app.post("/set_lyric_quality", response_model=LyricQualityModel, description="Set quality of lyric")
 async def set_lyric_quality(req: SetLyricQualityRequest):
-    reponse = db.set_lyric_quality(req.lyric_id, req.quality)
-    if response == 1: 
+    response = db.set_lyric_quality(req.lyric_id, req.quality)
+    if response == 1:
         return {
             "id": req.lyric_id,
             "quality": req.quality,
@@ -235,6 +233,7 @@ async def set_lyric_quality(req: SetLyricQualityRequest):
             "quality": 0,
             "success": False
         }
+
 
 @app.on_event("startup")
 async def startup():
