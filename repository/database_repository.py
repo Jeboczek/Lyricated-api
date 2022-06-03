@@ -214,8 +214,9 @@ class DatabaseRepository:
 
         cursor.reset()
         cursor.close()
+        db.commit()
 
-        return data
+        return data.rowcount
 
     def get_episodes(self, serie_name: str) -> List[dict]:
         """Get episodes from database
