@@ -186,6 +186,36 @@ class DatabaseRepository:
 
         return data
 
+    def get_random_lyric_without_quality(self):
+        db = mysql.connector.connect(**self.db_config)
+        cursor: MySQLCursorDict = db.cursor(dictionary=True)
+ 
+        cursor.execute(
+            f"SELECT id, en, pl, de, es, fr, pt, it FROM lyrics WHERE abs(LENGTH(pl)-LENGTH(en))<10 AND quality = null;"
+        )
+ 
+        data = cursor.fetchall()
+ 
+        cursor.reset()
+        cursor.close()
+ 
+        return 
+
+    def set_lyric_quality(self, id, quality):
+        db = mysql.connector.connect(**self.db_config)
+        cursor: MySQLCursorDict = db.cursor(dictionary=True)
+ 
+        cursor.execute(
+            f"UPDATE lyrics SET quality = {quality} WHERE id = {id};"
+        )
+ 
+        data = cursor.fetchall()
+ 
+        cursor.reset()
+        cursor.close()
+ 
+        return 
+
     def get_episodes(self, serie_name: str) -> List[dict]:
         """Get episodes from database
 
