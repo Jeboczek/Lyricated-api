@@ -14,7 +14,9 @@ import repository
 import settings
 from models.enums.source import Source
 from models.request.find_lyrics_request import FindLyricsRequest
-from models.request.find_random_lryic_requrest import GetRandomLyricRequest
+from models.request.find_random_lyric_request import GetRandomLyricRequest
+from models.request.set_lyric_quality_request import SetLyricQualityRequest
+from models.response.lyric_quality_model import LyricQualityModel
 from models.response.episode_model import ListEpisodeModel
 from models.response.find_lyrics_model import FindLyricsModel
 from models.response.get_random_lyric_model import GetRandomLyricModel
@@ -213,6 +215,23 @@ async def get_random_lyric_without_quality():
             "fr": "",
             "pt": "",
             "it": ""
+        }
+
+
+@app.post("/set_lyric_quality", response_model=LyricQualityModel, description="Set quality of lyric")
+async def set_lyric_quality(req: SetLyricQualityRequest):
+    response = db.set_lyric_quality(req.lyric_id, req.quality)
+    if response == 1:
+        return {
+            "id": req.lyric_id,
+            "quality": req.quality,
+            "success": True
+        }
+    else:
+        return {
+            "id": 0,
+            "quality": 0,
+            "success": False
         }
 
 

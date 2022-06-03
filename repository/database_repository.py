@@ -202,20 +202,21 @@ class DatabaseRepository:
 
         return data
 
-    def set_lyric_quality(self, id, quality):
+    def set_lyric_quality(self, lyric_id, quality):
         db = mysql.connector.connect(**self.db_config)
         cursor: MySQLCursorDict = db.cursor(dictionary=True)
 
         cursor.execute(
-            f"UPDATE lyrics SET quality = {quality} WHERE id = {id};"
+            f"UPDATE lyrics SET quality = {quality} WHERE id = {lyric_id};"
         )
 
-        data = cursor.fetchall()
+        row_count = cursor.rowcount
 
+        db.commit()
         cursor.reset()
         cursor.close()
 
-        return data
+        return row_count
 
     def get_episodes(self, serie_name: str) -> List[dict]:
         """Get episodes from database
