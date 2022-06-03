@@ -10,12 +10,12 @@ from word_marker.word_marker import WordMarker
 
 class DatabaseRepository:
     def __init__(
-        self,
-        dbhost="localhost",
-        dbuser="root",
-        dbpass="",
-        dbname="",
-        db_config: Optional[dict] = None,
+            self,
+            dbhost="localhost",
+            dbuser="root",
+            dbpass="",
+            dbname="",
+            db_config: Optional[dict] = None,
     ) -> None:
         if db_config is None:
             self.db_config = {
@@ -28,7 +28,7 @@ class DatabaseRepository:
             self.db_config = db_config
 
     def get_movies(
-        self, only_movies: Optional[bool] = None, table_name="movies"
+            self, only_movies: Optional[bool] = None, table_name="movies"
     ) -> List[dict]:
         db = mysql.connector.connect(**self.db_config)
         cursor: MySQLCursorDict = db.cursor(dictionary=True)
@@ -56,14 +56,14 @@ class DatabaseRepository:
         return data
 
     def get_lyrics(
-        self,
-        searched_phrase: str,
-        main_language: str,
-        translation_language: str,
-        sorting_mode: SortingMode,
-        only_movies: Optional[bool] = None,
-        movie: Optional[str] = None,
-        table_name="lyrics",
+            self,
+            searched_phrase: str,
+            main_language: str,
+            translation_language: str,
+            sorting_mode: SortingMode,
+            only_movies: Optional[bool] = None,
+            movie: Optional[str] = None,
+            table_name="lyrics",
     ) -> dict:
         """Get lyrics from database
 
@@ -190,31 +190,31 @@ class DatabaseRepository:
     def get_random_lyric_without_quality(self):
         db = mysql.connector.connect(**self.db_config)
         cursor: MySQLCursorDict = db.cursor(dictionary=True)
- 
+
         cursor.execute(
             f"SELECT id, en, pl, de, es, fr, pt, it FROM lyrics WHERE abs(LENGTH(pl)-LENGTH(en))<10 AND quality IS Null;"
         )
- 
+
         data = cursor.fetchall()
- 
+
         cursor.reset()
         cursor.close()
- 
+
         return data
 
     def set_lyric_quality(self, id, quality):
         db = mysql.connector.connect(**self.db_config)
         cursor: MySQLCursorDict = db.cursor(dictionary=True)
- 
+
         cursor.execute(
             f"UPDATE lyrics SET quality = {quality} WHERE id = {id};"
         )
- 
+
         data = cursor.fetchall()
- 
+
         cursor.reset()
         cursor.close()
- 
+
         return data
 
     def get_episodes(self, serie_name: str) -> List[dict]:
@@ -236,10 +236,10 @@ class DatabaseRepository:
         return cursor.fetchall()
 
     def get_movie(
-        self,
-        movie_name: Optional[str] = None,
-        movie_id: Optional[str] = None,
-        table_name="movies",
+            self,
+            movie_name: Optional[str] = None,
+            movie_id: Optional[str] = None,
+            table_name="movies",
     ) -> Optional[dict]:
         """Get one movie from database
 

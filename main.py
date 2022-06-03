@@ -186,7 +186,8 @@ async def get_random_lyric(req: GetRandomLyricRequest):
         }
 
 
-@app.get("/get_random_lyric_without_quality", response_model=GetRandomLyricWithoutQualityModel, description="Get random lyric without quality")
+@app.get("/get_random_lyric_without_quality", response_model=GetRandomLyricWithoutQualityModel,
+         description="Get random lyric without quality")
 async def get_random_lyric_without_quality():
     lyrics = db.get_random_lyric_without_quality()
     if len(lyrics) > 0:

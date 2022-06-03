@@ -1,10 +1,11 @@
 from typing import Any
 
+
 class WordMarker:
     MARK_SYMBOL = "¦"
 
     @staticmethod
-    def mark_word(sentence : str, r : Any):
+    def mark_word(sentence: str, r: Any):
         tmp_sentence = sentence.lower()
         sr = r.search(tmp_sentence)
         if sr is not None:
