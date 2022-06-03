@@ -199,7 +199,7 @@ class DatabaseRepository:
         cursor.reset()
         cursor.close()
  
-        return 
+        return data
 
     def set_lyric_quality(self, id, quality):
         db = mysql.connector.connect(**self.db_config)

@@ -9,9 +9,8 @@ from models.request.find_random_lryic_requrest import GetRandomLyricRequest
 import repository
 from models.enums.source import Source
 from models.response.episode_model import ListEpisodeModel
-from models.response.get_random_lyric_model import (
-    GetRandomLyricModel,
-)
+from models.response.get_random_lyric_model import GetRandomLyricModel
+from models.response.get_random_lyric_without_quality_model import GetRandomLyricWithoutQualityModel
 from models.response.movie_model import ListMovieModel, MovieModel
 from models.response.find_lyrics_model import FindLyricsModel
 import settings
@@ -183,6 +182,35 @@ async def get_random_lyric(req: GetRandomLyricRequest):
             "id": 0,
             "main_Sentence": "",
             "translated_sentence": "",
+        }
+
+
+@app.get("/get_random_lyric", response_model=GetRandomLyricWithoutQualityModel, description="Get random lyric without quality")
+async def get_random_lyric():
+    lyrics = db.get_random_lyric_without_quality()
+    if len(lyrics) > 0:
+        rand = random.Random()
+        random_lyric = rand.choice(lyrics)
+        return {
+            "id": random_lyric["id"],
+            "en": random_lyric["en"],
+            "pl": random_lyric["pl"],
+            "de": random_lyric["de"],
+            "es": random_lyric["es"],
+            "fr": random_lyric["fr"],
+            "pt": random_lyric["pt"],
+            "it": random_lyric["it"]
+        }
+    else:
+        return {
+            "id": 0,
+            "en": "",
+            "pl": "",
+            "de": "",
+            "es": "",
+            "fr": "",
+            "pt": "",
+            "it": ""
         }
 
 
