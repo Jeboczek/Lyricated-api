@@ -192,7 +192,7 @@ class DatabaseRepository:
         cursor: MySQLCursorDict = db.cursor(dictionary=True)
 
         cursor.execute(
-            f"SELECT id, en, pl, de, es, fr, pt, it FROM lyrics WHERE abs(LENGTH(pl)-LENGTH(en))<10 AND quality IS Null;"
+            f"SELECT id, en, pl, de, es, fr, pt, it FROM lyrics WHERE en IS NOT null AND pl IS NOT NULL AND de IS NOT NULL AND es IS NOT NULL AND fr IS NOT NULL and pt IS NOT NULL AND it IS NOT NULL AND LENGTH(en) > 15 AND quality IS NOT NULL ORDER BY abs(MIN(length(pl), length(en), length(es), LENGTH(fr), LENGTH(de), LENGTH(it), LENGTH(pt)) - MAX(LENGTH(pl), LENGTH(en), LENGTH(es), LENGTH(fr), LENGTH(de), LENGTH(it), LENGTH(pt)));"
         )
 
         data = cursor.fetchall()

@@ -193,17 +193,16 @@ async def get_random_lyric(req: GetRandomLyricRequest):
 async def get_random_lyric_without_quality():
     lyrics = db.get_random_lyric_without_quality()
     if len(lyrics) > 0:
-        rand = random.Random()
-        random_lyric = rand.choice(lyrics)
+        lyric = lyrics[0]
         return {
-            "id": random_lyric["id"],
-            "en": random_lyric["en"],
-            "pl": random_lyric["pl"],
-            "de": random_lyric["de"],
-            "es": random_lyric["es"],
-            "fr": random_lyric["fr"],
-            "pt": random_lyric["pt"],
-            "it": random_lyric["it"]
+            "id": lyric["id"],
+            "en": lyric["en"],
+            "pl": lyric["pl"],
+            "de": lyric["de"],
+            "es": lyric["es"],
+            "fr": lyric["fr"],
+            "pt": lyric["pt"],
+            "it": lyric["it"]
         }
     else:
         return {
