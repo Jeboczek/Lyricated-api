@@ -6,7 +6,7 @@ from models.enums.language_id import LanguageID
 
 
 class GetRandomLyricRequest(BaseModel):
-    lyric_length: Optional[int] = 25
+    lyric_length: Optional[int] = 5
     main_language_id: LanguageID
     translation_language_id: LanguageID
 
