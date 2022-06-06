@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: "Remove .git folder"
+        run: rm -r .git
       - name: "Deploy project on VPS 🌐"
         uses: wangyucode/sftp-upload-action@main
         with:
