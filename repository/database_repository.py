@@ -231,7 +231,7 @@ class DatabaseRepository:
         cursor: MySQLCursorDict = db.cursor(dictionary=True)
 
         cursor.execute(
-            "SELECT episodes.id, season, episode, movies.movie as 'movie' FROM episodes INNER JOIN movies ON episodes.movie_id_fk=movies.id WHERE movies.movie = %s;",
+            "SELECT episodes.id, season, episode, movies.movie, url as 'movie' FROM episodes INNER JOIN movies ON episodes.movie_id_fk=movies.id WHERE movies.movie = %s;",
             (serie_name,),
         )
         return cursor.fetchall()
