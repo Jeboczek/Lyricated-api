@@ -151,7 +151,7 @@ class DatabaseRepository:
                 ),
             )
         else:
-            reverse = False if sorting_mode is SortingMode.SHORTESTS else True
+            reverse = False if sorting_mode is SortingMode.SHORTEST else True
             main_results = sorted(
                 main_results, key=lambda x: len(x[main_language]), reverse=reverse
             )
