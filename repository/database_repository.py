@@ -151,7 +151,7 @@ class DatabaseRepository:
                 ),
             )
         else:
-            reverse = False if sorting_mode is SortingMode.SHORTESTS else True
+            reverse = False if sorting_mode is SortingMode.SHORTEST else True
             main_results = sorted(
                 main_results, key=lambda x: len(x[main_language]), reverse=reverse
             )
@@ -177,7 +177,7 @@ class DatabaseRepository:
         cursor: MySQLCursorDict = db.cursor(dictionary=True)
 
         cursor.execute(
-            f"SELECT id, seconds, movie_id_fk, episode_id_fk, {main_lang}, {translation_lang} FROM lyrics WHERE ABS(LENGTH({main_lang})-LENGTH({translation_lang}))<{lang_length} AND NOT quality = 1;"
+            f"SELECT id, seconds, movie_id_fk, episode_id_fk, {main_lang}, {translation_lang} FROM lyrics WHERE (ABS(LENGTH({main_lang})-LENGTH({translation_lang}))<{lang_length} AND NOT quality = 1) OR quality = 5;"
         )
 
         data = cursor.fetchall()
