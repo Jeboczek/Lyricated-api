@@ -253,7 +253,7 @@ class DatabaseRepository:
         db = mysql.connector.connect(**self.db_config)
         cursor: MySQLCursorDict = db.cursor(dictionary=True)
 
-        query = f"SELECT * FROM {table_name} "
+        query = f"SELECT * FROM {table_name};"
 
         if movie_name is not None:
             query += f"WHERE {table_name}.movie = %s"

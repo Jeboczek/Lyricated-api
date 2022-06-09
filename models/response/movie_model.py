@@ -9,7 +9,7 @@ class MovieModel(BaseModel):
     id: str
     lang: OriginalLang
     type: str
-    url: str
+    url: Optional[str] = None
     minutes: int
     en: Optional[str] = None
     pl: Optional[str] = None
