@@ -177,7 +177,7 @@ class DatabaseRepository:
         cursor: MySQLCursorDict = db.cursor(dictionary=True)
 
         cursor.execute(
-            f"SELECT id, seconds, movie_id_fk, episode_id_fk, {main_lang}, {translation_lang} FROM lyrics WHERE ABS(LENGTH({main_lang})-LENGTH({translation_lang}))<{lang_length} AND NOT quality = 1;"
+            f"SELECT id, seconds, movie_id_fk, episode_id_fk, {main_lang}, {translation_lang} FROM lyrics WHERE (ABS(LENGTH({main_lang})-LENGTH({translation_lang}))<{lang_length} AND NOT quality = 1) OR quality = 5;"
         )
 
         data = cursor.fetchall()
