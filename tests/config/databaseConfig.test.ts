@@ -2,7 +2,7 @@ import DatabaseConfig, {
     DatabaseConfigOptions,
 } from "../../src/config/databaseConfig";
 
-describe("DatabaseConfig:", function () {
+describe("DatabaseConfig", function () {
     const databaseConfigOptions: DatabaseConfigOptions = {
         name: "testDB",
         user: "testUser",
