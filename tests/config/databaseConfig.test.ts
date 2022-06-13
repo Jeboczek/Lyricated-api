@@ -3,14 +3,17 @@ import DatabaseConfig, {
 } from "../../src/config/databaseConfig";
 
 describe("DatabaseConfig", function () {
-    const databaseConfigOptions: DatabaseConfigOptions = {
-        name: "testDB",
-        user: "testUser",
-        password: "testPass",
-        host: "testHost",
-        driver: "testDriver",
-    };
-
+    let databaseConfigOptions: DatabaseConfigOptions;
+    beforeEach(() => {
+        databaseConfigOptions = {
+            name: "testDB",
+            user: "testUser",
+            password: "testPass",
+            host: "testHost",
+            driver: "testDriver",
+            path: "testPath",
+        };
+    });
     test("should have empty strings if no config parameter was passed and env is not set", () => {
         const databaseConfig = new DatabaseConfig();
 
@@ -57,6 +60,16 @@ describe("DatabaseConfig", function () {
 
         expect(databaseConfig.constructConnectionPath()).toBe(
             `${driver}://${user}:${password}@${host}/${name}`
+        );
+    });
+    test("should generate another connection path for sqlite", () => {
+        databaseConfigOptions.driver = "sqlite";
+        const databaseConfig = new DatabaseConfig(databaseConfigOptions);
+
+        const { driver, path } = databaseConfigOptions;
+
+        expect(databaseConfig.constructConnectionPath()).toBe(
+            `${driver}::${path}`
         );
     });
 });
