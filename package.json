@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/pawl0wski/Lyricated-api/issues"
   },
-  "homepage": "https://github.com/pawl0wski/Lyricated-api#readme"
+  "homepage": "https://github.com/pawl0wski/Lyricated-api#readme",
+  "devDependencies": {
+    "typescript": "^4.7.3"
+  }
 }
