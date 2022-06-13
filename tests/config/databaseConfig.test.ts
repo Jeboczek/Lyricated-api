@@ -11,7 +11,7 @@ describe("DatabaseConfig", function () {
             password: "testPass",
             host: "testHost",
             driver: "testDriver",
-            path: "testPath",
+            storage: "testPath",
         };
     });
     test("should have empty strings if no config parameter was passed and env is not set", () => {
@@ -22,6 +22,7 @@ describe("DatabaseConfig", function () {
         expect(databaseConfig.password).toBe("");
         expect(databaseConfig.host).toBe("");
         expect(databaseConfig.driver).toBe("");
+        expect(databaseConfig.storage).toBe("");
     });
     test("should implement the data from the config parameter", () => {
         const databaseConfig = new DatabaseConfig(databaseConfigOptions);
@@ -31,6 +32,7 @@ describe("DatabaseConfig", function () {
         expect(databaseConfig.password).toBe(databaseConfigOptions.password);
         expect(databaseConfig.host).toBe(databaseConfigOptions.host);
         expect(databaseConfig.driver).toBe(databaseConfigOptions.driver);
+        expect(databaseConfig.storage).toBe(databaseConfigOptions.storage);
     });
     test("should use the contents of env if config is not given", () => {
         process.env.DB_NAME = "testDB";
@@ -38,6 +40,7 @@ describe("DatabaseConfig", function () {
         process.env.DB_PASS = "testPass";
         process.env.DB_HOST = "testHost";
         process.env.DB_DRIVER = "testDriver";
+        process.env.DB_STORAGE = "testStorage";
         const databaseConfig = new DatabaseConfig();
 
         expect(databaseConfig.name).toBe(process.env.DB_NAME);
@@ -45,6 +48,7 @@ describe("DatabaseConfig", function () {
         expect(databaseConfig.password).toBe(process.env.DB_PASS);
         expect(databaseConfig.host).toBe(process.env.DB_HOST);
         expect(databaseConfig.driver).toBe(process.env.DB_DRIVER);
+        expect(databaseConfig.storage).toBe(process.env.DB_STORAGE);
     });
     test("should treat the config parameter with priority", () => {
         process.env.DB_NAME = "envDB";
@@ -52,24 +56,5 @@ describe("DatabaseConfig", function () {
         const databaseConfig = new DatabaseConfig(databaseConfigOptions);
 
         expect(databaseConfig.name).toBe(databaseConfigOptions.name);
-    });
-    test("should generate a connection path according to the values provided", () => {
-        const databaseConfig = new DatabaseConfig(databaseConfigOptions);
-
-        const { name, user, password, host, driver } = databaseConfigOptions;
-
-        expect(databaseConfig.constructConnectionPath()).toBe(
-            `${driver}://${user}:${password}@${host}/${name}`
-        );
-    });
-    test("should generate another connection path for sqlite", () => {
-        databaseConfigOptions.driver = "sqlite";
-        const databaseConfig = new DatabaseConfig(databaseConfigOptions);
-
-        const { driver, path } = databaseConfigOptions;
-
-        expect(databaseConfig.constructConnectionPath()).toBe(
-            `${driver}::${path}`
-        );
     });
 });

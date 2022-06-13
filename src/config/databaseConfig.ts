@@ -4,7 +4,7 @@ export interface DatabaseConfigOptions {
     name: string;
     host: string;
     driver: string;
-    path: string;
+    storage: string;
 }
 
 export default class DatabaseConfig {
@@ -13,7 +13,7 @@ export default class DatabaseConfig {
     public host: string;
     public driver: string;
     public name: string;
-    public path: string;
+    public storage: string;
 
     _databaseConfigOptionsFromEnv(): DatabaseConfigOptions {
         return {
@@ -22,13 +22,13 @@ export default class DatabaseConfig {
             driver: process.env.DB_DRIVER ?? "",
             name: process.env.DB_NAME ?? "",
             host: process.env.DB_HOST ?? "",
-            path: process.env.DB_PATH ?? "",
+            storage: process.env.DB_STORAGE ?? "",
         };
     }
 
     constructor(config?: DatabaseConfigOptions) {
         // Get data from config or if not available from env
-        const { user, password, host, driver, name, path } =
+        const { user, password, host, driver, name, storage } =
             config ?? this._databaseConfigOptionsFromEnv();
 
         this.user = user; // root
@@ -36,14 +36,6 @@ export default class DatabaseConfig {
         this.host = host; // localhost
         this.driver = driver; // mariadb / sqlite etc.
         this.name = name; // database_name
-        this.path = path; // ./database.db
+        this.storage = storage; // ./database.db
     }
-
-    public constructConnectionPath(): string {
-        if (this.driver === "sqlite") {
-            return `${this.driver}::${this.path}`;
-        } else {
-            return `${this.driver}://${this.user}:${this.password}@${this.host}/${this.name}`;
-        }
-    } // mariadb://root:f$a#21F5S@localhost/database_name
 }
