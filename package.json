@@ -18,5 +18,10 @@
   "homepage": "https://github.com/pawl0wski/Lyricated-api#readme",
   "devDependencies": {
     "typescript": "^4.7.3"
+  },
+  "dependencies": {
+    "express": "^4.18.1",
+    "sequelize": "^6.20.1",
+    "sequelize-typescript": "^2.1.3"
   }
 }
