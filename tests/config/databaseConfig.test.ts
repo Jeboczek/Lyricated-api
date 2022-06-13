@@ -10,7 +10,7 @@ describe("DatabaseConfig", function () {
             user: "testUser",
             password: "testPass",
             host: "testHost",
-            driver: "testDriver",
+            dialect: "sqlite",
             storage: "testPath",
         };
     });
@@ -21,7 +21,7 @@ describe("DatabaseConfig", function () {
         expect(databaseConfig.user).toBe("");
         expect(databaseConfig.password).toBe("");
         expect(databaseConfig.host).toBe("");
-        expect(databaseConfig.driver).toBe("");
+        expect(databaseConfig.dialect).toBe("sqlite");
         expect(databaseConfig.storage).toBe("");
     });
     test("should implement the data from the config parameter", () => {
@@ -31,7 +31,7 @@ describe("DatabaseConfig", function () {
         expect(databaseConfig.user).toBe(databaseConfigOptions.user);
         expect(databaseConfig.password).toBe(databaseConfigOptions.password);
         expect(databaseConfig.host).toBe(databaseConfigOptions.host);
-        expect(databaseConfig.driver).toBe(databaseConfigOptions.driver);
+        expect(databaseConfig.dialect).toBe(databaseConfigOptions.dialect);
         expect(databaseConfig.storage).toBe(databaseConfigOptions.storage);
     });
     test("should use the contents of env if config is not given", () => {
@@ -39,7 +39,7 @@ describe("DatabaseConfig", function () {
         process.env.DB_USER = "testUser";
         process.env.DB_PASS = "testPass";
         process.env.DB_HOST = "testHost";
-        process.env.DB_DRIVER = "testDriver";
+        process.env.DB_DIALECT = "sqlite";
         process.env.DB_STORAGE = "testStorage";
         const databaseConfig = new DatabaseConfig();
 
@@ -47,7 +47,7 @@ describe("DatabaseConfig", function () {
         expect(databaseConfig.user).toBe(process.env.DB_USER);
         expect(databaseConfig.password).toBe(process.env.DB_PASS);
         expect(databaseConfig.host).toBe(process.env.DB_HOST);
-        expect(databaseConfig.driver).toBe(process.env.DB_DRIVER);
+        expect(databaseConfig.dialect).toBe(process.env.DB_DIALECT);
         expect(databaseConfig.storage).toBe(process.env.DB_STORAGE);
     });
     test("should treat the config parameter with priority", () => {
