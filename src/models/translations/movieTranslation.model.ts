@@ -2,6 +2,7 @@ import {
     Column,
     DataType,
     ForeignKey,
+    Index,
     Model,
     Table,
 } from "sequelize-typescript";
@@ -10,11 +11,13 @@ import MovieModel from "../movie.model";
 
 @Table
 export default class MovieTranslationModel extends Model {
-    @ForeignKey(() => LangModel)
+    @Index
     @Column(DataType.INTEGER)
+    @ForeignKey(() => LangModel)
     lang: number;
 
-    @ForeignKey(() => MovieModel)
+    @Index
     @Column(DataType.INTEGER)
+    @ForeignKey(() => MovieModel)
     movie: number;
 }

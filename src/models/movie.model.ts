@@ -3,6 +3,7 @@ import {
     DataType,
     ForeignKey,
     HasMany,
+    Index,
     Model,
     Table,
 } from "sequelize-typescript";
@@ -11,6 +12,7 @@ import MovieTranslationModel from "./translations/movieTranslation.model";
 
 @Table
 export default class MovieModel extends Model {
+    @Index
     @Column({
         primaryKey: true,
         type: DataType.INTEGER,
@@ -19,11 +21,21 @@ export default class MovieModel extends Model {
     })
     id: number;
 
+    @Index
+    @Column({
+        type: DataType.INTEGER,
+        unique: true,
+        allowNull: true,
+    })
+    netflixId: number;
+
     @Column(DataType.TINYINT)
     minutes: number; // 140
 
+    @Index
+    @Column(DataType.TINYINT)
     @ForeignKey(() => LangModel)
-    lang: number;
+    lang: number; // pl
 
     @HasMany(() => MovieTranslationModel)
     movieTranslation: number;
