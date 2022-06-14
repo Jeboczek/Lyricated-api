@@ -1,6 +1,5 @@
 import DatabaseConfig from "../config/databaseConfig";
 import { Sequelize } from "sequelize-typescript";
-// Drivers
 // Models
 import LangModel from "../models/lang.model";
 import MovieModel from "../models/movie.model";
@@ -9,20 +8,23 @@ import { SyncOptions } from "sequelize";
 
 export default class DatabaseService {
     private static instance: DatabaseService;
-    private sequelize: Sequelize;
     private databaseConfig: DatabaseConfig;
+    public sequelize: Sequelize;
 
     private constructor(databaseConfig: DatabaseConfig) {
         this.databaseConfig = databaseConfig;
 
         const { user, password, host, dialect, name, storage } = databaseConfig;
 
-        this.sequelize = new Sequelize(name, user, password, {
+        this.sequelize = new Sequelize({
             models: [LangModel, MovieModel, MovieTranslationModel],
             define: { timestamps: false },
             logging: true,
             storage: storage,
             host: host,
+            username: user,
+            password: password,
+            database: name,
             dialect: dialect,
         });
     }
