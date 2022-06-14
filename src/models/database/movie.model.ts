@@ -37,10 +37,10 @@ export default class MovieModel extends Model {
     @Index
     @Column(DataType.TINYINT)
     @ForeignKey(() => LangModel)
-    lang: number; // pl
+    lang: LangModel; // pl
 
     @HasMany(() => MovieNameModel)
-    movieTranslations: MovieNameModel[];
+    movieNames: MovieNameModel[];
 
     @HasMany(() => LyricModel)
     lyrics: LyricModel[];

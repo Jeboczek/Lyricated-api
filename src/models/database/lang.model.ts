@@ -5,20 +5,12 @@ import LyricSentenceModel from "./translations/lyricSentence.model";
 @Table
 export default class LangModel extends Model {
     @Column({
-        type: DataType.INTEGER,
-        primaryKey: true,
-        unique: true,
-        allowNull: false,
-        autoIncrement: true,
-    })
-    id: number;
-
-    @Column({
         type: DataType.STRING(2),
         unique: true,
         allowNull: false,
+        primaryKey: true,
     })
-    short: string; // pl
+    id: string; // pl
 
     @HasMany(() => MovieNameModel)
     movieTranslations: MovieNameModel[];

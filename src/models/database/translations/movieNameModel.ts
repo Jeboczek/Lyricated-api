@@ -1,4 +1,5 @@
 import {
+    BelongsTo,
     Column,
     DataType,
     ForeignKey,
@@ -14,13 +15,19 @@ export default class MovieNameModel extends Model {
     @Index
     @Column(DataType.INTEGER)
     @ForeignKey(() => LangModel)
-    langId: number;
+    langId: string;
 
     @Index
     @Column(DataType.INTEGER)
     @ForeignKey(() => MovieModel)
     movieId: number;
 
-    @Column(DataType.TEXT)
+    @Column(DataType.STRING(256))
     content: string;
+
+    @BelongsTo(() => LangModel)
+    lang: LangModel;
+
+    @BelongsTo(() => MovieModel)
+    movie: MovieModel;
 }

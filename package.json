@@ -7,7 +7,8 @@
     "start": "ts-node src/main.ts",
     "dev": "tsnd --respawn src/main.ts",
     "test": "jest",
-    "build": "tsc"
+    "build": "tsc",
+    "build-swagger": "tsoa spec-and-routes"
   },
   "repository": {
     "type": "git",

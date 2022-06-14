@@ -3,6 +3,9 @@ import morgan from "morgan";
 import DatabaseService from "./services/databaseService";
 import DatabaseConfig from "./config/databaseConfig";
 import * as dotenv from "dotenv";
+import swaggerUi from "swagger-ui-express";
+import { RegisterRoutes } from "./routes";
+import SwaggerDoc from "./swagger.json";
 
 dotenv.config();
 
@@ -16,7 +19,9 @@ dotenv.config();
 
     app.use(express.json());
     app.use(morgan("short"));
+    app.use("/docs", swaggerUi.serve, swaggerUi.setup(SwaggerDoc));
     app.set("trust proxy", true);
+    RegisterRoutes(app);
 
     const PORT = process.env.PORT || 8080;
     app.listen(PORT, () => {
