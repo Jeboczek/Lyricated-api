@@ -8,7 +8,7 @@ import {
     Table,
 } from "sequelize-typescript";
 import LangModel from "./lang.model";
-import MovieTranslationModel from "./translations/movieTranslation.model";
+import MovieNameModel from "./translations/movieNameModel";
 import EpisodeModel from "./episode.model";
 import LyricModel from "./lyric.model";
 
@@ -39,8 +39,8 @@ export default class MovieModel extends Model {
     @ForeignKey(() => LangModel)
     lang: number; // pl
 
-    @HasMany(() => MovieTranslationModel)
-    movieTranslations: MovieTranslationModel[];
+    @HasMany(() => MovieNameModel)
+    movieTranslations: MovieNameModel[];
 
     @HasMany(() => LyricModel)
     lyrics: LyricModel[];

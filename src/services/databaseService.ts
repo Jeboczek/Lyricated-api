@@ -3,7 +3,7 @@ import { Sequelize } from "sequelize-typescript";
 // Models
 import LangModel from "../models/lang.model";
 import MovieModel from "../models/movie.model";
-import MovieTranslationModel from "../models/translations/movieTranslation.model";
+import MovieNameModel from "../models/translations/movieNameModel";
 import { SyncOptions } from "sequelize";
 import EpisodeModel from "../models/episode.model";
 import LyricModel from "../models/lyric.model";
@@ -25,7 +25,7 @@ export default class DatabaseService {
                 LyricModel,
                 LyricSentenceModel,
                 MovieModel,
-                MovieTranslationModel,
+                MovieNameModel,
                 EpisodeModel,
             ],
             define: { timestamps: false },

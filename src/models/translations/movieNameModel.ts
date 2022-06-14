@@ -10,7 +10,7 @@ import LangModel from "../lang.model";
 import MovieModel from "../movie.model";
 
 @Table
-export default class MovieTranslationModel extends Model {
+export default class MovieNameModel extends Model {
     @Index
     @Column(DataType.INTEGER)
     @ForeignKey(() => LangModel)

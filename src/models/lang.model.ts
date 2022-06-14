@@ -1,5 +1,5 @@
 import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
-import MovieTranslationModel from "./translations/movieTranslation.model";
+import MovieNameModel from "./translations/movieNameModel";
 import LyricSentenceModel from "./translations/lyricSentence.model";
 
 @Table
@@ -20,8 +20,8 @@ export default class LangModel extends Model {
     })
     short: string; // pl
 
-    @HasMany(() => MovieTranslationModel)
-    movieTranslations: MovieTranslationModel[];
+    @HasMany(() => MovieNameModel)
+    movieTranslations: MovieNameModel[];
 
     @HasMany(() => LyricSentenceModel)
     lyricSentences: LyricSentenceModel[];
