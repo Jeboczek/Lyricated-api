@@ -5,3 +5,4 @@ settings.json
 *.db
 .idea/
 .env
+dist/
