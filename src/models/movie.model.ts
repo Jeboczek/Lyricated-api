@@ -9,6 +9,8 @@ import {
 } from "sequelize-typescript";
 import LangModel from "./lang.model";
 import MovieTranslationModel from "./translations/movieTranslation.model";
+import EpisodeModel from "./episode.model";
+import LyricModel from "./lyric.model";
 
 @Table
 export default class MovieModel extends Model {
@@ -18,10 +20,10 @@ export default class MovieModel extends Model {
         type: DataType.INTEGER,
         unique: true,
         allowNull: false,
+        autoIncrement: true,
     })
     id: number;
 
-    @Index
     @Column({
         type: DataType.INTEGER,
         unique: true,
@@ -38,5 +40,11 @@ export default class MovieModel extends Model {
     lang: number; // pl
 
     @HasMany(() => MovieTranslationModel)
-    movieTranslation: number;
+    movieTranslations: MovieTranslationModel[];
+
+    @HasMany(() => LyricModel)
+    lyrics: LyricModel[];
+
+    @HasMany(() => EpisodeModel)
+    episodes: EpisodeModel[];
 }

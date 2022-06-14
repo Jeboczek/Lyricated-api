@@ -5,6 +5,9 @@ import LangModel from "../models/lang.model";
 import MovieModel from "../models/movie.model";
 import MovieTranslationModel from "../models/translations/movieTranslation.model";
 import { SyncOptions } from "sequelize";
+import EpisodeModel from "../models/episode.model";
+import LyricModel from "../models/lyric.model";
+import LyricSentenceModel from "../models/translations/lyricSentence.model";
 
 export default class DatabaseService {
     private static instance: DatabaseService;
@@ -17,7 +20,14 @@ export default class DatabaseService {
         const { user, password, host, dialect, name, storage } = databaseConfig;
 
         this.sequelize = new Sequelize({
-            models: [LangModel, MovieModel, MovieTranslationModel],
+            models: [
+                LangModel,
+                LyricModel,
+                LyricSentenceModel,
+                MovieModel,
+                MovieTranslationModel,
+                EpisodeModel,
+            ],
             define: { timestamps: false },
             logging: true,
             storage: storage,
