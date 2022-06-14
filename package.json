@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/main.ts",
-    "dev": "tsnd --respawn src/main.ts",
+    "start": "tsoa spec-and-routes && ts-node src/main.ts",
+    "dev": "tsoa spec-and-routes && tsnd --respawn src/main.ts",
     "test": "jest",
-    "build": "tsc",
+    "build": "tsoa spec-and-routes && tsc",
     "build-swagger": "tsoa spec-and-routes"
   },
   "repository": {

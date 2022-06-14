@@ -1,26 +1,28 @@
-import { Controller, Get, Query, Route } from "tsoa";
+import { Controller, Get, Query, Route, Tags } from "tsoa";
 import MovieResponse from "../models/response/movie.response";
-import MovieModel from "../models/database/movie.model";
-import EpisodeModel from "../models/database/episode.model";
-import MovieNameModel from "../models/database/translations/movieNameModel";
+import MovieRepository, { MovieType } from "../repositories/movieRepository";
 
 @Route("get_movies")
+@Tags("Movie")
 export class MovieController extends Controller {
-    @Get("")
-    public async getMovie(
-        @Query() source?: "only_movies" | "only_series"
+    @Get("Get list of Movies")
+    public async getMovies(
+        @Query() type: MovieType
     ): Promise<{ movies: MovieResponse[] }> {
-        let movieModels = await MovieModel.findAll({
-            include: [EpisodeModel, MovieNameModel],
-        });
+        const repo = new MovieRepository();
+        const movies = await repo.getMovies(type);
 
-        if (source != null) {
-            movieModels = movieModels.filter((e) => {
-                if (source == "only_movies") return e.episodes.length === 0;
-                if (source == "only_series") return e.episodes.length > 0;
-            });
-        }
+        return { movies: movies.map((e) => MovieResponse.fromModel(e)) };
+    }
 
-        return { movies: movieModels.map((e) => MovieResponse.fromModel(e)) };
+    @Get("Get specific movie")
+    public async getMovie(@Query("movie_id") movieId: number) {
+        const repo = new MovieRepository();
+        const movie = await repo.getMovie(movieId);
+
+        if (movie != null) return MovieResponse.fromModel(movie);
+
+        this.setStatus(404);
+        return new MovieResponse();
     }
 }
