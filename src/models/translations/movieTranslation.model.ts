@@ -14,10 +14,13 @@ export default class MovieTranslationModel extends Model {
     @Index
     @Column(DataType.INTEGER)
     @ForeignKey(() => LangModel)
-    lang: number;
+    langId: number;
 
     @Index
     @Column(DataType.INTEGER)
     @ForeignKey(() => MovieModel)
-    movie: number;
+    movieId: number;
+
+    @Column(DataType.TEXT)
+    content: string;
 }
