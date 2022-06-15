@@ -21,7 +21,7 @@ describe("MovieRepository", () => {
         testMovies = [firstMovieModel, secondMovieModel];
     });
 
-    describe("getMovies()", () => {
+    describe("getMovies", () => {
         let spy: jest.SpyInstance;
         beforeEach(() => {
             spy = jest
