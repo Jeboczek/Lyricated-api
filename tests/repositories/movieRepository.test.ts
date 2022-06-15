@@ -15,19 +15,37 @@ describe("MovieRepository", () => {
         firstMovieModel.episodes.push(new EpisodeModel());
 
         const secondMovieModel = new MovieModel();
+        secondMovieModel.episodes = [];
         secondMovieModel.id = 2;
 
         testMovies = [firstMovieModel, secondMovieModel];
     });
 
-    test("should return all movie models if source is null", async () => {
-        const spy = jest
-            .spyOn(MovieModel, "findAll")
-            .mockImplementation(async () => testMovies);
+    describe("getMovies()", () => {
+        let spy: jest.SpyInstance;
+        beforeEach(() => {
+            spy = jest
+                .spyOn(MovieModel, "findAll")
+                .mockImplementation(async () => testMovies);
+        });
 
-        const movies = await new MovieRepository().getMovies(null);
+        afterEach(jest.resetAllMocks);
 
-        expect(spy.mock.calls.length).toBe(1);
-        expect(movies.length).toBe(testMovies.length);
+        test("should return all movie models if source is null", async () => {
+            const movies = await new MovieRepository().getMovies(null);
+
+            expect(spy.mock.calls.length).toBe(1);
+            expect(movies.length).toBe(testMovies.length);
+        });
+
+        test("should return only movies without episodes if source is only_movies", async () => {
+            const movies = await new MovieRepository().getMovies("only_movies");
+
+            expect(spy.mock.calls.length).toBe(1);
+            expect(movies.length).toBe(1);
+            expect(movies).toStrictEqual(
+                testMovies.filter((e) => e.episodes.length == 0)
+            );
+        });
     });
 });
