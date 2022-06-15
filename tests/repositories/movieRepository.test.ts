@@ -87,5 +87,13 @@ describe("MovieRepository", () => {
                 testMovies.find((e) => e.id === movieId)
             );
         });
+
+        test("should return null if can't find movie with provided id", async () => {
+            const movieId = 3;
+            const movie = await new MovieRepository().getMovie(movieId);
+
+            expect(spyFindOne.mock.calls.length).toBe(1);
+            expect(movie).toBeNull();
+        });
     });
 });
