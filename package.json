@@ -9,7 +9,7 @@
     "test": "jest",
     "build": "tsoa spec-and-routes && tsc",
     "build:swagger": "tsoa spec-and-routes && prettier --write 'src/routes.ts' && prettier --write 'src/swagger.json'",
-    "check:linting": "eslint",
+    "check:linting": "eslint 'src/**'",
     "check:formatting": "prettier --check 'src/**'"
   },
   "repository": {
