@@ -3,13 +3,13 @@
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import {
     Controller,
-    fetchMiddlewares,
+    ValidationService,
     FieldErrors,
+    ValidateError,
+    TsoaRoute,
     HttpStatusCodeLiteral,
     TsoaResponse,
-    TsoaRoute,
-    ValidateError,
-    ValidationService,
+    fetchMiddlewares,
 } from "@tsoa/runtime";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { MovieController } from "./controllers/movie.controller";

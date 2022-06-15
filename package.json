@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsoa spec-and-routes && ts-node src/main.ts",
-    "dev": "tsoa spec-and-routes && tsnd --respawn src/main.ts",
+    "start": "npm run build:swagger  && ts-node src/main.ts",
+    "dev": "npm run build:swagger && tsnd --respawn src/main.ts",
     "test": "jest",
     "build": "tsoa spec-and-routes && tsc",
-    "build:swagger": "tsoa spec-and-routes",
+    "build:swagger": "tsoa spec-and-routes && prettier --write 'src/routes.ts' && prettier --write 'src/swagger.json'",
     "check:linting": "eslint",
     "check:formatting": "prettier --check 'src/**'"
   },
