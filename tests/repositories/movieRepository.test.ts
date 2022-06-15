@@ -47,5 +47,15 @@ describe("MovieRepository", () => {
                 testMovies.filter((e) => e.episodes.length == 0)
             );
         });
+
+        test("should return only movies with episodes if source is only_series", async () => {
+            const movies = await new MovieRepository().getMovies("only_series");
+
+            expect(spy.mock.calls.length).toBe(1);
+            expect(movies.length).toBe(1);
+            expect(movies).toStrictEqual(
+                testMovies.filter((e) => e.episodes.length != 0)
+            );
+        });
     });
 });
