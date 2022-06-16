@@ -76,7 +76,7 @@ export function RegisterRoutes(app: express.Router) {
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
     app.get(
-        "/get_movies/Get/list/of/Movies",
+        "/movies/find",
         ...fetchMiddlewares<RequestHandler>(MovieController),
         ...fetchMiddlewares<RequestHandler>(
             MovieController.prototype.getMovies
@@ -116,7 +116,7 @@ export function RegisterRoutes(app: express.Router) {
     );
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.get(
-        "/get_movies/Get/specific/movie",
+        "/movies/:id",
         ...fetchMiddlewares<RequestHandler>(MovieController),
         ...fetchMiddlewares<RequestHandler>(MovieController.prototype.getMovie),
 
@@ -127,8 +127,8 @@ export function RegisterRoutes(app: express.Router) {
         ) {
             const args = {
                 movieId: {
-                    in: "query",
-                    name: "movie_id",
+                    in: "path",
+                    name: "id",
                     required: true,
                     dataType: "double",
                 },

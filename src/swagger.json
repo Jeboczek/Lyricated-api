@@ -70,7 +70,7 @@
     },
     "openapi": "3.0.0",
     "paths": {
-        "/get_movies/Get/list/of/Movies": {
+        "/movies/find": {
             "get": {
                 "operationId": "GetMovies",
                 "responses": {
@@ -108,7 +108,7 @@
                 ]
             }
         },
-        "/get_movies/Get/specific/movie": {
+        "/movies/{id}": {
             "get": {
                 "operationId": "GetMovie",
                 "responses": {
@@ -127,8 +127,8 @@
                 "security": [],
                 "parameters": [
                     {
-                        "in": "query",
-                        "name": "movie_id",
+                        "in": "path",
+                        "name": "id",
                         "required": true,
                         "schema": {
                             "format": "double",
