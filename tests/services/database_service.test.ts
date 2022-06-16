@@ -1,5 +1,5 @@
-import Database_service from "../../src/services/database_service";
-import Database_config, {
+import DatabaseService from "../../src/services/database_service";
+import DatabaseConfig, {
     DatabaseConfigOptions,
 } from "../../src/config/database_config";
 import { Sequelize } from "sequelize-typescript/dist/sequelize/sequelize/sequelize";
@@ -8,7 +8,7 @@ import { SequelizeOptions } from "sequelize-typescript";
 jest.mock("sequelize-typescript/dist/sequelize/sequelize/sequelize");
 
 describe("Database_service", () => {
-    let dbConf: Database_config;
+    let dbConf: DatabaseConfig;
     const mockedSequelize = Sequelize as jest.MockedClass<typeof Sequelize>;
     let config: DatabaseConfigOptions;
     beforeEach(() => {
@@ -21,7 +21,7 @@ describe("Database_service", () => {
             storage: "testStorage",
         };
 
-        dbConf = new Database_config(config);
+        dbConf = new DatabaseConfig(config);
 
         mockedSequelize.mockReturnValue(new Sequelize());
     });
@@ -31,7 +31,7 @@ describe("Database_service", () => {
     });
 
     test("should use values from Database_config", () => {
-        Database_service.getInstance(dbConf);
+        DatabaseService.getInstance(dbConf);
 
         const call = mockedSequelize.mock.calls.at(-1);
 
@@ -50,7 +50,7 @@ describe("Database_service", () => {
     });
 
     test("should call the sync method of the sequelize object if it has sync called", async () => {
-        const inst = Database_service.getInstance(dbConf);
+        const inst = DatabaseService.getInstance(dbConf);
 
         const spy = jest
             .spyOn(inst.sequelize, "sync")

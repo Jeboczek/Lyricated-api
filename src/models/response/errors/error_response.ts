@@ -1,4 +1,4 @@
-export default class Error_response {
+export default class ErrorResponse {
     public message: string;
 
     constructor(message: string) {

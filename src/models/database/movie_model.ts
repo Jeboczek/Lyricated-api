@@ -7,13 +7,13 @@ import {
     Model,
     Table,
 } from "sequelize-typescript";
-import Lang_model from "./lang_model";
-import Movie_name_model from "./translations/movie_name_model";
-import Episode_model from "./episode_model";
-import Lyric_model from "./lyric_model";
+import LangModel from "./lang_model";
+import MovieNameModel from "./translations/movie_name_model";
+import EpisodeModel from "./episode_model";
+import LyricModel from "./lyric_model";
 
 @Table
-export default class Movie_model extends Model {
+export default class MovieModel extends Model {
     @Index
     @Column({
         primaryKey: true,
@@ -36,15 +36,15 @@ export default class Movie_model extends Model {
 
     @Index
     @Column(DataType.TINYINT)
-    @ForeignKey(() => Lang_model)
-    lang: Lang_model; // pl
+    @ForeignKey(() => LangModel)
+    lang: LangModel; // pl
 
-    @HasMany(() => Movie_name_model)
-    movieNames: Movie_name_model[];
+    @HasMany(() => MovieNameModel)
+    movieNames: MovieNameModel[];
 
-    @HasMany(() => Lyric_model)
-    lyrics: Lyric_model[];
+    @HasMany(() => LyricModel)
+    lyrics: LyricModel[];
 
-    @HasMany(() => Episode_model)
-    episodes: Episode_model[];
+    @HasMany(() => EpisodeModel)
+    episodes: EpisodeModel[];
 }

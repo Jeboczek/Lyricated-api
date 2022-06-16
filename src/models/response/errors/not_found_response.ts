@@ -1,6 +1,6 @@
-import Error_response from "./error_response";
+import ErrorResponse from "./error_response";
 
-export default class Not_found_response extends Error_response {
+export default class NotFoundResponse extends ErrorResponse {
     constructor(message: string) {
         super(message);
     }

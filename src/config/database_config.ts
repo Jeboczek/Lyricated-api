@@ -9,7 +9,7 @@ export interface DatabaseConfigOptions {
     storage: string;
 }
 
-export default class Database_config {
+export default class DatabaseConfig {
     public user: string;
     public password: string;
     public host: string;

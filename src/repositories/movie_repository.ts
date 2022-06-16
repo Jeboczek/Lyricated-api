@@ -1,13 +1,13 @@
-import Movie_model from "../models/database/movie_model";
-import Movie_name_model from "../models/database/translations/movie_name_model";
-import Episode_model from "../models/database/episode_model";
+import MovieModel from "../models/database/movie_model";
+import MovieNameModel from "../models/database/translations/movie_name_model";
+import EpisodeModel from "../models/database/episode_model";
 
 export type MovieType = "only_movies" | "only_series" | null;
 
-export default class Movie_repository {
-    async getMovies(type: MovieType): Promise<Movie_model[]> {
-        let movieModels = await Movie_model.findAll({
-            include: [Episode_model, Movie_name_model],
+export default class MovieRepository {
+    async getMovies(type: MovieType): Promise<MovieModel[]> {
+        let movieModels = await MovieModel.findAll({
+            include: [EpisodeModel, MovieNameModel],
         });
 
         if (type != null) {
@@ -20,10 +20,10 @@ export default class Movie_repository {
         return movieModels;
     }
 
-    async getMovie(movieId: number): Promise<Movie_model | null> {
-        return await Movie_model.findOne({
+    async getMovie(movieId: number): Promise<MovieModel | null> {
+        return await MovieModel.findOne({
             where: { id: movieId },
-            include: [Episode_model, Movie_name_model],
+            include: [EpisodeModel, MovieNameModel],
         });
     }
 }

@@ -6,11 +6,11 @@ import {
     Model,
     Table,
 } from "sequelize-typescript";
-import Lang_model from "../lang_model";
-import Lyric_model from "../lyric_model";
+import LangModel from "../lang_model";
+import LyricModel from "../lyric_model";
 
 @Table
-export default class Lyric_sentence_model extends Model {
+export default class LyricSentenceModel extends Model {
     @Index
     @Column({
         type: DataType.INTEGER,
@@ -23,12 +23,12 @@ export default class Lyric_sentence_model extends Model {
 
     @Index
     @Column({ type: DataType.INTEGER, allowNull: false, unique: true })
-    @ForeignKey(() => Lang_model)
+    @ForeignKey(() => LangModel)
     langId: number;
 
     @Index
     @Column({ type: DataType.INTEGER, allowNull: false, unique: true })
-    @ForeignKey(() => Lyric_model)
+    @ForeignKey(() => LyricModel)
     lyricId: number;
 
     @Column({ type: DataType.STRING(512), allowNull: false })

@@ -1,11 +1,11 @@
-import Movie_name_model from "../../database/translations/movie_name_model";
+import MovieNameModel from "../../database/translations/movie_name_model";
 
-export default class Movie_name_response {
+export default class MovieNameResponse {
     lang: string;
     content: string;
 
-    static fromModel(model: Movie_name_model): Movie_name_response {
-        const resp = new Movie_name_response();
+    static fromModel(model: MovieNameModel): MovieNameResponse {
+        const resp = new MovieNameResponse();
 
         resp.lang = model.langId;
         resp.content = model.content;

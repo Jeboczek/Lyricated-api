@@ -1,16 +1,16 @@
-import Movie_name_response from "./translations/movie_name_response";
-import Movie_model from "../database/movie_model";
+import MovieNameResponse from "./translations/movie_name_response";
+import MovieModel from "../database/movie_model";
 
-export default class Movie_response {
+export default class MovieResponse {
     id: number;
     lang: string;
     type: "movie" | "serie";
     netflix_id?: number;
     minutes: number;
-    movie_names: Movie_name_response[];
+    movie_names: MovieNameResponse[];
 
-    static fromModel(model: Movie_model): Movie_response {
-        const resp = new Movie_response();
+    static fromModel(model: MovieModel): MovieResponse {
+        const resp = new MovieResponse();
 
         resp.id = model.id;
         resp.lang = model.lang?.id;
@@ -18,7 +18,7 @@ export default class Movie_response {
         resp.netflix_id = model.netflixId;
         resp.minutes = model.minutes;
         resp.movie_names = model.movieNames?.map((e) =>
-            Movie_name_response.fromModel(e)
+            MovieNameResponse.fromModel(e)
         );
 
         return resp;

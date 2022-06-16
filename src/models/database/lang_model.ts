@@ -1,9 +1,9 @@
 import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
-import Movie_name_model from "./translations/movie_name_model";
-import Lyric_sentence_model from "./translations/lyric_sentence_model";
+import MovieNameModel from "./translations/movie_name_model";
+import LyricSentenceModel from "./translations/lyric_sentence_model";
 
 @Table
-export default class Lang_model extends Model {
+export default class LangModel extends Model {
     @Column({
         type: DataType.STRING(2),
         unique: true,
@@ -12,9 +12,9 @@ export default class Lang_model extends Model {
     })
     id: string; // pl
 
-    @HasMany(() => Movie_name_model)
-    movieTranslations: Movie_name_model[];
+    @HasMany(() => MovieNameModel)
+    movieTranslations: MovieNameModel[];
 
-    @HasMany(() => Lyric_sentence_model)
-    lyricSentences: Lyric_sentence_model[];
+    @HasMany(() => LyricSentenceModel)
+    lyricSentences: LyricSentenceModel[];
 }

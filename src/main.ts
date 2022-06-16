@@ -1,18 +1,18 @@
 import express, { Express } from "express";
 import morgan from "morgan";
-import Database_service from "./services/database_service";
-import Database_config from "./config/database_config";
+import DatabaseService from "./services/database_service";
+import DatabaseConfig from "./config/database_config";
 import * as dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
 import { RegisterRoutes } from "./routes";
 import SwaggerDoc from "./swagger.json";
-import error_handler from "./middlewares/error_handler";
+import errorHandler from "./middlewares/error_handler";
 
 dotenv.config();
 
-async function initializeDatabaseService(): Promise<Database_service> {
-    const databaseConfig = new Database_config();
-    const databaseService = Database_service.getInstance(databaseConfig);
+async function initializeDatabaseService(): Promise<DatabaseService> {
+    const databaseConfig = new DatabaseConfig();
+    const databaseService = DatabaseService.getInstance(databaseConfig);
     await databaseService.sync();
     console.log("Database initialized.");
 
@@ -25,7 +25,7 @@ function initializeExpress(): Express {
     app.use(express.json());
     app.use(morgan("short"));
     app.use("/docs", swaggerUi.serve, swaggerUi.setup(SwaggerDoc));
-    app.use(error_handler);
+    app.use(errorHandler);
     app.set("trust proxy", true);
     RegisterRoutes(app);
 
