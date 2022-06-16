@@ -55,6 +55,16 @@
                 "type": "string",
                 "enum": ["only_movies", "only_series"],
                 "nullable": true
+            },
+            "NotFoundResponse": {
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "required": ["message"],
+                "type": "object",
+                "additionalProperties": false
             }
         },
         "securitySchemes": {}
@@ -117,7 +127,24 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/MovieResponse"
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/MovieResponse"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/NotFoundResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotFoundResponse"
                                 }
                             }
                         }

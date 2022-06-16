@@ -3,13 +3,13 @@
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import {
     Controller,
-    fetchMiddlewares,
+    ValidationService,
     FieldErrors,
+    ValidateError,
+    TsoaRoute,
     HttpStatusCodeLiteral,
     TsoaResponse,
-    TsoaRoute,
-    ValidateError,
-    ValidationService
+    fetchMiddlewares,
 } from "@tsoa/runtime";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { MoviesController } from "./controllers/movies.controller";
@@ -65,6 +65,14 @@ const models: TsoaRoute.Models = {
         },
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    NotFoundResponse: {
+        dataType: "refObject",
+        properties: {
+            message: { dataType: "string", required: true },
+        },
+        additionalProperties: false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
 const validationService = new ValidationService(models);
 
@@ -82,7 +90,7 @@ export function RegisterRoutes(app: express.Router) {
             MoviesController.prototype.getMovies
         ),
 
-        function MovieController_getMovies(
+        function MoviesController_getMovies(
             request: any,
             response: any,
             next: any
@@ -122,7 +130,7 @@ export function RegisterRoutes(app: express.Router) {
             MoviesController.prototype.getMovie
         ),
 
-        function MovieController_getMovie(
+        function MoviesController_getMovie(
             request: any,
             response: any,
             next: any

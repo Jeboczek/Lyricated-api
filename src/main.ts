@@ -7,7 +7,6 @@ import swaggerUi from "swagger-ui-express";
 import { RegisterRoutes } from "./routes";
 import SwaggerDoc from "./swagger.json";
 import errorHandler from "./middlewares/errorHandler";
-import { notFoundHandler } from "./middlewares/notFoundHandler";
 
 dotenv.config();
 
@@ -27,7 +26,6 @@ function initializeExpress(): Express {
     app.use(morgan("short"));
     app.use("/docs", swaggerUi.serve, swaggerUi.setup(SwaggerDoc));
     app.use(errorHandler);
-    app.use(notFoundHandler);
     app.set("trust proxy", true);
     RegisterRoutes(app);
 
