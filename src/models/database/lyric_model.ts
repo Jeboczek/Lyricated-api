@@ -7,11 +7,11 @@ import {
     Model,
     Table,
 } from "sequelize-typescript";
-import MovieModel from "./movie.model";
-import LyricSentenceModel from "./translations/lyricSentence.model";
+import Movie_model from "./movie_model";
+import Lyric_sentence_model from "./translations/lyric_sentence_model";
 
 @Table
-export default class LyricModel extends Model {
+export default class Lyric_model extends Model {
     @Index
     @Column({
         type: DataType.INTEGER,
@@ -21,7 +21,7 @@ export default class LyricModel extends Model {
     })
     id: number;
 
-    @ForeignKey(() => MovieModel)
+    @ForeignKey(() => Movie_model)
     @Column({ type: DataType.INTEGER, allowNull: false, unique: false })
     movieId: number;
 
@@ -31,6 +31,6 @@ export default class LyricModel extends Model {
     @Column({ type: DataType.SMALLINT, allowNull: true })
     quality: number;
 
-    @HasMany(() => LyricSentenceModel)
-    sentences: LyricSentenceModel[];
+    @HasMany(() => Lyric_sentence_model)
+    sentences: Lyric_sentence_model[];
 }

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ValidateError } from "@tsoa/runtime";
 
-export default function errorHandler(
+export default function error_handler(
     err: unknown,
     req: Request,
     res: Response,

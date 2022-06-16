@@ -1,21 +1,21 @@
-import MovieModel from "../../src/models/database/movie.model";
-import EpisodeModel from "../../src/models/database/episode.model";
-import MovieRepository from "../../src/repositories/movieRepository";
+import Movie_model from "../../src/models/database/movie_model";
+import Episode_model from "../../src/models/database/episode_model";
+import Movie_repository from "../../src/repositories/movie_repository";
 import { FindOptions } from "sequelize";
 
 jest.mock("../../src/models/database/movie.model");
 jest.mock("../../src/models/database/episode.model");
 
-describe("MovieRepository", () => {
-    let testMovies: MovieModel[];
+describe("Movie_repository", () => {
+    let testMovies: Movie_model[];
 
     beforeEach(() => {
-        const firstMovieModel = new MovieModel();
+        const firstMovieModel = new Movie_model();
         firstMovieModel.id = 1;
         firstMovieModel.episodes = [];
-        firstMovieModel.episodes.push(new EpisodeModel());
+        firstMovieModel.episodes.push(new Episode_model());
 
-        const secondMovieModel = new MovieModel();
+        const secondMovieModel = new Movie_model();
         secondMovieModel.episodes = [];
         secondMovieModel.id = 2;
 
@@ -28,19 +28,19 @@ describe("MovieRepository", () => {
         let spyFindAll: jest.SpyInstance;
         beforeEach(() => {
             spyFindAll = jest
-                .spyOn(MovieModel, "findAll")
+                .spyOn(Movie_model, "findAll")
                 .mockImplementation(async () => testMovies);
         });
 
         test("should return all movie models if source is null", async () => {
-            const movies = await new MovieRepository().getMovies(null);
+            const movies = await new Movie_repository().getMovies(null);
 
             expect(spyFindAll.mock.calls.length).toBe(1);
             expect(movies.length).toBe(testMovies.length);
         });
 
         test("should return only movies without episodes if source is only_movies", async () => {
-            const movies = await new MovieRepository().getMovies("only_movies");
+            const movies = await new Movie_repository().getMovies("only_movies");
 
             expect(spyFindAll.mock.calls.length).toBe(1);
             expect(movies.length).toBe(1);
@@ -50,7 +50,7 @@ describe("MovieRepository", () => {
         });
 
         test("should return only movies with episodes if source is only_series", async () => {
-            const movies = await new MovieRepository().getMovies("only_series");
+            const movies = await new Movie_repository().getMovies("only_series");
 
             expect(spyFindAll.mock.calls.length).toBe(1);
             expect(movies.length).toBe(1);
@@ -64,7 +64,7 @@ describe("MovieRepository", () => {
 
         beforeEach(() => {
             spyFindOne = jest
-                .spyOn(MovieModel, "findOne")
+                .spyOn(Movie_model, "findOne")
                 .mockImplementation(
                     async (options?: FindOptions | undefined) => {
                         if (options == null) return null;
@@ -79,7 +79,7 @@ describe("MovieRepository", () => {
 
         test("should return movie with provided id", async () => {
             const movieId = 2;
-            const movie = await new MovieRepository().getMovie(movieId);
+            const movie = await new Movie_repository().getMovie(movieId);
 
             expect(spyFindOne.mock.calls.length).toBe(1);
             expect(movie).not.toBeNull();
@@ -90,7 +90,7 @@ describe("MovieRepository", () => {
 
         test("should return null if can't find movie with provided id", async () => {
             const movieId = 3;
-            const movie = await new MovieRepository().getMovie(movieId);
+            const movie = await new Movie_repository().getMovie(movieId);
 
             expect(spyFindOne.mock.calls.length).toBe(1);
             expect(movie).toBeNull();

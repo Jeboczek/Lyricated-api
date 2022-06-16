@@ -7,27 +7,27 @@ import {
     Model,
     Table,
 } from "sequelize-typescript";
-import LangModel from "../lang.model";
-import MovieModel from "../movie.model";
+import Lang_model from "../lang_model";
+import Movie_model from "../movie_model";
 
 @Table
-export default class MovieNameModel extends Model {
+export default class Movie_name_model extends Model {
     @Index
     @Column(DataType.INTEGER)
-    @ForeignKey(() => LangModel)
+    @ForeignKey(() => Lang_model)
     langId: string;
 
     @Index
     @Column(DataType.INTEGER)
-    @ForeignKey(() => MovieModel)
+    @ForeignKey(() => Movie_model)
     movieId: number;
 
     @Column(DataType.STRING(256))
     content: string;
 
-    @BelongsTo(() => LangModel)
-    lang: LangModel;
+    @BelongsTo(() => Lang_model)
+    lang: Lang_model;
 
-    @BelongsTo(() => MovieModel)
-    movie: MovieModel;
+    @BelongsTo(() => Movie_model)
+    movie: Movie_model;
 }

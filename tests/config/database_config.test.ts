@@ -1,8 +1,8 @@
-import DatabaseConfig, {
+import Database_config, {
     DatabaseConfigOptions,
-} from "../../src/config/databaseConfig";
+} from "../../src/config/database_config";
 
-describe("DatabaseConfig", function () {
+describe("Database_config", function () {
     let databaseConfigOptions: DatabaseConfigOptions;
     beforeEach(() => {
         databaseConfigOptions = {
@@ -15,7 +15,7 @@ describe("DatabaseConfig", function () {
         };
     });
     test("should have empty strings if no config parameter was passed and env is not set", () => {
-        const databaseConfig = new DatabaseConfig();
+        const databaseConfig = new Database_config();
 
         expect(databaseConfig.name).toBe("");
         expect(databaseConfig.user).toBe("");
@@ -25,7 +25,7 @@ describe("DatabaseConfig", function () {
         expect(databaseConfig.storage).toBe("");
     });
     test("should implement the data from the config parameter", () => {
-        const databaseConfig = new DatabaseConfig(databaseConfigOptions);
+        const databaseConfig = new Database_config(databaseConfigOptions);
 
         expect(databaseConfig.name).toBe(databaseConfigOptions.name);
         expect(databaseConfig.user).toBe(databaseConfigOptions.user);
@@ -41,7 +41,7 @@ describe("DatabaseConfig", function () {
         process.env.DB_HOST = "testHost";
         process.env.DB_DIALECT = "sqlite";
         process.env.DB_STORAGE = "testStorage";
-        const databaseConfig = new DatabaseConfig();
+        const databaseConfig = new Database_config();
 
         expect(databaseConfig.name).toBe(process.env.DB_NAME);
         expect(databaseConfig.user).toBe(process.env.DB_USER);
@@ -53,7 +53,7 @@ describe("DatabaseConfig", function () {
     test("should treat the config parameter with priority", () => {
         process.env.DB_NAME = "envDB";
 
-        const databaseConfig = new DatabaseConfig(databaseConfigOptions);
+        const databaseConfig = new Database_config(databaseConfigOptions);
 
         expect(databaseConfig.name).toBe(databaseConfigOptions.name);
     });

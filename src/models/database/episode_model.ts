@@ -6,10 +6,10 @@ import {
     Model,
     Table,
 } from "sequelize-typescript";
-import MovieModel from "./movie.model";
+import Movie_model from "./movie_model";
 
 @Table
-export default class EpisodeModel extends Model {
+export default class Episode_model extends Model {
     @Index
     @Column({
         type: DataType.INTEGER,
@@ -41,6 +41,6 @@ export default class EpisodeModel extends Model {
     netflixId: number;
 
     @Column({ type: DataType.INTEGER, allowNull: false })
-    @ForeignKey(() => MovieModel)
+    @ForeignKey(() => Movie_model)
     movieId: number;
 }
