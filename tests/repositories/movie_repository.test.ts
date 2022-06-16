@@ -3,8 +3,8 @@ import Episode_model from "../../src/models/database/episode_model";
 import Movie_repository from "../../src/repositories/movie_repository";
 import { FindOptions } from "sequelize";
 
-jest.mock("../../src/models/database/movie.model");
-jest.mock("../../src/models/database/episode.model");
+jest.mock("../../src/models/database/movie_model");
+jest.mock("../../src/models/database/episode_model");
 
 describe("Movie_repository", () => {
     let testMovies: Movie_model[];
@@ -40,7 +40,9 @@ describe("Movie_repository", () => {
         });
 
         test("should return only movies without episodes if source is only_movies", async () => {
-            const movies = await new Movie_repository().getMovies("only_movies");
+            const movies = await new Movie_repository().getMovies(
+                "only_movies"
+            );
 
             expect(spyFindAll.mock.calls.length).toBe(1);
             expect(movies.length).toBe(1);
@@ -50,7 +52,9 @@ describe("Movie_repository", () => {
         });
 
         test("should return only movies with episodes if source is only_series", async () => {
-            const movies = await new Movie_repository().getMovies("only_series");
+            const movies = await new Movie_repository().getMovies(
+                "only_series"
+            );
 
             expect(spyFindAll.mock.calls.length).toBe(1);
             expect(movies.length).toBe(1);
