@@ -4,7 +4,7 @@ import MovieRepository, { MovieType } from "../repositories/movieRepository";
 
 @Route("movies")
 @Tags("Movie")
-export class MovieController extends Controller {
+export class MoviesController extends Controller {
     @Get("find")
     public async getMovies(
         @Query() type: MovieType

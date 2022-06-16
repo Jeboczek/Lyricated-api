@@ -3,16 +3,16 @@
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import {
     Controller,
-    ValidationService,
+    fetchMiddlewares,
     FieldErrors,
-    ValidateError,
-    TsoaRoute,
     HttpStatusCodeLiteral,
     TsoaResponse,
-    fetchMiddlewares,
+    TsoaRoute,
+    ValidateError,
+    ValidationService
 } from "@tsoa/runtime";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { MovieController } from "./controllers/movie.controller";
+import { MoviesController } from "./controllers/movies.controller";
 import type { RequestHandler } from "express";
 import * as express from "express";
 
@@ -77,9 +77,9 @@ export function RegisterRoutes(app: express.Router) {
     // ###########################################################################################################
     app.get(
         "/movies/find",
-        ...fetchMiddlewares<RequestHandler>(MovieController),
+        ...fetchMiddlewares<RequestHandler>(MoviesController),
         ...fetchMiddlewares<RequestHandler>(
-            MovieController.prototype.getMovies
+            MoviesController.prototype.getMovies
         ),
 
         function MovieController_getMovies(
@@ -102,7 +102,7 @@ export function RegisterRoutes(app: express.Router) {
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
 
-                const controller = new MovieController();
+                const controller = new MoviesController();
 
                 const promise = controller.getMovies.apply(
                     controller,
@@ -117,8 +117,10 @@ export function RegisterRoutes(app: express.Router) {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.get(
         "/movies/:id",
-        ...fetchMiddlewares<RequestHandler>(MovieController),
-        ...fetchMiddlewares<RequestHandler>(MovieController.prototype.getMovie),
+        ...fetchMiddlewares<RequestHandler>(MoviesController),
+        ...fetchMiddlewares<RequestHandler>(
+            MoviesController.prototype.getMovie
+        ),
 
         function MovieController_getMovie(
             request: any,
@@ -140,7 +142,7 @@ export function RegisterRoutes(app: express.Router) {
             try {
                 validatedArgs = getValidatedArgs(args, request, response);
 
-                const controller = new MovieController();
+                const controller = new MoviesController();
 
                 const promise = controller.getMovie.apply(
                     controller,
