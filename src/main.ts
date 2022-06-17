@@ -1,18 +1,18 @@
 import express, { Express } from "express";
 import morgan from "morgan";
 import DatabaseService from "./services/database_service";
+import DatabaseConfig from "./config/database_config";
 import * as dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
 import { RegisterRoutes } from "./routes";
 import SwaggerDoc from "./swagger.json";
 import errorHandler from "./middlewares/error_handler";
-import { container } from "tsyringe";
-import "reflect-metadata";
 
 dotenv.config();
 
 async function initializeDatabaseService(): Promise<DatabaseService> {
-    const databaseService = container.resolve(DatabaseService);
+    const databaseConfig = new DatabaseConfig();
+    const databaseService = DatabaseService.getInstance(databaseConfig);
     await databaseService.sync();
     console.log("Database initialized.");
 

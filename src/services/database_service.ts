@@ -8,15 +8,16 @@ import { SyncOptions } from "sequelize";
 import EpisodeModel from "../models/database/episode_model";
 import LyricModel from "../models/database/lyric_model";
 import LyricSentenceModel from "../models/database/translations/lyric_sentence_model";
-import { singleton } from "tsyringe";
 
-@singleton()
 export default class DatabaseService {
+    private static instance: DatabaseService;
+    private databaseConfig: DatabaseConfig;
     public sequelize: Sequelize;
 
-    constructor(private databaseConfig: DatabaseConfig) {
-        const { user, password, host, dialect, name, storage } =
-            this.databaseConfig;
+    private constructor(databaseConfig: DatabaseConfig) {
+        this.databaseConfig = databaseConfig;
+
+        const { user, password, host, dialect, name, storage } = databaseConfig;
 
         this.sequelize = new Sequelize({
             models: [
@@ -36,6 +37,14 @@ export default class DatabaseService {
             database: name,
             dialect: dialect,
         });
+    }
+
+    public static getInstance(databaseConfig: DatabaseConfig) {
+        if (!DatabaseService.instance) {
+            this.instance = new DatabaseService(databaseConfig);
+        }
+
+        return this.instance;
     }
 
     public async sync(options?: SyncOptions) {
