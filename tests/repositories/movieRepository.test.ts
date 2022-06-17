@@ -1,5 +1,5 @@
-import MovieModel from "../../src/models/database/movieModel";
-import EpisodeModel from "../../src/models/database/episodeModel";
+import MovieModel from "../../src/models/database/api/movieModel";
+import EpisodeModel from "../../src/models/database/api/episodeModel";
 import MovieRepository from "../../src/repositories/movieRepository";
 import { FindOptions } from "sequelize";
 

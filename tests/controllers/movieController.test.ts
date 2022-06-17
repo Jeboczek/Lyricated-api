@@ -1,4 +1,4 @@
-import MovieModel from "../../src/models/database/movieModel";
+import MovieModel from "../../src/models/database/api/movieModel";
 import MovieRepository from "../../src/repositories/movieRepository";
 import { MovieController } from "../../src/controllers/movieController";
 import MovieResponse from "../../src/models/response/movieResponse";

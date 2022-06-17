@@ -1,5 +1,5 @@
 import MovieNameResponse from "./translations/movieNameResponse";
-import MovieModel from "../database/movieModel";
+import MovieModel from "../database/api/movieModel";
 
 export default class MovieResponse {
     id: number;

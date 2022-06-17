@@ -1,3 +1,7 @@
-import ErrorResponse from "./errorResponse";
+import ErrorResponse, { ErrorResponseOptions } from "./errorResponse";
 
-export default class ValidateErrorResponse extends ErrorResponse {}
+export default class ValidateErrorResponse extends ErrorResponse {
+    constructor(options: ErrorResponseOptions) {
+        super("Validate Error", options);
+    }
+}

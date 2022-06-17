@@ -75,10 +75,14 @@
 				"properties": {
 					"message": {
 						"type": "string"
+					},
+					"errorUUID": {
+						"type": "string"
 					}
 				},
 				"required": [
-					"message"
+					"message",
+					"errorUUID"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -153,7 +157,11 @@
 											"$ref": "#/components/schemas/MovieResponse"
 										},
 										{
-											"$ref": "#/components/schemas/NotFoundResponse"
+											"properties": {},
+											"additionalProperties": {
+												"type": "string"
+											},
+											"type": "object"
 										}
 									]
 								}

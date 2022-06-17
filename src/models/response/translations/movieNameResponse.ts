@@ -1,4 +1,4 @@
-import MovieNameModel from "../../database/translations/movieNameModel";
+import MovieNameModel from "../../database/api/translations/movieNameModel";
 
 export default class MovieNameResponse {
     lang: string;

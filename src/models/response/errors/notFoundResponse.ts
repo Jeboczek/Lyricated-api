@@ -1,7 +1,7 @@
-import ErrorResponse from "./errorResponse";
+import ErrorResponse, { ErrorResponseOptions } from "./errorResponse";
 
 export default class NotFoundResponse extends ErrorResponse {
-    constructor(message: string) {
-        super(message);
+    constructor(options: ErrorResponseOptions, message?: string) {
+        super(message ?? "Not Found", options);
     }
 }

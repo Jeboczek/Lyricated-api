@@ -31,7 +31,17 @@ export class MovieController extends Controller {
 
         if (movie != null) return MovieResponse.fromModel(movie);
 
+        // If not found
         this.setStatus(404);
-        return new NotFoundResponse("No video found with the given ID");
+        const notFoundResp = new NotFoundResponse(
+            {
+                params: JSON.stringify({ id: movieId }),
+                path: "/movies/find",
+                stack: undefined,
+            },
+            "A movie with the specified ID cannot be found"
+        );
+        await notFoundResp.save();
+        return notFoundResp.toJson();
     }
 }
