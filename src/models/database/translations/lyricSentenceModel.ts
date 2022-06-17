@@ -6,8 +6,9 @@ import {
     Model,
     Table,
 } from "sequelize-typescript";
-import LangModel from "../lang_model";
-import LyricModel from "../lyric_model";
+
+import LangModel from "../langModel";
+import LyricModel from "../lyricModel";
 
 @Table
 export default class LyricSentenceModel extends Model {

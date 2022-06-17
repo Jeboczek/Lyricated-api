@@ -1,6 +1,6 @@
 import DatabaseConfig, {
     DatabaseConfigOptions,
-} from "../../src/config/database_config";
+} from "../../src/config/databaseConfig";
 
 describe("DatabaseConfig", function () {
     let databaseConfigOptions: DatabaseConfigOptions;

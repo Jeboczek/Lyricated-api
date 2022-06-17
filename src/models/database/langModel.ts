@@ -1,6 +1,6 @@
 import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
-import MovieNameModel from "./translations/movie_name_model";
-import LyricSentenceModel from "./translations/lyric_sentence_model";
+import LyricSentenceModel from "./translations/lyricSentenceModel";
+import MovieNameModel from "./translations/movieNameModel";
 
 @Table
 export default class LangModel extends Model {

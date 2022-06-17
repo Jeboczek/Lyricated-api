@@ -7,8 +7,8 @@ import {
     Model,
     Table,
 } from "sequelize-typescript";
-import MovieModel from "./movie_model";
-import LyricSentenceModel from "./translations/lyric_sentence_model";
+import MovieModel from "./movieModel";
+import LyricSentenceModel from "./translations/lyricSentenceModel";
 
 @Table
 export default class LyricModel extends Model {

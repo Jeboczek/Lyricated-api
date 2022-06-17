@@ -1,10 +1,10 @@
-import MovieModel from "../../src/models/database/movie_model";
-import EpisodeModel from "../../src/models/database/episode_model";
-import MovieRepository from "../../src/repositories/movie_repository";
+import MovieModel from "../../src/models/database/movieModel";
+import EpisodeModel from "../../src/models/database/episodeModel";
+import MovieRepository from "../../src/repositories/movieRepository";
 import { FindOptions } from "sequelize";
 
-jest.mock("../../src/models/database/movie_model");
-jest.mock("../../src/models/database/episode_model");
+jest.mock("../../src/models/database/movieModel");
+jest.mock("../../src/models/database/episodeModel");
 
 describe("MovieRepository", () => {
     let testMovies: MovieModel[];

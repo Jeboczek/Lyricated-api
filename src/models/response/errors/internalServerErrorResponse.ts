@@ -1,3 +1,3 @@
-import ErrorResponse from "./error_response";
+import ErrorResponse from "./errorResponse";
 
 export default class InternalServerErrorResponse extends ErrorResponse {}

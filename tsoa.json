@@ -2,7 +2,7 @@
   "entryFile": "src/main.ts",
   "noImplicitAdditionalProperties": "throw-on-extras",
   "controllerPathGlobs": [
-    "src/**/*_controller.ts"
+    "src/**/*Controller.ts"
   ],
   "spec": {
     "outputDirectory": "src",

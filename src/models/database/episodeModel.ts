@@ -6,7 +6,8 @@ import {
     Model,
     Table,
 } from "sequelize-typescript";
-import MovieModel from "./movie_model";
+
+import MovieModel from "./movieModel";
 
 @Table
 export default class EpisodeModel extends Model {

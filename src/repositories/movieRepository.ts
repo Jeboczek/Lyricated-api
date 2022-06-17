@@ -1,6 +1,6 @@
-import MovieModel from "../models/database/movie_model";
-import MovieNameModel from "../models/database/translations/movie_name_model";
-import EpisodeModel from "../models/database/episode_model";
+import MovieModel from "../models/database/movieModel";
+import MovieNameModel from "../models/database/translations/movieNameModel";
+import EpisodeModel from "../models/database/episodeModel";
 
 export type MovieType = "only_movies" | "only_series" | null;
 

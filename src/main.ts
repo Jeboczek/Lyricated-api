@@ -1,12 +1,12 @@
 import express, { Express } from "express";
 import morgan from "morgan";
-import DatabaseService from "./services/database_service";
-import DatabaseConfig from "./config/database_config";
+import DatabaseService from "./services/databaseService";
+import DatabaseConfig from "./config/databaseConfig";
 import * as dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
 import { RegisterRoutes } from "./routes";
 import SwaggerDoc from "./swagger.json";
-import errorHandler from "./middlewares/error_handler";
+import errorHandler from "./middlewares/errorHandler";
 
 dotenv.config();
 

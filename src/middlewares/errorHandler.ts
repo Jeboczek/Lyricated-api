@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ValidateError } from "@tsoa/runtime";
-import ValidateErrorResponse from "../models/response/errors/validate_error_response";
-import InternalServerErrorResponse from "../models/response/errors/internal_server_error_response";
+import ValidateErrorResponse from "../models/response/errors/validateErrorResponse";
+import InternalServerErrorResponse from "../models/response/errors/internalServerErrorResponse";
 
 export default function errorHandler(
     err: unknown,

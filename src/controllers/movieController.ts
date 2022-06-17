@@ -1,7 +1,7 @@
 import { Controller, Get, Path, Query, Response, Route, Tags } from "tsoa";
-import MovieResponse from "../models/response/movie_response";
-import MovieRepository, { MovieType } from "../repositories/movie_repository";
-import NotFoundResponse from "../models/response/errors/not_found_response";
+import MovieResponse from "../models/response/movieResponse";
+import MovieRepository, { MovieType } from "../repositories/movieRepository";
+import NotFoundResponse from "../models/response/errors/notFoundResponse";
 
 @Route("movies")
 @Tags("Movie")

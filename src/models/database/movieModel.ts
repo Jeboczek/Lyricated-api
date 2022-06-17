@@ -7,10 +7,11 @@ import {
     Model,
     Table,
 } from "sequelize-typescript";
-import LangModel from "./lang_model";
-import MovieNameModel from "./translations/movie_name_model";
-import EpisodeModel from "./episode_model";
-import LyricModel from "./lyric_model";
+
+import LangModel from "./langModel";
+import MovieNameModel from "./translations/movieNameModel";
+import EpisodeModel from "./episodeModel";
+import LyricModel from "./lyricModel";
 
 @Table
 export default class MovieModel extends Model {
