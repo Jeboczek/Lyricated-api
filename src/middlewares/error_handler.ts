@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ValidateError } from "@tsoa/runtime";
+import ValidateErrorResponse from "../models/response/errors/validate_error_response";
+import InternalServerErrorResponse from "../models/response/errors/internal_server_error_response";
 
 export default function errorHandler(
     err: unknown,
@@ -8,16 +10,14 @@ export default function errorHandler(
     next: NextFunction
 ): Response | void {
     if (err instanceof ValidateError) {
-        console.warn(`Caught Validation Error for ${req.path}:`, err.fields);
-        return res.status(422).json({
-            message: "Validation Failed",
-            details: err?.fields,
-        });
+        return res
+            .status(422)
+            .json(new ValidateErrorResponse("Validate error"));
     }
     if (err instanceof Error) {
-        return res.status(500).json({
-            message: "Internal Server Error",
-        });
+        return res
+            .status(500)
+            .json(new InternalServerErrorResponse("Internal Server Error"));
     }
 
     next();

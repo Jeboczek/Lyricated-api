@@ -25,9 +25,10 @@ function initializeExpress(): Express {
     app.use(express.json());
     app.use(morgan("short"));
     app.use("/docs", swaggerUi.serve, swaggerUi.setup(SwaggerDoc));
-    app.use(errorHandler);
     app.set("trust proxy", true);
     RegisterRoutes(app);
+
+    app.use(errorHandler); // Error handler must be the last
 
     return app;
 }
