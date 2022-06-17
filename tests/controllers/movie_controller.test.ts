@@ -39,11 +39,12 @@ describe("MovieController", () => {
                 repo
             ).getMovies(null);
 
-
             expect(repo.getMovies).toBeCalled();
             expect(moviesFromController.movies.length).toBe(testMovies.length);
-            for (const [i, movie] of testMovies.entries()) {
-                expect(moviesFromController.movies[i].id).toBe(movie.id);
+            for (let i = 0; i < testMovies.length; i++) {
+                expect(moviesFromController.movies[i].id).toBe(
+                    testMovies[i].id
+                );
             }
         });
     });

@@ -6,14 +6,19 @@ import NotFoundResponse from "../models/response/errors/not_found_response";
 @Route("movies")
 @Tags("Movie")
 export class MovieController extends Controller {
+    private repo: MovieRepository;
+
+    constructor(repo?: MovieRepository) {
+        super();
+        this.repo = repo ?? new MovieRepository();
+    }
+
     @Get("find")
     @Response<MovieResponse>(200, "OK")
     public async getMovies(
-        @Query() type: MovieType,
-        config: { repo?: MovieRepository } = {}
+        @Query() type: MovieType
     ): Promise<{ movies: MovieResponse[] }> {
-        const repo = config.repo ?? new MovieRepository();
-        const movies = await repo.getMovies(type);
+        const movies = await this.repo.getMovies(type);
 
         return { movies: movies.map((e) => MovieResponse.fromModel(e)) };
     }
@@ -21,12 +26,8 @@ export class MovieController extends Controller {
     @Get("{id}")
     @Response<MovieResponse>(200, "OK")
     @Response<NotFoundResponse>(404, "Not found")
-    public async getMovie(
-        @Path("id") movieId: number,
-        config: { repo?: MovieRepository } = {}
-    ) {
-        const repo = config.repo ?? new MovieRepository();
-        const movie = await repo.getMovie(movieId);
+    public async getMovie(@Path("id") movieId: number) {
+        const movie = await this.repo.getMovie(movieId);
 
         if (movie != null) return MovieResponse.fromModel(movie);
 
