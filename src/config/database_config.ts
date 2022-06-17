@@ -1,4 +1,6 @@
+import "reflect-metadata";
 import { Dialect } from "sequelize/types";
+import { singleton } from "tsyringe";
 
 export interface DatabaseConfigOptions {
     user: string;
@@ -9,6 +11,7 @@ export interface DatabaseConfigOptions {
     storage: string;
 }
 
+@singleton()
 export default class DatabaseConfig {
     public user: string;
     public password: string;

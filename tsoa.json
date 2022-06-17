@@ -11,6 +11,7 @@
     "description": "API for Lyricated app."
   },
   "routes": {
-    "routesDir": "src"
+    "routesDir": "src",
+    "iocModule": "src/lib/tsyringe_tsoa_ioc_container.ts"
   }
 }
