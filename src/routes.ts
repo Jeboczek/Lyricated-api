@@ -61,7 +61,7 @@ export function RegisterRoutes(app: express.Router) {
 
             function MovieController_getMovies(request: any, response: any, next: any) {
             const args = {
-                    type: {"in":"query","name":"type","required":true,"ref":"MovieType"},
+                    type: {"in":"query","name":"type","ref":"MovieType"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

@@ -5,7 +5,7 @@ import EpisodeModel from "../models/database/episode_model";
 export type MovieType = "only_movies" | "only_series" | null;
 
 export default class MovieRepository {
-    async getMovies(type: MovieType): Promise<MovieModel[]> {
+    async getMovies(type?: MovieType): Promise<MovieModel[]> {
         let movieModels = await MovieModel.findAll({
             include: [EpisodeModel, MovieNameModel],
         });

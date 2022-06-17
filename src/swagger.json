@@ -131,7 +131,7 @@
 					{
 						"in": "query",
 						"name": "type",
-						"required": true,
+						"required": false,
 						"schema": {
 							"$ref": "#/components/schemas/MovieType"
 						}

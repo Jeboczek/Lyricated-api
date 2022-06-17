@@ -16,7 +16,7 @@ export class MovieController extends Controller {
     @Get("find")
     @Response<MovieResponse>(200, "OK")
     public async getMovies(
-        @Query() type: MovieType
+        @Query() type?: MovieType
     ): Promise<{ movies: MovieResponse[] }> {
         const movies = await this.repo.getMovies(type);
 
