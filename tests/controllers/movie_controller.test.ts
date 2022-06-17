@@ -7,7 +7,7 @@ import NotFoundResponse from "../../src/models/response/errors/not_found_respons
 jest.mock("../../src/repositories/movie_repository");
 jest.mock("../../src/models/database/movie_model");
 
-describe("MoviesController", () => {
+describe("MovieController", () => {
     let testMovies: MovieModel[];
     let repo: jest.MockedObject<MovieRepository>;
 

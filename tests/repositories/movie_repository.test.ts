@@ -6,7 +6,7 @@ import { FindOptions } from "sequelize";
 jest.mock("../../src/models/database/movie_model");
 jest.mock("../../src/models/database/episode_model");
 
-describe("Movie_repository", () => {
+describe("MovieRepository", () => {
     let testMovies: MovieModel[];
 
     beforeEach(() => {

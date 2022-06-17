@@ -2,7 +2,7 @@ import DatabaseConfig, {
     DatabaseConfigOptions,
 } from "../../src/config/database_config";
 
-describe("Database_config", function () {
+describe("DatabaseConfig", function () {
     let databaseConfigOptions: DatabaseConfigOptions;
     beforeEach(() => {
         databaseConfigOptions = {
