@@ -6,7 +6,7 @@ import * as dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
 import { RegisterRoutes } from "./routes";
 import SwaggerDoc from "./swagger.json";
-import errorHandler from "./middlewares/errorHandler";
+import errorHandler from "./middlewares/errorHandler/errorHandler";
 
 dotenv.config();
 

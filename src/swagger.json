@@ -71,7 +71,7 @@
 				],
 				"nullable": true
 			},
-			"NotFoundResponse": {
+			"ErrorResponse": {
 				"properties": {
 					"message": {
 						"type": "string"
@@ -152,18 +152,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"anyOf": [
-										{
-											"$ref": "#/components/schemas/MovieResponse"
-										},
-										{
-											"properties": {},
-											"additionalProperties": {
-												"type": "string"
-											},
-											"type": "object"
-										}
-									]
+									"$ref": "#/components/schemas/MovieResponse"
 								}
 							}
 						}
@@ -173,7 +162,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/NotFoundResponse"
+									"$ref": "#/components/schemas/ErrorResponse"
 								}
 							}
 						}

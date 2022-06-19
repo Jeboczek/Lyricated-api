@@ -11,8 +11,14 @@ export default class ErrorModel extends Model {
     uuid: string;
 
     @Column({
+        type: DataType.SMALLINT,
+        allowNull: true,
+    })
+    statusCode: number;
+
+    @Column({
         type: DataType.STRING(32),
-        allowNull: false,
+        allowNull: true,
     })
     exception: string;
 
@@ -25,19 +31,19 @@ export default class ErrorModel extends Model {
         type: DataType.STRING(5120),
         allowNull: true,
     })
-    stack: string;
+    stack?: string;
 
     @Column({
         type: DataType.STRING(1024),
         allowNull: true,
     })
-    params: string;
+    params?: string;
 
     @Column({
         type: DataType.STRING(256),
         allowNull: true,
     })
-    path: string;
+    path?: string;
 
     @Column(DataType.NOW)
     timestamp: Date;

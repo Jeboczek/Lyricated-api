@@ -37,7 +37,7 @@ const models: TsoaRoute.Models = {
         "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["only_movies"]},{"dataType":"enum","enums":["only_series"]},{"dataType":"enum","enums":[null]}],"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "NotFoundResponse": {
+    "ErrorResponse": {
         "dataType": "refObject",
         "properties": {
             "message": {"dataType":"string","required":true},

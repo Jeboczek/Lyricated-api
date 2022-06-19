@@ -2,10 +2,12 @@ import MovieModel from "../../src/models/database/api/movieModel";
 import MovieRepository from "../../src/repositories/movieRepository";
 import { MovieController } from "../../src/controllers/movieController";
 import MovieResponse from "../../src/models/response/movieResponse";
-import NotFoundResponse from "../../src/models/response/errors/notFoundResponse";
+import NotFoundError from "../../src/exceptions/notFoundError";
 
 jest.mock("../../src/repositories/movieRepository");
-jest.mock("../../src/models/database/movieModel");
+jest.mock("../../src/models/database/error/errorModel");
+
+jest.mock("../../src/models/database/api/movieModel");
 
 describe("MovieController", () => {
     let testMovies: MovieModel[];
@@ -65,11 +67,11 @@ describe("MovieController", () => {
         test("should NotFoundResponse if specified movie is unavailable", async () => {
             const movieId = 420;
 
-            const movieFromController = await new MovieController(
-                repo
-            ).getMovie(movieId);
+            const controller = new MovieController(repo);
 
-            expect(movieFromController).toBeInstanceOf(NotFoundResponse);
+            await expect(controller.getMovie(movieId)).rejects.toThrow(
+                NotFoundError
+            );
         });
     });
 });
