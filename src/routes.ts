@@ -19,6 +19,16 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "EpisodeResponse": {
+        "dataType": "refObject",
+        "properties": {
+            "season": {"dataType":"double","required":true},
+            "episode": {"dataType":"double","required":true},
+            "netflixId": {"dataType":"double","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "MovieResponse": {
         "dataType": "refObject",
         "properties": {
@@ -28,6 +38,7 @@ const models: TsoaRoute.Models = {
             "netflix_id": {"dataType":"double"},
             "minutes": {"dataType":"double","required":true},
             "movie_names": {"dataType":"array","array":{"dataType":"refObject","ref":"MovieNameResponse"},"required":true},
+            "episodes": {"dataType":"array","array":{"dataType":"refObject","ref":"EpisodeResponse"},"required":true},
         },
         "additionalProperties": false,
     },

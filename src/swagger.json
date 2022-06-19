@@ -22,6 +22,29 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"EpisodeResponse": {
+				"properties": {
+					"season": {
+						"type": "number",
+						"format": "double"
+					},
+					"episode": {
+						"type": "number",
+						"format": "double"
+					},
+					"netflixId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"season",
+					"episode",
+					"netflixId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"MovieResponse": {
 				"properties": {
 					"id": {
@@ -51,6 +74,12 @@
 							"$ref": "#/components/schemas/MovieNameResponse"
 						},
 						"type": "array"
+					},
+					"episodes": {
+						"items": {
+							"$ref": "#/components/schemas/EpisodeResponse"
+						},
+						"type": "array"
 					}
 				},
 				"required": [
@@ -58,7 +87,8 @@
 					"lang",
 					"type",
 					"minutes",
-					"movie_names"
+					"movie_names",
+					"episodes"
 				],
 				"type": "object",
 				"additionalProperties": false

@@ -16,9 +16,11 @@ describe("MovieController", () => {
     beforeEach(() => {
         const firstMovie = new MovieModel();
         firstMovie.id = 1;
+        firstMovie.episodes = [];
 
         const secondMovie = new MovieModel();
         secondMovie.id = 2;
+        secondMovie.episodes = [];
 
         testMovies = [firstMovie, secondMovie];
 
