@@ -24,7 +24,7 @@
   "homepage": "https://github.com/pawl0wski/Lyricated-api#readme",
   "devDependencies": {
     "@types/express": "^4.17.13",
-    "@types/jest": "^28.1.1",
+    "@types/jest": "^28.1.2",
     "@types/morgan": "^1.9.3",
     "@types/node": "^17.0.44",
     "@types/sequelize": "^4.28.13",
