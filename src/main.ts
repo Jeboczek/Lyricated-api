@@ -1,6 +1,6 @@
 import express, { Express } from "express";
 import morgan from "morgan";
-import DatabaseService from "./services/databaseService";
+import DatabaseService from "./services/databaseService/databaseService";
 import DatabaseConfig from "./config/databaseConfig";
 import * as dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";

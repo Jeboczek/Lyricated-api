@@ -1,13 +1,13 @@
-import MovieModel from "../../src/models/database/api/movieModel";
-import MovieRepository from "../../src/repositories/movieRepository";
-import { MovieController } from "../../src/controllers/movieController";
-import MovieResponse from "../../src/models/response/movieResponse";
-import NotFoundError from "../../src/exceptions/notFoundError";
+import MovieModel from "../../../src/models/database/api/movieModel";
+import MovieRepository from "../../../src/repositories/movieRepository/movieRepository";
+import { MovieController } from "../../../src/controllers/movieController/movieController";
+import MovieResponse from "../../../src/models/response/movieResponse";
+import NotFoundError from "../../../src/exceptions/notFoundError";
 
-jest.mock("../../src/repositories/movieRepository");
-jest.mock("../../src/models/database/error/errorModel");
+jest.mock("../../../src/repositories/movieRepository/movieRepository");
+jest.mock("../../../src/models/database/error/errorModel");
 
-jest.mock("../../src/models/database/api/movieModel");
+jest.mock("../../../src/models/database/api/movieModel");
 
 describe("MovieController", () => {
     let testMovies: MovieModel[];

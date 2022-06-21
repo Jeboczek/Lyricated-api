@@ -1,8 +1,10 @@
 import { Controller, Get, Path, Query, Response, Route, Tags } from "tsoa";
-import MovieResponse from "../models/response/movieResponse";
-import MovieRepository, { MovieType } from "../repositories/movieRepository";
-import ErrorResponse from "../models/response/errors/errorResponse";
-import NotFoundError from "../exceptions/notFoundError";
+import MovieResponse from "../../models/response/movieResponse";
+import MovieRepository, {
+    MovieType,
+} from "../../repositories/movieRepository/movieRepository";
+import ErrorResponse from "../../models/response/errors/errorResponse";
+import NotFoundError from "../../exceptions/notFoundError";
 
 @Route("movies")
 @Tags("Movie")

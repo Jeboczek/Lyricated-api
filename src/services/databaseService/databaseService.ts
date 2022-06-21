@@ -1,14 +1,14 @@
-import DatabaseConfig from "../config/databaseConfig";
+import DatabaseConfig from "../../config/databaseConfig";
 import { Sequelize } from "sequelize-typescript";
 // Models
-import LangModel from "../models/database/api/langModel";
-import MovieModel from "../models/database/api/movieModel";
-import MovieNameModel from "../models/database/api/translations/movieNameModel";
+import LangModel from "../../models/database/api/langModel";
+import MovieModel from "../../models/database/api/movieModel";
+import MovieNameModel from "../../models/database/api/translations/movieNameModel";
 import { SyncOptions } from "sequelize";
-import EpisodeModel from "../models/database/api/episodeModel";
-import LyricModel from "../models/database/api/lyricModel";
-import LyricSentenceModel from "../models/database/api/translations/lyricSentenceModel";
-import ErrorModel from "../models/database/error/errorModel";
+import EpisodeModel from "../../models/database/api/episodeModel";
+import LyricModel from "../../models/database/api/lyricModel";
+import LyricSentenceModel from "../../models/database/api/translations/lyricSentenceModel";
+import ErrorModel from "../../models/database/error/errorModel";
 
 export default class DatabaseService {
     private static instance: DatabaseService;

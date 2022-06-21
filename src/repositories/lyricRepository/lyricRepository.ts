@@ -1,7 +1,7 @@
-import LyricModel from "../models/database/api/lyricModel";
-import LyricSentenceModel from "../models/database/api/translations/lyricSentenceModel";
-import MovieModel from "../models/database/api/movieModel";
-import LangModel from "../models/database/api/langModel";
+import LyricModel from "../../models/database/api/lyricModel";
+import LyricSentenceModel from "../../models/database/api/translations/lyricSentenceModel";
+import MovieModel from "../../models/database/api/movieModel";
+import LangModel from "../../models/database/api/langModel";
 import { Op } from "sequelize";
 
 export interface GetLyricByQualityOptions {

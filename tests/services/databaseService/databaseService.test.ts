@@ -1,7 +1,7 @@
-import DatabaseService from "../../src/services/databaseService";
+import DatabaseService from "../../../src/services/databaseService/databaseService";
 import DatabaseConfig, {
     DatabaseConfigOptions,
-} from "../../src/config/databaseConfig";
+} from "../../../src/config/databaseConfig";
 import { Sequelize } from "sequelize-typescript/dist/sequelize/sequelize/sequelize";
 import { SequelizeOptions } from "sequelize-typescript";
 
