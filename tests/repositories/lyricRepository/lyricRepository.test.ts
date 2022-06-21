@@ -88,5 +88,37 @@ describe("LyricRepository", () => {
                 [Op.eq]: testQuality,
             });
         });
+        test("should ask model for a lyric with more than given quality", async () => {
+            const testQuality = 24;
+
+            await repo.getLyricsByQuality(100, {
+                qualityBetterThan: testQuality,
+            });
+
+            expect(spy.mock.calls.length).toBe(1);
+            const lastCallOptions = spy.mock.lastCall[0];
+
+            const quality = checkIfFindOptionsHaveX(lastCallOptions, "quality");
+
+            expect(quality).toStrictEqual({
+                [Op.gt]: testQuality,
+            });
+        });
+        test("should ask model for a lyric with lower than given quality", async () => {
+            const testQuality = 24;
+
+            await repo.getLyricsByQuality(100, {
+                qualityLowerThan: testQuality,
+            });
+
+            expect(spy.mock.calls.length).toBe(1);
+            const lastCallOptions = spy.mock.lastCall[0];
+
+            const quality = checkIfFindOptionsHaveX(lastCallOptions, "quality");
+
+            expect(quality).toStrictEqual({
+                [Op.lt]: testQuality,
+            });
+        });
     });
 });
