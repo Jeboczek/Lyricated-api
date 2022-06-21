@@ -42,39 +42,46 @@ describe("LyricRepository", () => {
     });
     afterEach(jest.clearAllMocks);
 
-    test("should ask model for a lyric with the given id", async () => {
-        const testId = 543;
-        const spy = jest
-            .spyOn(LyricModel, "findOne")
-            .mockResolvedValue(firstLyricModel);
+    describe("getLyricById", () => {
+        test("should ask model for a lyric with the given id", async () => {
+            const testId = 543;
+            const spy = jest
+                .spyOn(LyricModel, "findOne")
+                .mockResolvedValue(firstLyricModel);
 
-        const repo = new LyricRepository();
-        await repo.getLyricById(testId);
+            const repo = new LyricRepository();
+            await repo.getLyricById(testId);
 
-        expect(spy.mock.calls.length).toBe(1);
-        const lastCallOptions = spy.mock.lastCall[0];
+            expect(spy.mock.calls.length).toBe(1);
+            const lastCallOptions = spy.mock.lastCall[0];
 
-        const id = checkIfFindOptionsHaveX(lastCallOptions, "id");
+            const id = checkIfFindOptionsHaveX(lastCallOptions, "id");
 
-        expect(id).toBe(testId);
-    });
-
-    test("should ask model for a lyric with the given quality", async () => {
-        const testQuality = 100;
-        const spy = jest
-            .spyOn(LyricModel, "findAll")
-            .mockResolvedValue(allLyricModels);
-
-        const repo = new LyricRepository();
-        await repo.getLyricsByQuality(100, { qualityEqual: testQuality });
-
-        expect(spy.mock.calls.length).toBe(1);
-        const lastCallOptions = spy.mock.lastCall[0];
-
-        const quality = checkIfFindOptionsHaveX(lastCallOptions, "quality");
-
-        expect(quality).toStrictEqual({
-            [Op.eq]: testQuality,
+            expect(id).toBe(testId);
         });
-    });
+    })
+
+
+    describe("getLyricsByQuality", () => {
+        test("should ask model for a lyric with the given quality", async () => {
+            const testQuality = 100;
+            const spy = jest
+                .spyOn(LyricModel, "findAll")
+                .mockResolvedValue(allLyricModels);
+
+            const repo = new LyricRepository();
+            await repo.getLyricsByQuality(100, { qualityEqual: testQuality });
+
+            expect(spy.mock.calls.length).toBe(1);
+            const lastCallOptions = spy.mock.lastCall[0];
+
+            const quality = checkIfFindOptionsHaveX(lastCallOptions, "quality");
+
+            expect(quality).toStrictEqual({
+                [Op.eq]: testQuality,
+            });
+        });
+    })
+
+
 });
