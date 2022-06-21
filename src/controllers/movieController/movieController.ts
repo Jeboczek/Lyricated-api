@@ -6,7 +6,7 @@ import MovieRepository, {
 import ErrorResponse from "../../models/response/errors/errorResponse";
 import NotFoundError from "../../exceptions/notFoundError";
 
-@Route("movies")
+@Route("movie")
 @Tags("Movie")
 export class MovieController extends Controller {
     private repo: MovieRepository;

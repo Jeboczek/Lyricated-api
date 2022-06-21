@@ -93,13 +93,61 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"MovieType": {
-				"type": "string",
-				"enum": [
-					"only_movies",
-					"only_series"
+			"LyricSentenceResponse": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"lang": {
+						"type": "string"
+					},
+					"content": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"lang",
+					"content"
 				],
-				"nullable": true
+				"type": "object",
+				"additionalProperties": false
+			},
+			"LyricResponse": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"movie": {
+						"$ref": "#/components/schemas/MovieResponse"
+					},
+					"minutes": {
+						"type": "number",
+						"format": "double"
+					},
+					"quality": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"sentences": {
+						"items": {
+							"$ref": "#/components/schemas/LyricSentenceResponse"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"id",
+					"movie",
+					"minutes",
+					"quality",
+					"sentences"
+				],
+				"type": "object",
+				"additionalProperties": false
 			},
 			"ErrorResponse": {
 				"properties": {
@@ -116,6 +164,14 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"MovieType": {
+				"type": "string",
+				"enum": [
+					"only_movies",
+					"only_series"
+				],
+				"nullable": true
 			}
 		},
 		"securitySchemes": {}
@@ -131,7 +187,49 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/movies/find": {
+		"/lyric/{id}": {
+			"get": {
+				"operationId": "GetLyricById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LyricResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Lyric"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/movie/find": {
 			"get": {
 				"operationId": "GetMovies",
 				"responses": {
@@ -173,7 +271,7 @@
 				]
 			}
 		},
-		"/movies/{id}": {
+		"/movie/{id}": {
 			"get": {
 				"operationId": "GetMovie",
 				"responses": {

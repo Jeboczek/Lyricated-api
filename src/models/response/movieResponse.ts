@@ -14,15 +14,19 @@ export default class MovieResponse {
     static fromModel(model: MovieModel): MovieResponse {
         const resp = new MovieResponse();
 
-        resp.id = model.id;
-        resp.lang = model.lang?.id;
-        resp.type = model.episodes?.length === 0 ? "movie" : "serie";
-        resp.netflix_id = model.netflixId;
-        resp.minutes = model.minutes;
-        resp.movie_names = model.movieNames?.map((e) =>
+        const { id, lang, netflixId, minutes } = model;
+        const episodes = model.episodes ?? [];
+        const movieNames = model.movieNames ?? [];
+
+        resp.id = id;
+        resp.lang = lang?.id;
+        resp.type = episodes.length === 0 ? "movie" : "serie";
+        resp.netflix_id = netflixId;
+        resp.minutes = minutes;
+        resp.movie_names = movieNames?.map((e) =>
             MovieNameResponse.fromModel(e)
         );
-        resp.episodes = model.episodes.map((e) => EpisodeResponse.fromModel(e));
+        resp.episodes = episodes.map((e) => EpisodeResponse.fromModel(e));
 
         return resp;
     }

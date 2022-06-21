@@ -1,8 +1,8 @@
 import {
+    BelongsTo,
     Column,
     DataType,
     ForeignKey,
-    HasOne,
     Index,
     Model,
     Table,
@@ -24,21 +24,21 @@ export default class LyricSentenceModel extends Model {
     id: number;
 
     @Index
-    @Column({ type: DataType.STRING(2), allowNull: false, unique: true })
+    @Column({ type: DataType.STRING(2), allowNull: false })
     @ForeignKey(() => LangModel)
     langId: string;
 
     @Index
-    @Column({ type: DataType.INTEGER, allowNull: false, unique: true })
+    @Column({ type: DataType.INTEGER, allowNull: false })
     @ForeignKey(() => LyricModel)
     lyricId: number;
 
     @Column({ type: DataType.STRING(512), allowNull: false })
     content: string;
 
-    @HasOne(() => LyricModel)
+    @BelongsTo(() => LyricModel, { foreignKey: "lyricId" })
     lyric: LyricModel;
 
-    @HasOne(() => LangModel)
+    @BelongsTo(() => LangModel, { foreignKey: "langId" })
     lang: LangModel;
 }

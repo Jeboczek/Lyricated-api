@@ -1,9 +1,9 @@
 import {
+    BelongsTo,
     Column,
     DataType,
     ForeignKey,
     HasMany,
-    HasOne,
     Index,
     Model,
     Table,
@@ -35,6 +35,6 @@ export default class LyricModel extends Model {
     @HasMany(() => LyricSentenceModel)
     sentences: LyricSentenceModel[];
 
-    @HasOne(() => MovieModel)
+    @BelongsTo(() => MovieModel, { foreignKey: "movieId" })
     movie: MovieModel;
 }
