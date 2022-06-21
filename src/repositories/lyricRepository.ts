@@ -24,9 +24,10 @@ export default class LyricRepository {
         });
     }
 
-    getLyricByQuality(
+    getLyricsByQuality(
+        limit: 100,
         options: GetLyricByQualityOptions
-    ): Promise<LyricModel | null> {
+    ): Promise<LyricModel[]> {
         const { qualityBetterThan, qualityLowerThan, qualityEqual } = options;
 
         let qualityMustBe;
@@ -37,9 +38,10 @@ export default class LyricRepository {
             qualityMustBe = { [Op.gt]: qualityBetterThan };
         if (qualityEqual != null) qualityMustBe = { [Op.eq]: qualityEqual };
 
-        return LyricModel.findOne({
+        return LyricModel.findAll({
             where: { quality: qualityMustBe },
             include: this.modelsToIncludeWithLyricModel,
+            limit,
         });
     }
 }
