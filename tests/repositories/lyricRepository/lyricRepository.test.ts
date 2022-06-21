@@ -24,8 +24,16 @@ describe("LyricRepository", () => {
     let firstLyricModel: LyricModel;
     let secondLyricModel: LyricModel;
     let allLyricModels: LyricModel[];
+    let repo: LyricRepository;
+    let spy: jest.SpyInstance;
 
     beforeEach(() => {
+        repo = new LyricRepository();
+
+        spy = jest
+            .spyOn(LyricModel, "findOne")
+            .mockResolvedValue(firstLyricModel);
+
         firstLyricModel = new LyricModel();
         firstLyricModel.id = 1;
         firstLyricModel.minutes = 100;
@@ -45,11 +53,7 @@ describe("LyricRepository", () => {
     describe("getLyricById", () => {
         test("should ask model for a lyric with the given id", async () => {
             const testId = 543;
-            const spy = jest
-                .spyOn(LyricModel, "findOne")
-                .mockResolvedValue(firstLyricModel);
 
-            const repo = new LyricRepository();
             await repo.getLyricById(testId);
 
             expect(spy.mock.calls.length).toBe(1);
@@ -59,17 +63,20 @@ describe("LyricRepository", () => {
 
             expect(id).toBe(testId);
         });
-    })
-
+    });
 
     describe("getLyricsByQuality", () => {
-        test("should ask model for a lyric with the given quality", async () => {
-            const testQuality = 100;
-            const spy = jest
+        let spy: jest.SpyInstance;
+
+        beforeEach(() => {
+            spy = jest
                 .spyOn(LyricModel, "findAll")
                 .mockResolvedValue(allLyricModels);
+        });
 
-            const repo = new LyricRepository();
+        test("should ask model for a lyrics with the given quality", async () => {
+            const testQuality = 100;
+
             await repo.getLyricsByQuality(100, { qualityEqual: testQuality });
 
             expect(spy.mock.calls.length).toBe(1);
@@ -81,7 +88,5 @@ describe("LyricRepository", () => {
                 [Op.eq]: testQuality,
             });
         });
-    })
-
-
+    });
 });
