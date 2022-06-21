@@ -3,6 +3,7 @@ import {
     DataType,
     ForeignKey,
     HasMany,
+    HasOne,
     Index,
     Model,
     Table,
@@ -33,4 +34,7 @@ export default class LyricModel extends Model {
 
     @HasMany(() => LyricSentenceModel)
     sentences: LyricSentenceModel[];
+
+    @HasOne(() => MovieModel)
+    movie: MovieModel;
 }

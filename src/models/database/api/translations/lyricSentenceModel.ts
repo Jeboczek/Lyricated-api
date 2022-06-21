@@ -2,6 +2,7 @@ import {
     Column,
     DataType,
     ForeignKey,
+    HasOne,
     Index,
     Model,
     Table,
@@ -23,9 +24,9 @@ export default class LyricSentenceModel extends Model {
     id: number;
 
     @Index
-    @Column({ type: DataType.INTEGER, allowNull: false, unique: true })
+    @Column({ type: DataType.STRING(2), allowNull: false, unique: true })
     @ForeignKey(() => LangModel)
-    langId: number;
+    langId: string;
 
     @Index
     @Column({ type: DataType.INTEGER, allowNull: false, unique: true })
@@ -34,4 +35,10 @@ export default class LyricSentenceModel extends Model {
 
     @Column({ type: DataType.STRING(512), allowNull: false })
     content: string;
+
+    @HasOne(() => LyricModel)
+    lyric: LyricModel;
+
+    @HasOne(() => LangModel)
+    lang: LangModel;
 }
