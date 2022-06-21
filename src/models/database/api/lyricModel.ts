@@ -29,7 +29,7 @@ export default class LyricModel extends Model {
     minutes: number;
 
     @Column({ type: DataType.SMALLINT, allowNull: true })
-    quality: number;
+    quality: number | null;
 
     @HasMany(() => LyricSentenceModel)
     sentences: LyricSentenceModel[];
