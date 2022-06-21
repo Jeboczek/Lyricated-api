@@ -46,7 +46,7 @@ describe("MovieController", () => {
             expect(repo.getMovies).toBeCalled();
             expect(moviesFromController.movies.length).toBe(testMovies.length);
             for (let i = 0; i < testMovies.length; i++) {
-                expect(moviesFromController.movies[i].id).toBe(
+                expect(moviesFromController.movies[i].movie_id).toBe(
                     testMovies[i].id
                 );
             }
@@ -63,7 +63,9 @@ describe("MovieController", () => {
             expect(movieFromController).toBeInstanceOf(MovieResponse);
 
             if (movieFromController instanceof MovieResponse) {
-                expect(movieFromController.id).toBe(testMovies[movieId - 1].id);
+                expect(movieFromController.movie_id).toBe(
+                    testMovies[movieId - 1].id
+                );
             }
         });
         test("should NotFoundResponse if specified movie is unavailable", async () => {

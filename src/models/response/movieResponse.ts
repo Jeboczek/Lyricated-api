@@ -3,7 +3,7 @@ import MovieModel from "../database/api/movieModel";
 import EpisodeResponse from "./episodeResponse";
 
 export default class MovieResponse {
-    id: number;
+    movie_id: number;
     lang: string;
     type: "movie" | "serie";
     netflix_id?: number;
@@ -18,7 +18,7 @@ export default class MovieResponse {
         const episodes = model.episodes ?? [];
         const movieNames = model.movieNames ?? [];
 
-        resp.id = id;
+        resp.movie_id = id;
         resp.lang = lang?.id;
         resp.type = episodes.length === 0 ? "movie" : "serie";
         resp.netflix_id = netflixId;

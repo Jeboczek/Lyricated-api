@@ -3,7 +3,7 @@ import LyricModel from "../database/api/lyricModel";
 import LyricSentenceResponse from "./translations/lyricSentenceResponse";
 
 export default class LyricResponse {
-    public id: number;
+    public lyric_id: number;
     public movie: MovieResponse;
     public minutes: number;
     public quality: number | null;
@@ -14,7 +14,7 @@ export default class LyricResponse {
 
         const { id, movie, minutes, quality, sentences } = model;
 
-        resp.id = id;
+        resp.lyric_id = id;
         resp.movie = MovieResponse.fromModel(movie);
         resp.quality = quality;
         resp.minutes = minutes;
