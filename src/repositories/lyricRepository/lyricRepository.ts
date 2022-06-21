@@ -25,7 +25,7 @@ export default class LyricRepository {
     }
 
     getLyricsByQuality(
-        limit: 100,
+        limit = 100,
         options: GetLyricByQualityOptions
     ): Promise<LyricModel[]> {
         const { qualityBetterThan, qualityLowerThan, qualityEqual } = options;

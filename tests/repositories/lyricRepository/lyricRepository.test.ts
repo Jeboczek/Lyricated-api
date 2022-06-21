@@ -105,7 +105,7 @@ describe("LyricRepository", () => {
             });
         });
         test("should ask model for a lyric with lower than given quality", async () => {
-            const testQuality = 24;
+            const testQuality = 22;
 
             await repo.getLyricsByQuality(100, {
                 qualityLowerThan: testQuality,
@@ -119,6 +119,19 @@ describe("LyricRepository", () => {
             expect(quality).toStrictEqual({
                 [Op.lt]: testQuality,
             });
+        });
+        test("should give a limit for LyricModel", async () => {
+            const testLimit = 43;
+
+            await repo.getLyricsByQuality(testLimit, { qualityEqual: 1 });
+
+            expect(spy.mock.calls.length).toBe(1);
+            const lastCallOptions = spy.mock.lastCall[0];
+
+            checkIfFindOptionsHaveX(lastCallOptions, "quality");
+            const limit = lastCallOptions.limit;
+
+            expect(limit).toBe(testLimit);
         });
     });
 });
