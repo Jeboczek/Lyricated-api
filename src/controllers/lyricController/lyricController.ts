@@ -1,8 +1,19 @@
-import { Controller, Get, Path, Query, Response, Route, Tags } from "tsoa";
+import {
+    Body,
+    Controller,
+    Get,
+    Path,
+    Put,
+    Query,
+    Response,
+    Route,
+    Tags,
+} from "tsoa";
 import LyricResponse from "../../models/response/lyricResponse";
 import LyricRepository from "../../repositories/lyricRepository/lyricRepository";
 import ErrorResponse from "../../models/response/errors/errorResponse";
 import NotFoundError from "../../exceptions/notFoundError";
+import PutLyricRequest from "../../models/request/putLyricRequest";
 
 @Route("lyric")
 @Tags("Lyric")
@@ -57,5 +68,17 @@ export class LyricController extends Controller {
         if (movie != null) return LyricResponse.fromModel(movie);
 
         throw new NotFoundError();
+    }
+
+    @Put("{id}")
+    @Response<LyricResponse>(200, "OK")
+    @Response<ErrorResponse>(404, "Not found")
+    public async putLyric(
+        @Path("id") id: number,
+        @Body() reqBody: PutLyricRequest
+    ) {
+        const lyric = await this.repo.updateLyric(id, reqBody);
+
+        return LyricResponse.fromModel(lyric);
     }
 }

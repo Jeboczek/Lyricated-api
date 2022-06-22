@@ -36,13 +36,13 @@ describe("LyricRepository", () => {
 
         firstLyricModel = new LyricModel();
         firstLyricModel.id = 1;
-        firstLyricModel.minutes = 100;
+        firstLyricModel.minute = 100;
         firstLyricModel.quality = 5;
         firstLyricModel.sentences = [];
 
         secondLyricModel = new LyricModel();
         secondLyricModel.id = 2;
-        secondLyricModel.minutes = 50;
+        secondLyricModel.minute = 50;
         secondLyricModel.quality = null;
         secondLyricModel.sentences = [];
 

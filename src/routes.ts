@@ -62,7 +62,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "lyric_id": {"dataType":"double","required":true},
             "movie": {"ref":"MovieResponse","required":true},
-            "minutes": {"dataType":"double","required":true},
+            "minute": {"dataType":"double","required":true},
             "quality": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
             "sentences": {"dataType":"array","array":{"dataType":"refObject","ref":"LyricSentenceResponse"},"required":true},
         },
@@ -74,6 +74,15 @@ const models: TsoaRoute.Models = {
         "properties": {
             "message": {"dataType":"string","required":true},
             "errorUUID": {"dataType":"string"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PutLyricRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "minute": {"dataType":"double","required":true},
+            "quality": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
         },
         "additionalProperties": false,
     },
@@ -173,6 +182,32 @@ export function RegisterRoutes(app: express.Router) {
 
 
               const promise = controller.getLyricById.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.put('/lyric/:id',
+            ...(fetchMiddlewares<RequestHandler>(LyricController)),
+            ...(fetchMiddlewares<RequestHandler>(LyricController.prototype.putLyric)),
+
+            function LyricController_putLyric(request: any, response: any, next: any) {
+            const args = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+                    reqBody: {"in":"body","name":"reqBody","required":true,"ref":"PutLyricRequest"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new LyricController();
+
+
+              const promise = controller.putLyric.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);

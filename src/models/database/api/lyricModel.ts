@@ -27,7 +27,7 @@ export default class LyricModel extends Model {
     movieId: number;
 
     @Column({ type: DataType.INTEGER, allowNull: false, defaultValue: 0 })
-    minutes: number;
+    minute: number;
 
     @Column({ type: DataType.SMALLINT, allowNull: true })
     quality: number | null;

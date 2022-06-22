@@ -133,7 +133,7 @@
 					"movie": {
 						"$ref": "#/components/schemas/MovieResponse"
 					},
-					"minutes": {
+					"minute": {
 						"type": "number",
 						"format": "double"
 					},
@@ -152,7 +152,7 @@
 				"required": [
 					"lyric_id",
 					"movie",
-					"minutes",
+					"minute",
 					"quality",
 					"sentences"
 				],
@@ -170,6 +170,25 @@
 				},
 				"required": [
 					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PutLyricRequest": {
+				"properties": {
+					"minute": {
+						"type": "number",
+						"format": "double"
+					},
+					"quality": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					}
+				},
+				"required": [
+					"minute",
+					"quality"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -357,6 +376,56 @@
 						}
 					}
 				]
+			},
+			"put": {
+				"operationId": "PutLyric",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LyricResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Lyric"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PutLyricRequest"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/movie/find": {

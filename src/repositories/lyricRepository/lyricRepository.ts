@@ -3,6 +3,8 @@ import LyricSentenceModel from "../../models/database/api/translations/lyricSent
 import MovieModel from "../../models/database/api/movieModel";
 import { Op } from "sequelize";
 import DatabaseService from "../../services/databaseService/databaseService";
+import PutLyricRequest from "../../models/request/putLyricRequest";
+import UpdateError from "../../exceptions/updateError";
 
 export interface LyricRepositoryQualityOptions {
     qualityBetterThan?: number;
@@ -66,6 +68,26 @@ export default class LyricRepository {
         return LyricModel.findOne({
             include: this.modelsToIncludeWithLyricModel,
             where: { quality: null },
+        });
+    }
+
+    async updateLyric(
+        id: number,
+        newData: PutLyricRequest
+    ): Promise<LyricModel> {
+        const lyric = await LyricModel.findOne({
+            include: this.modelsToIncludeWithLyricModel,
+            where: { id },
+        });
+
+        if (lyric === null)
+            throw new UpdateError("Unable to find a movie with the given id");
+
+        const { minute, quality } = newData;
+
+        return lyric.update({
+            minute,
+            quality,
         });
     }
 }
