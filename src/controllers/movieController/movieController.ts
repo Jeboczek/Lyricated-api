@@ -10,12 +10,11 @@ import {
     Tags,
 } from "tsoa";
 import MovieResponse from "../../models/response/movieResponse";
-import MovieRepository, {
-    MovieType,
-} from "../../repositories/movieRepository/movieRepository";
+import MovieRepository from "../../repositories/movieRepository/movieRepository";
 import ErrorResponse from "../../models/response/errors/errorResponse";
 import NotFoundError from "../../exceptions/notFoundError";
 import { PutMovieRequest } from "../../models/request/putMovieRequest";
+import MovieType from "../../models/enums/movieTypeEnum";
 
 @Route("movie")
 @Tags("Movie")

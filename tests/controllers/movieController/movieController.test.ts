@@ -41,7 +41,7 @@ describe("MovieController", () => {
         test("should return all movies from MovieRepository", async () => {
             const moviesFromController = await new MovieController(
                 repo
-            ).getMovies(null);
+            ).getMovies();
 
             expect(repo.getMovies).toBeCalled();
             expect(moviesFromController.movies.length).toBe(testMovies.length);

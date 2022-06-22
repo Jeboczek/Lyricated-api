@@ -4,8 +4,7 @@ import EpisodeModel from "../../models/database/api/episodeModel";
 import { PutMovieRequest } from "../../models/request/putMovieRequest";
 import UpdateError from "../../exceptions/updateError";
 import LangModel from "../../models/database/api/langModel";
-
-export type MovieType = "only_movies" | "only_series" | null;
+import MovieType from "../../models/enums/movieTypeEnum";
 
 export default class MovieRepository {
     async getMovies(type?: MovieType): Promise<MovieModel[]> {
@@ -15,8 +14,9 @@ export default class MovieRepository {
 
         if (type != null) {
             movieModels = movieModels.filter((e) => {
-                if (type == "only_movies") return e.episodes.length === 0;
-                if (type == "only_series") return e.episodes.length > 0;
+                if (type == MovieType.onlyMovies)
+                    return e.episodes.length === 0;
+                if (type == MovieType.onlySeries) return e.episodes.length > 0;
             });
         }
 

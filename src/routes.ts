@@ -90,8 +90,8 @@ const models: TsoaRoute.Models = {
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "MovieType": {
-        "dataType": "refAlias",
-        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["only_movies"]},{"dataType":"enum","enums":["only_series"]},{"dataType":"enum","enums":[null]}],"validators":{}},
+        "dataType": "refEnum",
+        "enums": ["only_movies","only_series"],
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "PutMovieRequest": {

@@ -194,12 +194,11 @@
 				"additionalProperties": false
 			},
 			"MovieType": {
-				"type": "string",
 				"enum": [
 					"only_movies",
 					"only_series"
 				],
-				"nullable": true
+				"type": "string"
 			},
 			"PutMovieRequest": {
 				"properties": {
