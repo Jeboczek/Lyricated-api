@@ -26,7 +26,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "season": {"dataType":"double","required":true},
             "episode": {"dataType":"double","required":true},
-            "netflixId": {"dataType":"double","required":true},
+            "netflix_id": {"dataType":"double","required":true},
         },
         "additionalProperties": false,
     },
@@ -34,7 +34,7 @@ const models: TsoaRoute.Models = {
     "MovieResponse": {
         "dataType": "refObject",
         "properties": {
-            "id": {"dataType":"double","required":true},
+            "movie_id": {"dataType":"double","required":true},
             "lang": {"dataType":"string","required":true},
             "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["movie"]},{"dataType":"enum","enums":["serie"]}],"required":true},
             "netflix_id": {"dataType":"double"},
@@ -48,7 +48,7 @@ const models: TsoaRoute.Models = {
     "LyricSentenceResponse": {
         "dataType": "refObject",
         "properties": {
-            "id": {"dataType":"double","required":true},
+            "sentence_id": {"dataType":"double","required":true},
             "lang": {"dataType":"string","required":true},
             "content": {"dataType":"string","required":true},
         },
@@ -58,7 +58,7 @@ const models: TsoaRoute.Models = {
     "LyricResponse": {
         "dataType": "refObject",
         "properties": {
-            "id": {"dataType":"double","required":true},
+            "lyric_id": {"dataType":"double","required":true},
             "movie": {"ref":"MovieResponse","required":true},
             "minutes": {"dataType":"double","required":true},
             "quality": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
@@ -91,6 +91,33 @@ export function RegisterRoutes(app: express.Router) {
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
+        app.get('/lyric/random',
+            ...(fetchMiddlewares<RequestHandler>(LyricController)),
+            ...(fetchMiddlewares<RequestHandler>(LyricController.prototype.getRandomLyric)),
+
+            function LyricController_getRandomLyric(request: any, response: any, next: any) {
+            const args = {
+                    qualityBetterThan: {"in":"query","name":"qualityBetterThan","dataType":"double"},
+                    qualityLowerThan: {"in":"query","name":"qualityLowerThan","dataType":"double"},
+                    qualityEqual: {"in":"query","name":"qualityEqual","dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new LyricController();
+
+
+              const promise = controller.getRandomLyric.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/lyric/:id',
             ...(fetchMiddlewares<RequestHandler>(LyricController)),
             ...(fetchMiddlewares<RequestHandler>(LyricController.prototype.getLyricById)),

@@ -32,7 +32,7 @@
 						"type": "number",
 						"format": "double"
 					},
-					"netflixId": {
+					"netflix_id": {
 						"type": "number",
 						"format": "double"
 					}
@@ -40,14 +40,14 @@
 				"required": [
 					"season",
 					"episode",
-					"netflixId"
+					"netflix_id"
 				],
 				"type": "object",
 				"additionalProperties": false
 			},
 			"MovieResponse": {
 				"properties": {
-					"id": {
+					"movie_id": {
 						"type": "number",
 						"format": "double"
 					},
@@ -83,7 +83,7 @@
 					}
 				},
 				"required": [
-					"id",
+					"movie_id",
 					"lang",
 					"type",
 					"minutes",
@@ -95,7 +95,7 @@
 			},
 			"LyricSentenceResponse": {
 				"properties": {
-					"id": {
+					"sentence_id": {
 						"type": "number",
 						"format": "double"
 					},
@@ -107,7 +107,7 @@
 					}
 				},
 				"required": [
-					"id",
+					"sentence_id",
 					"lang",
 					"content"
 				],
@@ -116,7 +116,7 @@
 			},
 			"LyricResponse": {
 				"properties": {
-					"id": {
+					"lyric_id": {
 						"type": "number",
 						"format": "double"
 					},
@@ -140,7 +140,7 @@
 					}
 				},
 				"required": [
-					"id",
+					"lyric_id",
 					"movie",
 					"minutes",
 					"quality",
@@ -187,6 +187,66 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/lyric/random": {
+			"get": {
+				"operationId": "GetRandomLyric",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LyricResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Lyric"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "qualityBetterThan",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "qualityLowerThan",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "qualityEqual",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
 		"/lyric/{id}": {
 			"get": {
 				"operationId": "GetLyricById",

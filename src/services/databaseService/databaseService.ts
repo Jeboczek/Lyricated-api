@@ -41,8 +41,12 @@ export default class DatabaseService {
         });
     }
 
-    public static getInstance(databaseConfig: DatabaseConfig) {
+    public static getInstance(databaseConfig?: DatabaseConfig) {
         if (!DatabaseService.instance) {
+            if (databaseConfig == null)
+                throw Error(
+                    "When you first initialize DatabaseService you need to provide a config."
+                );
             this.instance = new DatabaseService(databaseConfig);
         }
 

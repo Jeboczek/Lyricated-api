@@ -2,8 +2,9 @@ import LyricModel from "../../models/database/api/lyricModel";
 import LyricSentenceModel from "../../models/database/api/translations/lyricSentenceModel";
 import MovieModel from "../../models/database/api/movieModel";
 import { Op } from "sequelize";
+import DatabaseService from "../../services/databaseService/databaseService";
 
-export interface GetLyricByQualityOptions {
+export interface LyricRepositoryQualityOptions {
     qualityBetterThan?: number;
     qualityLowerThan?: number;
     qualityEqual?: number;
@@ -15,6 +16,20 @@ export default class LyricRepository {
         MovieModel,
     ];
 
+    _createSearchSettingsForQuality(
+        options: LyricRepositoryQualityOptions
+    ): { [key: symbol]: number } | undefined {
+        const { qualityBetterThan, qualityLowerThan, qualityEqual } = options;
+
+        const qualityMustBe: { [key: symbol]: number } = {};
+
+        if (qualityLowerThan != null) qualityMustBe[Op.lt] = qualityLowerThan;
+        if (qualityBetterThan != null) qualityMustBe[Op.gt] = qualityBetterThan;
+        if (qualityEqual != null) qualityMustBe[Op.eq] = qualityEqual;
+
+        return qualityMustBe;
+    }
+
     getLyricById(id: number): Promise<LyricModel | null> {
         return LyricModel.findOne({
             where: { id },
@@ -22,20 +37,24 @@ export default class LyricRepository {
         });
     }
 
+    getRandomLyric(
+        options: LyricRepositoryQualityOptions
+    ): Promise<LyricModel | null> {
+        const qualityMustBe = this._createSearchSettingsForQuality(options);
+        const db = DatabaseService.getInstance();
+
+        return LyricModel.findOne({
+            order: db.sequelize.random(),
+            where: { quality: qualityMustBe },
+            include: this.modelsToIncludeWithLyricModel,
+        });
+    }
+
     getLyricsByQuality(
         limit = 100,
-        options: GetLyricByQualityOptions
+        options: LyricRepositoryQualityOptions
     ): Promise<LyricModel[]> {
-        const { qualityBetterThan, qualityLowerThan, qualityEqual } = options;
-
-        let qualityMustBe;
-
-        if (qualityLowerThan != null)
-            qualityMustBe = { [Op.lt]: qualityLowerThan };
-        if (qualityBetterThan != null)
-            qualityMustBe = { [Op.gt]: qualityBetterThan };
-        if (qualityEqual != null) qualityMustBe = { [Op.eq]: qualityEqual };
-
+        const qualityMustBe = this._createSearchSettingsForQuality(options);
         return LyricModel.findAll({
             where: { quality: qualityMustBe },
             include: this.modelsToIncludeWithLyricModel,
