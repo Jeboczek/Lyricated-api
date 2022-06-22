@@ -23,6 +23,7 @@ export default async function errorHandler(
         else errorModel = errFactory.createInternalServerError();
 
         await errorModel.save();
+        console.error(errorModel.stack);
         return sendErrorModel(res, errorModel);
     }
 
