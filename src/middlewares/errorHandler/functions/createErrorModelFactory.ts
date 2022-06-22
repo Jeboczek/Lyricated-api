@@ -6,11 +6,11 @@ export default function createErrorModelFactory(
     err: Error
 ): ErrorModelFactory {
     return new ErrorModelFactory({
-        exceptionName: err.constructor.name,
-        message: err.message,
         params: JSON.stringify(req.params),
         path: req.path,
-        stack: err.stack,
+        name: err.constructor.name,
+        content: err.stack ?? "",
+        message: err.message,
         statusCode: 500,
     });
 }

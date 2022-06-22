@@ -18,20 +18,21 @@ export default class ErrorModel extends Model {
 
     @Column({
         type: DataType.STRING(32),
-        allowNull: true,
+        allowNull: false,
     })
-    exception: string;
+    name: string;
 
     @Column({
-        type: DataType.STRING(256),
+        type: DataType.STRING(128),
+        allowNull: false,
     })
     message: string;
 
     @Column({
         type: DataType.STRING(5120),
-        allowNull: true,
+        allowNull: false,
     })
-    stack?: string;
+    content: string;
 
     @Column({
         type: DataType.STRING(1024),

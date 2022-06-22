@@ -7,15 +7,15 @@ export default class ErrorModelFactory {
     create(): ErrorModel {
         const model = new ErrorModel();
 
-        const { params, stack, path, exceptionName, message, statusCode } =
+        const { params, path, name, content, statusCode, message } =
             this.options;
 
+        model.name = name;
+        model.content = content;
         model.params = params;
-        model.stack = stack;
         model.path = path;
-        model.exception = exceptionName;
-        model.message = message;
         model.statusCode = statusCode;
+        model.message = message;
 
         return model;
     }

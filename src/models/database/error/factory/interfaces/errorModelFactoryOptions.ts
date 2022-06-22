@@ -1,8 +1,8 @@
 export default interface ErrorModelFactoryOptions {
     params?: string;
-    stack?: string;
     path?: string;
-    exceptionName: string;
+    name: string;
+    content: string;
     message: string;
     statusCode: number;
 }
