@@ -104,6 +104,33 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "SearchResultResponse": {
+        "dataType": "refObject",
+        "properties": {
+            "lyric_id": {"dataType":"double","required":true},
+            "minute": {"dataType":"double","required":true},
+            "from_sentence": {"ref":"LyricSentenceResponse","required":true},
+            "to_sentence": {"ref":"LyricSentenceResponse","required":true},
+            "movie": {"ref":"MovieResponse","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "SearchResponse": {
+        "dataType": "refObject",
+        "properties": {
+            "from_lang_id": {"dataType":"string","required":true},
+            "to_lang_id": {"dataType":"string","required":true},
+            "search_phase": {"dataType":"string","required":true},
+            "cached": {"dataType":"boolean","required":true},
+            "response_time": {"dataType":"string","required":true},
+            "translations": {"dataType":"array","array":{"dataType":"string"},"required":true},
+            "main_results": {"dataType":"array","array":{"dataType":"refObject","ref":"SearchResultResponse"},"required":true},
+            "similar_results": {"dataType":"array","array":{"dataType":"refObject","ref":"SearchResultResponse"},"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
 const validationService = new ValidationService(models);
 

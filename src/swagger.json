@@ -222,6 +222,85 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"SearchResultResponse": {
+				"properties": {
+					"lyric_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"minute": {
+						"type": "number",
+						"format": "double"
+					},
+					"from_sentence": {
+						"$ref": "#/components/schemas/LyricSentenceResponse"
+					},
+					"to_sentence": {
+						"$ref": "#/components/schemas/LyricSentenceResponse"
+					},
+					"movie": {
+						"$ref": "#/components/schemas/MovieResponse"
+					}
+				},
+				"required": [
+					"lyric_id",
+					"minute",
+					"from_sentence",
+					"to_sentence",
+					"movie"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SearchResponse": {
+				"properties": {
+					"from_lang_id": {
+						"type": "string"
+					},
+					"to_lang_id": {
+						"type": "string"
+					},
+					"search_phase": {
+						"type": "string"
+					},
+					"cached": {
+						"type": "boolean"
+					},
+					"response_time": {
+						"type": "string"
+					},
+					"translations": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"main_results": {
+						"items": {
+							"$ref": "#/components/schemas/SearchResultResponse"
+						},
+						"type": "array"
+					},
+					"similar_results": {
+						"items": {
+							"$ref": "#/components/schemas/SearchResultResponse"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"from_lang_id",
+					"to_lang_id",
+					"search_phase",
+					"cached",
+					"response_time",
+					"translations",
+					"main_results",
+					"similar_results"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {}
@@ -557,17 +636,14 @@
 				"operationId": "Search",
 				"responses": {
 					"200": {
-						"description": "OK",
+						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/MovieResponse"
+									"$ref": "#/components/schemas/SearchResponse"
 								}
 							}
 						}
-					},
-					"204": {
-						"description": "No content"
 					},
 					"404": {
 						"description": "Not found",
