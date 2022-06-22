@@ -91,7 +91,7 @@ export function RegisterRoutes(app: express.Router) {
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
-        app.get('/lyric/without_quality',
+        app.get('/lyric/without-quality',
             ...(fetchMiddlewares<RequestHandler>(LyricController)),
             ...(fetchMiddlewares<RequestHandler>(LyricController.prototype.getLyricWithoutQuality)),
 
@@ -142,7 +142,7 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/lyric/:id',
+        app.get('/lyric/get/:id',
             ...(fetchMiddlewares<RequestHandler>(LyricController)),
             ...(fetchMiddlewares<RequestHandler>(LyricController.prototype.getLyricById)),
 
@@ -192,7 +192,7 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/movie/:id',
+        app.get('/movie/get/:id',
             ...(fetchMiddlewares<RequestHandler>(MovieController)),
             ...(fetchMiddlewares<RequestHandler>(MovieController.prototype.getMovie)),
 

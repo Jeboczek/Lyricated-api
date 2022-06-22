@@ -14,7 +14,7 @@ export class LyricController extends Controller {
         this.repo = repo ?? new LyricRepository();
     }
 
-    @Get("without_quality")
+    @Get("without-quality")
     @Response<LyricResponse>(200, "OK")
     @Response<ErrorResponse>(404, "No more content")
     public async getLyricWithoutQuality() {
@@ -48,7 +48,7 @@ export class LyricController extends Controller {
         throw new NotFoundError();
     }
 
-    @Get("{id}")
+    @Get("get/{id}")
     @Response<LyricResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Not found")
     public async getLyricById(@Path("id") lyricId: number) {

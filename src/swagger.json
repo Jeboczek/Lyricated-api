@@ -186,7 +186,7 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/lyric/without_quality": {
+		"/lyric/without-quality": {
 			"get": {
 				"operationId": "GetLyricWithoutQuality",
 				"responses": {
@@ -208,7 +208,7 @@
 						}
 					},
 					"404": {
-						"description": "There is no more content",
+						"description": "No more content",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -285,7 +285,7 @@
 				]
 			}
 		},
-		"/lyric/{id}": {
+		"/lyric/get/{id}": {
 			"get": {
 				"operationId": "GetLyricById",
 				"responses": {
@@ -369,7 +369,7 @@
 				]
 			}
 		},
-		"/movie/{id}": {
+		"/movie/get/{id}": {
 			"get": {
 				"operationId": "GetMovie",
 				"responses": {
