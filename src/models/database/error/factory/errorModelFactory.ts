@@ -16,6 +16,7 @@ export default class ErrorModelFactory {
         model.path = path;
         model.statusCode = statusCode;
         model.message = message;
+        model.timestamp = new Date();
 
         return model;
     }
