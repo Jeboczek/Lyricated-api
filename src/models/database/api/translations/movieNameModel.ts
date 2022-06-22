@@ -14,7 +14,7 @@ import MovieModel from "../movieModel";
 @Table
 export default class MovieNameModel extends Model {
     @Index
-    @Column(DataType.INTEGER)
+    @Column(DataType.STRING(2))
     @ForeignKey(() => LangModel)
     langId: string;
 

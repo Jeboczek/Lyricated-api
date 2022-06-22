@@ -1,10 +1,21 @@
-import { Controller, Get, Path, Query, Response, Route, Tags } from "tsoa";
+import {
+    Body,
+    Controller,
+    Get,
+    Path,
+    Put,
+    Query,
+    Response,
+    Route,
+    Tags,
+} from "tsoa";
 import MovieResponse from "../../models/response/movieResponse";
 import MovieRepository, {
     MovieType,
 } from "../../repositories/movieRepository/movieRepository";
 import ErrorResponse from "../../models/response/errors/errorResponse";
 import NotFoundError from "../../exceptions/notFoundError";
+import { PutMovieRequest } from "../../models/request/putMovieRequest";
 
 @Route("movie")
 @Tags("Movie")
@@ -26,7 +37,7 @@ export class MovieController extends Controller {
         return { movies: movies.map((e) => MovieResponse.fromModel(e)) };
     }
 
-    @Get("get/{id}")
+    @Get("{id}")
     @Response<MovieResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Not found")
     public async getMovie(@Path("id") movieId: number) {
@@ -35,5 +46,15 @@ export class MovieController extends Controller {
         if (movie != null) return MovieResponse.fromModel(movie);
 
         throw new NotFoundError();
+    }
+
+    @Put("{id}")
+    @Response<MovieResponse>(200, "OK")
+    public async putMovie(
+        @Path("id") movieId: number,
+        @Body() reqBody: PutMovieRequest
+    ) {
+        const updatedMovie = await this.repo.updateMovie(movieId, reqBody);
+        return MovieResponse.fromModel(updatedMovie);
     }
 }

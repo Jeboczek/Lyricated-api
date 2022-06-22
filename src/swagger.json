@@ -8,6 +8,10 @@
 		"schemas": {
 			"MovieNameResponse": {
 				"properties": {
+					"movie_name_id": {
+						"type": "number",
+						"format": "double"
+					},
 					"lang": {
 						"type": "string"
 					},
@@ -16,6 +20,7 @@
 					}
 				},
 				"required": [
+					"movie_name_id",
 					"lang",
 					"content"
 				],
@@ -24,6 +29,10 @@
 			},
 			"EpisodeResponse": {
 				"properties": {
+					"episode_id": {
+						"type": "number",
+						"format": "double"
+					},
 					"season": {
 						"type": "number",
 						"format": "double"
@@ -38,6 +47,7 @@
 					}
 				},
 				"required": [
+					"episode_id",
 					"season",
 					"episode",
 					"netflix_id"
@@ -171,6 +181,28 @@
 					"only_series"
 				],
 				"nullable": true
+			},
+			"PutMovieRequest": {
+				"properties": {
+					"lang": {
+						"type": "string"
+					},
+					"netflix_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"minutes": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"lang",
+					"netflix_id",
+					"minutes"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {}
@@ -285,7 +317,7 @@
 				]
 			}
 		},
-		"/lyric/get/{id}": {
+		"/lyric/{id}": {
 			"get": {
 				"operationId": "GetLyricById",
 				"responses": {
@@ -369,7 +401,7 @@
 				]
 			}
 		},
-		"/movie/get/{id}": {
+		"/movie/{id}": {
 			"get": {
 				"operationId": "GetMovie",
 				"responses": {
@@ -409,6 +441,46 @@
 						}
 					}
 				]
+			},
+			"put": {
+				"operationId": "PutMovie",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MovieResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Movie"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PutMovieRequest"
+							}
+						}
+					}
+				}
 			}
 		}
 	},

@@ -1,4 +1,5 @@
 import {
+    BelongsTo,
     Column,
     DataType,
     ForeignKey,
@@ -25,6 +26,11 @@ export default class MovieModel extends Model {
     })
     id: number;
 
+    @Index
+    @Column(DataType.STRING(2))
+    @ForeignKey(() => LangModel)
+    langId: string; // pl
+
     @Column({
         type: DataType.INTEGER,
         unique: true,
@@ -35,11 +41,6 @@ export default class MovieModel extends Model {
     @Column(DataType.TINYINT)
     minutes: number; // 140
 
-    @Index
-    @Column(DataType.TINYINT)
-    @ForeignKey(() => LangModel)
-    lang: LangModel; // pl
-
     @HasMany(() => MovieNameModel)
     movieNames: MovieNameModel[];
 
@@ -48,4 +49,7 @@ export default class MovieModel extends Model {
 
     @HasMany(() => EpisodeModel)
     episodes: EpisodeModel[];
+
+    @BelongsTo(() => LangModel)
+    lang: LangModel;
 }

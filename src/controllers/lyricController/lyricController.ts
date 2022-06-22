@@ -48,7 +48,7 @@ export class LyricController extends Controller {
         throw new NotFoundError();
     }
 
-    @Get("get/{id}")
+    @Get("{id}")
     @Response<LyricResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Not found")
     public async getLyricById(@Path("id") lyricId: number) {

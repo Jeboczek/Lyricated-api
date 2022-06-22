@@ -15,6 +15,7 @@ const models: TsoaRoute.Models = {
     "MovieNameResponse": {
         "dataType": "refObject",
         "properties": {
+            "movie_name_id": {"dataType":"double","required":true},
             "lang": {"dataType":"string","required":true},
             "content": {"dataType":"string","required":true},
         },
@@ -24,6 +25,7 @@ const models: TsoaRoute.Models = {
     "EpisodeResponse": {
         "dataType": "refObject",
         "properties": {
+            "episode_id": {"dataType":"double","required":true},
             "season": {"dataType":"double","required":true},
             "episode": {"dataType":"double","required":true},
             "netflix_id": {"dataType":"double","required":true},
@@ -79,6 +81,16 @@ const models: TsoaRoute.Models = {
     "MovieType": {
         "dataType": "refAlias",
         "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["only_movies"]},{"dataType":"enum","enums":["only_series"]},{"dataType":"enum","enums":[null]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PutMovieRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "lang": {"dataType":"string","required":true},
+            "netflix_id": {"dataType":"double","required":true},
+            "minutes": {"dataType":"double","required":true},
+        },
+        "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
@@ -142,7 +154,7 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/lyric/get/:id',
+        app.get('/lyric/:id',
             ...(fetchMiddlewares<RequestHandler>(LyricController)),
             ...(fetchMiddlewares<RequestHandler>(LyricController.prototype.getLyricById)),
 
@@ -192,7 +204,7 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/movie/get/:id',
+        app.get('/movie/:id',
             ...(fetchMiddlewares<RequestHandler>(MovieController)),
             ...(fetchMiddlewares<RequestHandler>(MovieController.prototype.getMovie)),
 
@@ -211,6 +223,32 @@ export function RegisterRoutes(app: express.Router) {
 
 
               const promise = controller.getMovie.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.put('/movie/:id',
+            ...(fetchMiddlewares<RequestHandler>(MovieController)),
+            ...(fetchMiddlewares<RequestHandler>(MovieController.prototype.putMovie)),
+
+            function MovieController_putMovie(request: any, response: any, next: any) {
+            const args = {
+                    movieId: {"in":"path","name":"id","required":true,"dataType":"double"},
+                    reqBody: {"in":"body","name":"reqBody","required":true,"ref":"PutMovieRequest"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new MovieController();
+
+
+              const promise = controller.putMovie.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
