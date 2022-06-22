@@ -159,8 +159,7 @@
 					}
 				},
 				"required": [
-					"message",
-					"errorUUID"
+					"message"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -187,6 +186,45 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/lyric/without_quality": {
+			"get": {
+				"operationId": "GetLyricWithoutQuality",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/LyricResponse"
+										},
+										{
+											"$ref": "#/components/schemas/ErrorResponse"
+										}
+									]
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "There is no more content",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Lyric"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
 		"/lyric/random": {
 			"get": {
 				"operationId": "GetRandomLyric",

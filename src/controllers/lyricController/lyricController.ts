@@ -14,6 +14,21 @@ export class LyricController extends Controller {
         this.repo = repo ?? new LyricRepository();
     }
 
+    @Get("without_quality")
+    @Response<LyricResponse>(200, "OK")
+    @Response<ErrorResponse>(404, "No more content")
+    public async getLyricWithoutQuality() {
+        const lyricWithoutQuality = await this.repo.getLyricWithoutQuality();
+
+        if (lyricWithoutQuality != null)
+            return LyricResponse.fromModel(lyricWithoutQuality);
+
+        const err = new ErrorResponse();
+        err.message = "There are no more lyrics without quality set";
+        this.setStatus(404);
+        return err;
+    }
+
     @Get("random")
     @Response<LyricResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Not found")

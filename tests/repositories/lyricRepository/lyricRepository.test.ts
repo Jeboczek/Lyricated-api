@@ -6,7 +6,7 @@ import { Op } from "sequelize";
 jest.mock("../../../src/models/database/api/lyricModel");
 
 function checkIfFindOptionsHaveX(
-    findOptions: FindOptions<any> | undefined,
+    findOptions: FindOptions | undefined,
     x: string
 ) {
     expect(findOptions).not.toBeUndefined();

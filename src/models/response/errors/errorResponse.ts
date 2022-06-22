@@ -2,10 +2,14 @@ import ErrorModel from "../../database/error/errorModel";
 
 export default class ErrorResponse {
     public message: string;
-    public errorUUID: string;
+    public errorUUID?: string;
 
-    constructor(errorModel: ErrorModel) {
-        this.message = errorModel.message;
-        this.errorUUID = errorModel.uuid;
+    static fromErrorModel(errorModel: ErrorModel) {
+        const resp = new ErrorResponse();
+
+        resp.message = errorModel.message;
+        resp.errorUUID = errorModel.uuid;
+
+        return resp;
     }
 }

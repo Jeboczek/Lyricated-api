@@ -61,4 +61,11 @@ export default class LyricRepository {
             limit,
         });
     }
+
+    getLyricWithoutQuality(): Promise<LyricModel | null> {
+        return LyricModel.findOne({
+            include: this.modelsToIncludeWithLyricModel,
+            where: { quality: null },
+        });
+    }
 }
