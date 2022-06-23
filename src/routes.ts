@@ -131,6 +131,28 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "SearchRequestFilterOptions": {
+        "dataType": "refObject",
+        "properties": {
+            "curses": {"dataType":"boolean"},
+            "only_movies": {"dataType":"boolean","required":true},
+            "only_series": {"dataType":"boolean","required":true},
+            "only_movie_id": {"dataType":"double"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "SearchRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "search_phase": {"dataType":"string","required":true},
+            "from_lang_id": {"dataType":"string","required":true},
+            "to_lang_id": {"dataType":"string","required":true},
+            "filter_options": {"ref":"SearchRequestFilterOptions","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
 const validationService = new ValidationService(models);
 
@@ -319,12 +341,13 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/search',
+        app.post('/search',
             ...(fetchMiddlewares<RequestHandler>(SearchController)),
             ...(fetchMiddlewares<RequestHandler>(SearchController.prototype.search)),
 
             function SearchController_search(request: any, response: any, next: any) {
             const args = {
+                    options: {"in":"body","name":"options","required":true,"ref":"SearchRequest"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

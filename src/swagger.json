@@ -300,6 +300,53 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"SearchRequestFilterOptions": {
+				"properties": {
+					"curses": {
+						"type": "boolean"
+					},
+					"only_movies": {
+						"type": "boolean"
+					},
+					"only_series": {
+						"type": "boolean"
+					},
+					"only_movie_id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"only_movies",
+					"only_series"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"SearchRequest": {
+				"properties": {
+					"search_phase": {
+						"type": "string"
+					},
+					"from_lang_id": {
+						"type": "string"
+					},
+					"to_lang_id": {
+						"type": "string"
+					},
+					"filter_options": {
+						"$ref": "#/components/schemas/SearchRequestFilterOptions"
+					}
+				},
+				"required": [
+					"search_phase",
+					"from_lang_id",
+					"to_lang_id",
+					"filter_options"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {}
@@ -631,7 +678,7 @@
 			}
 		},
 		"/search": {
-			"get": {
+			"post": {
 				"operationId": "Search",
 				"responses": {
 					"200": {
@@ -659,7 +706,17 @@
 					"Search"
 				],
 				"security": [],
-				"parameters": []
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SearchRequest"
+							}
+						}
+					}
+				}
 			}
 		}
 	},
