@@ -3,6 +3,7 @@ export default interface SearchRequest {
     from_lang_id: string;
     to_lang_id: string;
     filter_options: SearchRequestFilterOptions;
+    dont_use_cache: boolean;
 }
 
 export interface SearchRequestFilterOptions {
