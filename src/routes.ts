@@ -134,9 +134,9 @@ const models: TsoaRoute.Models = {
     "SearchRequestFilterOptions": {
         "dataType": "refObject",
         "properties": {
-            "curses": {"dataType":"boolean"},
-            "only_movies": {"dataType":"boolean","required":true},
-            "only_series": {"dataType":"boolean","required":true},
+            "hide_curses": {"dataType":"boolean"},
+            "hide_movies": {"dataType":"boolean"},
+            "hide_series": {"dataType":"boolean"},
             "only_movie_id": {"dataType":"double"},
         },
         "additionalProperties": false,
@@ -149,6 +149,7 @@ const models: TsoaRoute.Models = {
             "from_lang_id": {"dataType":"string","required":true},
             "to_lang_id": {"dataType":"string","required":true},
             "filter_options": {"ref":"SearchRequestFilterOptions","required":true},
+            "dont_use_cache": {"dataType":"boolean","required":true},
         },
         "additionalProperties": false,
     },

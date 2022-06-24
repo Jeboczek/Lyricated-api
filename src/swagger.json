@@ -303,13 +303,13 @@
 			},
 			"SearchRequestFilterOptions": {
 				"properties": {
-					"curses": {
+					"hide_curses": {
 						"type": "boolean"
 					},
-					"only_movies": {
+					"hide_movies": {
 						"type": "boolean"
 					},
-					"only_series": {
+					"hide_series": {
 						"type": "boolean"
 					},
 					"only_movie_id": {
@@ -317,10 +317,6 @@
 						"format": "double"
 					}
 				},
-				"required": [
-					"only_movies",
-					"only_series"
-				],
 				"type": "object",
 				"additionalProperties": false
 			},
@@ -337,13 +333,17 @@
 					},
 					"filter_options": {
 						"$ref": "#/components/schemas/SearchRequestFilterOptions"
+					},
+					"dont_use_cache": {
+						"type": "boolean"
 					}
 				},
 				"required": [
 					"search_phase",
 					"from_lang_id",
 					"to_lang_id",
-					"filter_options"
+					"filter_options",
+					"dont_use_cache"
 				],
 				"type": "object",
 				"additionalProperties": false
