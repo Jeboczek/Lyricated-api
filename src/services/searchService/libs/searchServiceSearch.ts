@@ -8,9 +8,56 @@ export interface SearchServiceOptions {
     toLang: string;
 }
 
+export interface SearchServiceSearchResults {
+    mainResults: LyricModel[];
+    similarResults: LyricModel[];
+}
+
+interface SearchServiceResultGetterOptions {
+    fromLang: string;
+    lyrics: LyricModel[];
+}
+
 export default class SearchServiceSearch {
-    async search(options: SearchServiceOptions) {
-        const { fromLang, toLang } = options;
+    private _getSimiliarRegExpForSearchPhase(searchPhase: string): RegExp {
+        if (searchPhase.length === 4)
+            return new RegExp(
+                `\\b\\S${searchPhase}\\S*|\\b\\S?${searchPhase}?[^${searchPhase.slice(
+                    -1
+                )}.,?! ]\\S*`
+            );
+
+        if (searchPhase.length > 4)
+            return new RegExp(
+                `\\b\\S${searchPhase}\\S*|\\b\\S?${searchPhase}?[^${searchPhase.slice(
+                    -1
+                )}.,?! ]\\S*|\\b${searchPhase.slice(0, -1)}\\b`
+            );
+
+        return new RegExp(
+            `"\\b\\S${searchPhase}\\S?[^\\s]*|\\b\\S?${searchPhase}[^.,?! ][^\\s]*"`
+        );
+    }
+
+    private async _getResults(
+        options: SearchServiceResultGetterOptions,
+        regExp: RegExp
+    ): Promise<LyricModel[]> {
+        const { lyrics, fromLang } = options;
+        return lyrics.filter((e) => {
+            const fromLangSentence = e.sentences.find(
+                (e) => e.langId === fromLang
+            );
+            if (fromLangSentence instanceof LyricSentenceModel)
+                return regExp.test(fromLangSentence.content);
+            return false;
+        });
+    }
+
+    async search(
+        options: SearchServiceOptions
+    ): Promise<SearchServiceSearchResults> {
+        const { fromLang, toLang, searchPhase } = options;
 
         // Get LyricModels with queried languages
         let lyrics = await LyricModel.findAll({
@@ -27,5 +74,24 @@ export default class SearchServiceSearch {
 
         //  Filter LyricModel's without 2 LyricSentence's
         lyrics = lyrics.filter((e) => e.sentences.length === 2);
+
+        // Get main and similar results
+        const mainRegExp = new RegExp(`\\b${searchPhase}\\b[^']`);
+        const similarRegExp =
+            this._getSimiliarRegExpForSearchPhase(searchPhase);
+
+        const resultGetterOptions: SearchServiceResultGetterOptions = {
+            fromLang,
+            lyrics,
+        };
+        const dataFromAllPromises = await Promise.all([
+            this._getResults(resultGetterOptions, mainRegExp),
+            this._getResults(resultGetterOptions, similarRegExp),
+        ]);
+
+        return {
+            mainResults: dataFromAllPromises[0],
+            similarResults: dataFromAllPromises[1],
+        };
     }
 }

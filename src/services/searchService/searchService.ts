@@ -11,6 +11,19 @@ export default class SearchService {
     ) {}
 
     async search(options: SearchRequest) {
-        console.log(`SearchService search ${options}`);
+        const {
+            from_lang_id: fromLang,
+            search_phase: searchPhase,
+            to_lang_id: toLang,
+        } = options;
+
+        const { mainResults, similarResults } = await this.searcher.search({
+            fromLang,
+            searchPhase,
+            toLang,
+        });
+
+        console.log(mainResults);
+        console.log(similarResults);
     }
 }
