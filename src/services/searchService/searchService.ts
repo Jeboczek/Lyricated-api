@@ -4,10 +4,10 @@ import SearchRequest from "../../models/request/searchRequest";
 
 export default class SearchService {
     constructor(
+        private searcher: SearchServiceSearch = new SearchServiceSearch(),
         private filter: SearchServiceSearch = new SearchServiceSearch(),
         private highlighter: SearchServiceHighlight = new SearchServiceHighlight(),
-        private sorter: SearchServiceHighlight = new SearchServiceHighlight(),
-        private searcher: SearchServiceSearch = new SearchServiceSearch()
+        private sorter: SearchServiceHighlight = new SearchServiceHighlight()
     ) {}
 
     async search(options: SearchRequest) {
