@@ -682,7 +682,7 @@
 				"operationId": "Search",
 				"responses": {
 					"200": {
-						"description": "Ok",
+						"description": "OK",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -690,6 +690,9 @@
 								}
 							}
 						}
+					},
+					"204": {
+						"description": "No content"
 					},
 					"404": {
 						"description": "Not found",
