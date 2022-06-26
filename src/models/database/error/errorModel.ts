@@ -46,6 +46,6 @@ export default class ErrorModel extends Model {
     })
     path?: string;
 
-    @Column(DataType.NOW)
+    @Column(DataType.DATE)
     timestamp: Date;
 }

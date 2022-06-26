@@ -10,6 +10,7 @@ import {
 } from "sequelize-typescript";
 import MovieModel from "./movieModel";
 import LyricSentenceModel from "./translations/lyricSentenceModel";
+import EpisodeModel from "./episodeModel";
 
 @Table
 export default class LyricModel extends Model {
@@ -26,6 +27,10 @@ export default class LyricModel extends Model {
     @Column({ type: DataType.INTEGER, allowNull: false, unique: false })
     movieId: number;
 
+    @ForeignKey(() => EpisodeModel)
+    @Column({ type: DataType.INTEGER, allowNull: true, unique: false })
+    episodeId: number | null;
+
     @Column({ type: DataType.INTEGER, allowNull: false, defaultValue: 0 })
     minute: number;
 
@@ -37,4 +42,7 @@ export default class LyricModel extends Model {
 
     @BelongsTo(() => MovieModel, { foreignKey: "movieId" })
     movie: MovieModel;
+
+    @BelongsTo(() => EpisodeModel, { foreignKey: "episodeId" })
+    episode: EpisodeModel;
 }
