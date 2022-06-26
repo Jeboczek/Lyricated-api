@@ -18,7 +18,7 @@ export default class LyricResponse {
 
         resp.lyric_id = id;
         resp.movie = MovieResponse.fromModel(movie);
-        resp.episode = EpisodeResponse.fromModel(episode);
+        resp.episode = episode ? EpisodeResponse.fromModel(episode) : null;
         resp.quality = quality;
         resp.seconds = seconds;
         resp.sentences = sentences.map((e) =>

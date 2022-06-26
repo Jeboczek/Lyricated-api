@@ -141,7 +141,7 @@
 						],
 						"nullable": true
 					},
-					"minute": {
+					"seconds": {
 						"type": "number",
 						"format": "double"
 					},
@@ -161,7 +161,7 @@
 					"lyric_id",
 					"movie",
 					"episode",
-					"minute",
+					"seconds",
 					"quality",
 					"sentences"
 				],
