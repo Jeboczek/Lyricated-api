@@ -27,12 +27,12 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "PutMovieRequest": {
+    "PutEpisodeRequest": {
         "dataType": "refObject",
         "properties": {
-            "lang": {"dataType":"string","required":true},
-            "netflix_id": {"dataType":"double","required":true},
-            "minutes": {"dataType":"double","required":true},
+            "episode": {"dataType":"double","required":true},
+            "season": {"dataType":"double","required":true},
+            "netflixId": {"dataType":"double","required":true},
         },
         "additionalProperties": false,
     },
@@ -107,6 +107,16 @@ const models: TsoaRoute.Models = {
         "enums": ["only_movies","only_series"],
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PutMovieRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "lang": {"dataType":"string","required":true},
+            "netflix_id": {"dataType":"double","required":true},
+            "minutes": {"dataType":"double","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "SearchResultResponse": {
         "dataType": "refObject",
         "properties": {
@@ -174,7 +184,7 @@ export function RegisterRoutes(app: express.Router) {
             function EpisodeController_putEpisode(request: any, response: any, next: any) {
             const args = {
                     id: {"in":"path","name":"id","required":true,"dataType":"double"},
-                    request: {"in":"body","name":"request","required":true,"ref":"PutMovieRequest"},
+                    request: {"in":"body","name":"request","required":true,"ref":"PutEpisodeRequest"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -301,7 +311,7 @@ export function RegisterRoutes(app: express.Router) {
             function LyricController_putLyric(request: any, response: any, next: any) {
             const args = {
                     id: {"in":"path","name":"id","required":true,"dataType":"double"},
-                    reqBody: {"in":"body","name":"reqBody","required":true,"ref":"PutLyricRequest"},
+                    request: {"in":"body","name":"request","required":true,"ref":"PutLyricRequest"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -377,7 +387,7 @@ export function RegisterRoutes(app: express.Router) {
             function MovieController_putMovie(request: any, response: any, next: any) {
             const args = {
                     movieId: {"in":"path","name":"id","required":true,"dataType":"double"},
-                    reqBody: {"in":"body","name":"reqBody","required":true,"ref":"PutMovieRequest"},
+                    request: {"in":"body","name":"request","required":true,"ref":"PutMovieRequest"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

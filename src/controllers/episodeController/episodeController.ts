@@ -3,6 +3,7 @@ import EpisodeRepository from "../../repositories/episodeRepository/episodeRepos
 import EpisodeResponse from "../../models/response/episodeResponse";
 import ErrorResponse from "../../models/response/errors/errorResponse";
 import PutEpisodeRequest from "../../models/request/putEpisodeRequest";
+import NotFoundError from "../../exceptions/notFoundError";
 
 @Route("episode")
 @Tags("Episode")
@@ -28,6 +29,10 @@ export class EpisodeController extends Controller {
     @Response<EpisodeResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Not Found")
     public async getEpisode(@Path("id") id: number) {
-        return await this.repo.getEpisode(id);
+        const episode = await this.repo.getEpisode(id);
+
+        if (episode === null) throw new NotFoundError();
+
+        return EpisodeResponse.fromModel(episode);
     }
 }
