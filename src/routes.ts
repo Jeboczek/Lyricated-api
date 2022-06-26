@@ -129,13 +129,11 @@ const models: TsoaRoute.Models = {
     "SearchResultResponse": {
         "dataType": "refObject",
         "properties": {
-            "lyric_id": {"dataType":"double","required":true},
-            "seconds": {"dataType":"double","required":true},
+            "lyric": {"ref":"LyricResponse","required":true},
             "from_sentence": {"ref":"LyricSentenceResponse","required":true},
             "to_sentence": {"ref":"LyricSentenceResponse","required":true},
             "from_highlights": {"dataType":"array","array":{"dataType":"refObject","ref":"HighlightResponse"},"required":true},
             "to_highlights": {"dataType":"array","array":{"dataType":"refObject","ref":"HighlightResponse"},"required":true},
-            "movie": {"ref":"MovieResponse","required":true},
         },
         "additionalProperties": false,
     },

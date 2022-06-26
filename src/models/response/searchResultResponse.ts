@@ -1,13 +1,11 @@
 import LyricSentenceResponse from "./translations/lyricSentenceResponse";
-import MovieResponse from "./movieResponse";
 import HighlightResponse from "./highlightResponse";
+import LyricResponse from "./lyricResponse";
 
 export default class SearchResultResponse {
-    lyric_id: number;
-    seconds: number;
+    lyric: LyricResponse;
     from_sentence: LyricSentenceResponse;
     to_sentence: LyricSentenceResponse;
     from_highlights: HighlightResponse[];
     to_highlights: HighlightResponse[];
-    movie: MovieResponse;
 }

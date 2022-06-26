@@ -1,35 +1,16 @@
 import { SearchServiceResult } from "../../../services/searchService/searchService";
 import SearchResultResponse from "../../../models/response/searchResultResponse";
-import LyricSentenceResponse from "../../../models/response/translations/lyricSentenceResponse";
-import LyricSentenceModel from "../../../models/database/api/translations/lyricSentenceModel";
-import MovieResponse from "../../../models/response/movieResponse";
+import LyricResponse from "../../../models/response/lyricResponse";
 
 export default class ChangeSearchResults {
-    static change(
-        result: SearchServiceResult[],
-        fromLang: string,
-        toLang: string
-    ): SearchResultResponse[] {
+    static change(result: SearchServiceResult[]): SearchResultResponse[] {
         return result.map((e) => {
-            const { id, seconds, movie } = e.lyricModel;
-            const { fromHighlights, toHighlights } = e;
+            const { fromHighlights, toHighlights, lyricModel } = e;
 
             return {
-                lyric_id: id,
-                seconds: seconds,
-                from_sentence: LyricSentenceResponse.fromModel(
-                    e.lyricModel.sentences.find(
-                        (e) => e.langId === fromLang
-                    ) as LyricSentenceModel
-                ),
-                to_sentence: LyricSentenceResponse.fromModel(
-                    e.lyricModel.sentences.find(
-                        (e) => e.langId === toLang
-                    ) as LyricSentenceModel
-                ),
+                lyric: LyricResponse.fromModel(lyricModel),
                 from_highlights: fromHighlights,
                 to_highlights: toHighlights,
-                movie: MovieResponse.fromModel(movie),
             } as SearchResultResponse;
         });
     }

@@ -274,13 +274,8 @@
 			},
 			"SearchResultResponse": {
 				"properties": {
-					"lyric_id": {
-						"type": "number",
-						"format": "double"
-					},
-					"seconds": {
-						"type": "number",
-						"format": "double"
+					"lyric": {
+						"$ref": "#/components/schemas/LyricResponse"
 					},
 					"from_sentence": {
 						"$ref": "#/components/schemas/LyricSentenceResponse"
@@ -299,19 +294,14 @@
 							"$ref": "#/components/schemas/HighlightResponse"
 						},
 						"type": "array"
-					},
-					"movie": {
-						"$ref": "#/components/schemas/MovieResponse"
 					}
 				},
 				"required": [
-					"lyric_id",
-					"seconds",
+					"lyric",
 					"from_sentence",
 					"to_sentence",
 					"from_highlights",
-					"to_highlights",
-					"movie"
+					"to_highlights"
 				],
 				"type": "object",
 				"additionalProperties": false
