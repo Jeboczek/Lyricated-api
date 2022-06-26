@@ -320,9 +320,6 @@
 					"cached": {
 						"type": "boolean"
 					},
-					"response_time": {
-						"type": "string"
-					},
 					"translations": {
 						"items": {
 							"type": "string"
@@ -347,7 +344,6 @@
 					"to_lang_id",
 					"search_phase",
 					"cached",
-					"response_time",
 					"translations",
 					"main_results",
 					"similar_results"
@@ -839,10 +835,6 @@
 											"items": {},
 											"type": "array"
 										},
-										"response_time": {
-											"type": "number",
-											"format": "double"
-										},
 										"cached": {
 											"type": "boolean"
 										},
@@ -860,7 +852,6 @@
 										"similar_results",
 										"main_results",
 										"translations",
-										"response_time",
 										"cached",
 										"search_phase",
 										"to_lang_id",

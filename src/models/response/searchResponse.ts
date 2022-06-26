@@ -5,7 +5,6 @@ export default class SearchResponse {
     to_lang_id: string;
     search_phase: string;
     cached: boolean;
-    response_time: string;
     translations: string[];
     main_results: SearchResultResponse[];
     similar_results: SearchResultResponse[];
