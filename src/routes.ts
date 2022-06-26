@@ -117,13 +117,24 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "HighlightResponse": {
+        "dataType": "refObject",
+        "properties": {
+            "from": {"dataType":"double","required":true},
+            "to": {"dataType":"double","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "SearchResultResponse": {
         "dataType": "refObject",
         "properties": {
             "lyric_id": {"dataType":"double","required":true},
-            "minute": {"dataType":"double","required":true},
+            "seconds": {"dataType":"double","required":true},
             "from_sentence": {"ref":"LyricSentenceResponse","required":true},
             "to_sentence": {"ref":"LyricSentenceResponse","required":true},
+            "from_highlights": {"dataType":"array","array":{"dataType":"refObject","ref":"HighlightResponse"},"required":true},
+            "to_highlights": {"dataType":"array","array":{"dataType":"refObject","ref":"HighlightResponse"},"required":true},
             "movie": {"ref":"MovieResponse","required":true},
         },
         "additionalProperties": false,

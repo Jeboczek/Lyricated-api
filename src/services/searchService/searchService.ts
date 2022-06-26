@@ -5,6 +5,21 @@ import LyricModel from "../../models/database/api/lyricModel";
 import LyricSentenceModel from "../../models/database/api/translations/lyricSentenceModel";
 import { Op } from "sequelize";
 import SearchServiceFilter from "./libs/searchServiceFilter";
+import HighlightResponse from "../../models/response/highlightResponse";
+import MainMatcher from "./matchers/mainMatcher";
+import SimilarMatcher from "./matchers/similarMatcher";
+import MovieModel from "../../models/database/api/movieModel";
+
+export interface SearchServiceResult {
+    lyricModel: LyricModel;
+    fromHighlights: HighlightResponse[];
+    toHighlights: HighlightResponse[];
+}
+
+export interface SearchServiceReturn {
+    mains: SearchServiceResult[];
+    similar: SearchServiceResult[];
+}
 
 export default class SearchService {
     constructor(
@@ -14,7 +29,7 @@ export default class SearchService {
         private sorter: SearchServiceHighlight = new SearchServiceHighlight()
     ) {}
 
-    async search(options: SearchRequest) {
+    async search(options: SearchRequest): Promise<SearchServiceReturn> {
         const {
             from_lang_id: fromLang,
             search_phase: searchPhase,
@@ -24,14 +39,17 @@ export default class SearchService {
 
         // Get LyricModels with queried languages
         let lyrics = await LyricModel.findAll({
-            include: {
-                model: LyricSentenceModel,
-                where: {
-                    langId: {
-                        [Op.in]: [fromLang, toLang],
+            include: [
+                MovieModel,
+                {
+                    model: LyricSentenceModel,
+                    where: {
+                        langId: {
+                            [Op.in]: [fromLang, toLang],
+                        },
                     },
                 },
-            },
+            ],
             where: {},
         });
 
@@ -48,5 +66,48 @@ export default class SearchService {
 
         console.log(mainResults);
         console.log(similarResults);
+
+        const mainGlobalRegrex = MainMatcher.get(searchPhase, "g");
+        const similarGlobalRegrex = SimilarMatcher.get(searchPhase, "g");
+        return {
+            mains: mainResults.map((e) => {
+                return {
+                    lyricModel: e,
+                    fromHighlights:
+                        this.highlighter.highlightSpecifiedByLangSentence(
+                            e,
+                            searchPhase,
+                            fromLang,
+                            mainGlobalRegrex
+                        ),
+                    toHighlights:
+                        this.highlighter.highlightSpecifiedByLangSentence(
+                            e,
+                            searchPhase,
+                            toLang,
+                            mainGlobalRegrex
+                        ),
+                } as SearchServiceResult;
+            }),
+            similar: similarResults.map((e) => {
+                return {
+                    lyricModel: e,
+                    fromHighlights:
+                        this.highlighter.highlightSpecifiedByLangSentence(
+                            e,
+                            searchPhase,
+                            fromLang,
+                            similarGlobalRegrex
+                        ),
+                    toHighlights:
+                        this.highlighter.highlightSpecifiedByLangSentence(
+                            e,
+                            searchPhase,
+                            toLang,
+                            similarGlobalRegrex
+                        ),
+                } as SearchServiceResult;
+            }),
+        };
     }
 }

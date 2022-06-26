@@ -254,13 +254,31 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"HighlightResponse": {
+				"properties": {
+					"from": {
+						"type": "number",
+						"format": "double"
+					},
+					"to": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"from",
+					"to"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"SearchResultResponse": {
 				"properties": {
 					"lyric_id": {
 						"type": "number",
 						"format": "double"
 					},
-					"minute": {
+					"seconds": {
 						"type": "number",
 						"format": "double"
 					},
@@ -270,15 +288,29 @@
 					"to_sentence": {
 						"$ref": "#/components/schemas/LyricSentenceResponse"
 					},
+					"from_highlights": {
+						"items": {
+							"$ref": "#/components/schemas/HighlightResponse"
+						},
+						"type": "array"
+					},
+					"to_highlights": {
+						"items": {
+							"$ref": "#/components/schemas/HighlightResponse"
+						},
+						"type": "array"
+					},
 					"movie": {
 						"$ref": "#/components/schemas/MovieResponse"
 					}
 				},
 				"required": [
 					"lyric_id",
-					"minute",
+					"seconds",
 					"from_sentence",
 					"to_sentence",
+					"from_highlights",
+					"to_highlights",
 					"movie"
 				],
 				"type": "object",
@@ -796,17 +828,58 @@
 				"operationId": "Search",
 				"responses": {
 					"200": {
-						"description": "OK",
+						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/SearchResponse"
+									"properties": {
+										"similar_results": {
+											"items": {
+												"$ref": "#/components/schemas/SearchResultResponse"
+											},
+											"type": "array"
+										},
+										"main_results": {
+											"items": {
+												"$ref": "#/components/schemas/SearchResultResponse"
+											},
+											"type": "array"
+										},
+										"translations": {
+											"items": {},
+											"type": "array"
+										},
+										"response_time": {
+											"type": "number",
+											"format": "double"
+										},
+										"cached": {
+											"type": "boolean"
+										},
+										"search_phase": {
+											"type": "string"
+										},
+										"to_lang_id": {
+											"type": "string"
+										},
+										"from_lang_id": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"similar_results",
+										"main_results",
+										"translations",
+										"response_time",
+										"cached",
+										"search_phase",
+										"to_lang_id",
+										"from_lang_id"
+									],
+									"type": "object"
 								}
 							}
 						}
-					},
-					"204": {
-						"description": "No content"
 					},
 					"404": {
 						"description": "Not found",
