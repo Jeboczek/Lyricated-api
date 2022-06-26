@@ -5,6 +5,8 @@ import { Op } from "sequelize";
 import DatabaseService from "../../services/databaseService/databaseService";
 import PutLyricRequest from "../../models/request/putLyricRequest";
 import UpdateError from "../../exceptions/updateError";
+import MovieNameModel from "../../models/database/api/translations/movieNameModel";
+import EpisodeModel from "../../models/database/api/episodeModel";
 
 export interface LyricRepositoryQualityOptions {
     qualityBetterThan?: number;
@@ -15,7 +17,10 @@ export interface LyricRepositoryQualityOptions {
 export default class LyricRepository {
     private readonly modelsToIncludeWithLyricModel = [
         LyricSentenceModel,
-        MovieModel,
+        {
+            model: MovieModel,
+            include: [MovieNameModel, EpisodeModel],
+        },
     ];
 
     _createSearchSettingsForQuality(

@@ -6,27 +6,6 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"MovieNameResponse": {
-				"properties": {
-					"movie_name_id": {
-						"type": "number",
-						"format": "double"
-					},
-					"lang": {
-						"type": "string"
-					},
-					"content": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"movie_name_id",
-					"lang",
-					"content"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"EpisodeResponse": {
 				"properties": {
 					"episode_id": {
@@ -51,6 +30,64 @@
 					"season",
 					"episode",
 					"netflix_id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PutMovieRequest": {
+				"properties": {
+					"lang": {
+						"type": "string"
+					},
+					"netflix_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"minutes": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"lang",
+					"netflix_id",
+					"minutes"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ErrorResponse": {
+				"properties": {
+					"message": {
+						"type": "string"
+					},
+					"errorUUID": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"MovieNameResponse": {
+				"properties": {
+					"movie_name_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"lang": {
+						"type": "string"
+					},
+					"content": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"movie_name_id",
+					"lang",
+					"content"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -168,21 +205,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"ErrorResponse": {
-				"properties": {
-					"message": {
-						"type": "string"
-					},
-					"errorUUID": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"message"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"PutLyricRequest": {
 				"properties": {
 					"minute": {
@@ -208,28 +230,6 @@
 					"only_series"
 				],
 				"type": "string"
-			},
-			"PutMovieRequest": {
-				"properties": {
-					"lang": {
-						"type": "string"
-					},
-					"netflix_id": {
-						"type": "number",
-						"format": "double"
-					},
-					"minutes": {
-						"type": "number",
-						"format": "double"
-					}
-				},
-				"required": [
-					"lang",
-					"netflix_id",
-					"minutes"
-				],
-				"type": "object",
-				"additionalProperties": false
 			},
 			"SearchResultResponse": {
 				"properties": {
@@ -371,6 +371,86 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/episode/{id}": {
+			"put": {
+				"operationId": "PutEpisode",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EpisodeResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Episode"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PutMovieRequest"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "GetEpisode",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Episode"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
 		"/lyric/without-quality": {
 			"get": {
 				"operationId": "GetLyricWithoutQuality",
@@ -382,10 +462,10 @@
 								"schema": {
 									"anyOf": [
 										{
-											"$ref": "#/components/schemas/LyricResponse"
+											"$ref": "#/components/schemas/ErrorResponse"
 										},
 										{
-											"$ref": "#/components/schemas/ErrorResponse"
+											"$ref": "#/components/schemas/LyricResponse"
 										}
 									]
 								}
