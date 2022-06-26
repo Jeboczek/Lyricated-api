@@ -38,7 +38,33 @@ export default class SearchService {
         } = options;
 
         // Get LyricModels with queried languages
+        // This helping query is designed to select only those lyrics where the word is searched for
+        const idsWithPhase = (
+            await LyricModel.findAll({
+                include: [
+                    {
+                        model: LyricSentenceModel,
+                        where: {
+                            langId: {
+                                [Op.eq]: fromLang,
+                            },
+                            content: {
+                                [Op.like]: `%${searchPhase.slice(0, -1)}%`,
+                            },
+                        },
+                    },
+                ],
+            })
+        ).map((e) => {
+            return e.id;
+        });
+
         let lyrics = await LyricModel.findAll({
+            where: {
+                id: {
+                    [Op.in]: idsWithPhase,
+                },
+            },
             include: [
                 MovieModel,
                 {
@@ -50,7 +76,6 @@ export default class SearchService {
                     },
                 },
             ],
-            where: {},
         });
 
         lyrics = this.filterer.filter(lyrics, filterOptions);
@@ -63,9 +88,6 @@ export default class SearchService {
                 toLang,
             }
         );
-
-        console.log(mainResults);
-        console.log(similarResults);
 
         const mainGlobalRegrex = MainMatcher.get(searchPhase, "g");
         const similarGlobalRegrex = SimilarMatcher.get(searchPhase, "g");
