@@ -23,7 +23,7 @@ export default class SearchService {
             toLang,
         });
 
-        console.log(mainResults);
-        console.log(similarResults);
+        // console.log(mainResults);
+        // console.log(similarResults);
     }
 }

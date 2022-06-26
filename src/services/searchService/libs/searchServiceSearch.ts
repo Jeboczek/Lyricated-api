@@ -44,14 +44,23 @@ export default class SearchServiceSearch {
         regExp: RegExp
     ): Promise<LyricModel[]> {
         const { lyrics, fromLang } = options;
-        return lyrics.filter((e) => {
-            const fromLangSentence = e.sentences.find(
-                (e) => e.langId === fromLang
+        const promises: Promise<LyricModel | undefined>[] = [];
+
+        for (const lyric of lyrics) {
+            promises.push(
+                (async () => {
+                    const fromLangSentence = lyric.sentences.find(
+                        (lyric) => lyric.langId === fromLang
+                    );
+                    if (fromLangSentence instanceof LyricSentenceModel)
+                        if (regExp.test(fromLangSentence.content)) return lyric;
+                })()
             );
-            if (fromLangSentence instanceof LyricSentenceModel)
-                return regExp.test(fromLangSentence.content);
-            return false;
-        });
+        }
+
+        return (await Promise.all(promises)).filter(
+            (e): e is LyricModel => e !== undefined
+        ) as LyricModel[];
     }
 
     async search(
