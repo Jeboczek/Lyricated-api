@@ -9,6 +9,8 @@ import HighlightResponse from "../../models/response/highlightResponse";
 import MainMatcher from "./matchers/mainMatcher";
 import SimilarMatcher from "./matchers/similarMatcher";
 import MovieModel from "../../models/database/api/movieModel";
+import EpisodeModel from "../../models/database/api/episodeModel";
+import MovieNameModel from "../../models/database/api/translations/movieNameModel";
 
 export interface SearchServiceResult {
     lyricModel: LyricModel;
@@ -66,7 +68,7 @@ export default class SearchService {
                 },
             },
             include: [
-                MovieModel,
+                { model: MovieModel, include: [EpisodeModel, MovieNameModel] },
                 {
                     model: LyricSentenceModel,
                     where: {
