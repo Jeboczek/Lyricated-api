@@ -5,13 +5,13 @@ import LyricModel from "../../models/database/api/lyricModel";
 import LyricSentenceModel from "../../models/database/api/translations/lyricSentenceModel";
 import { Op } from "sequelize";
 import SearchServiceFilter from "./libs/searchServiceFilter";
-import MainMatcher from "./matchers/mainMatcher";
-import SimilarMatcher from "./matchers/similarMatcher";
+import MainMatcher from "./libs/matchers/mainMatcher";
+import SimilarMatcher from "./libs/matchers/similarMatcher";
 import MovieModel from "../../models/database/api/movieModel";
 import EpisodeModel from "../../models/database/api/episodeModel";
 import MovieNameModel from "../../models/database/api/translations/movieNameModel";
 import SearchServiceReturn from "./interfaces/searchServiceReturn";
-import SearchServiceResult from "./interfaces/searchServiceResult";
+import SearchServiceObjectsBuilder from "./libs/objectBuilder/searchServiceObjectBuilder";
 
 export default class SearchService {
     constructor(
@@ -81,47 +81,23 @@ export default class SearchService {
             }
         );
 
-        const mainGlobalRegrex = MainMatcher.get(searchPhase, "g");
-        const similarGlobalRegrex = SimilarMatcher.get(searchPhase, "g");
-        return {
-            mains: mainResults.map((e) => {
-                return {
-                    lyricModel: e,
-                    fromHighlights:
-                        this.highlighter.highlightSpecifiedByLangSentence(
-                            e,
-                            searchPhase,
-                            fromLang,
-                            mainGlobalRegrex
-                        ),
-                    toHighlights:
-                        this.highlighter.highlightSpecifiedByLangSentence(
-                            e,
-                            searchPhase,
-                            toLang,
-                            mainGlobalRegrex
-                        ),
-                } as SearchServiceResult;
-            }),
-            similar: similarResults.map((e) => {
-                return {
-                    lyricModel: e,
-                    fromHighlights:
-                        this.highlighter.highlightSpecifiedByLangSentence(
-                            e,
-                            searchPhase,
-                            fromLang,
-                            similarGlobalRegrex
-                        ),
-                    toHighlights:
-                        this.highlighter.highlightSpecifiedByLangSentence(
-                            e,
-                            searchPhase,
-                            toLang,
-                            similarGlobalRegrex
-                        ),
-                } as SearchServiceResult;
-            }),
-        };
+        const mainGlobalRegExp = MainMatcher.get(searchPhase, "g");
+        const similarGlobalRegExp = SimilarMatcher.get(searchPhase, "g");
+        return SearchServiceObjectsBuilder.buildReturn({
+            highlightFunction: (lyric: LyricModel, r: RegExp, lang: string) => {
+                return this.highlighter.highlightSpecifiedByLangSentence(
+                    lyric,
+                    searchPhase,
+                    lang,
+                    r
+                );
+            },
+            mainGlobalRegExp,
+            mainResults,
+            similarGlobalRegExp,
+            similarResults,
+            fromLang,
+            toLang,
+        });
     }
 }

@@ -1,7 +1,7 @@
 import LyricModel from "../../../models/database/api/lyricModel";
 import LyricSentenceModel from "../../../models/database/api/translations/lyricSentenceModel";
-import MainMatcher from "../matchers/mainMatcher";
-import SimilarMatcher from "../matchers/similarMatcher";
+import MainMatcher from "./matchers/mainMatcher";
+import SimilarMatcher from "./matchers/similarMatcher";
 
 export interface SearchServiceOptions {
     searchPhase: string;
