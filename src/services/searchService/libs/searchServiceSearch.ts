@@ -1,5 +1,7 @@
 import LyricModel from "../../../models/database/api/lyricModel";
 import LyricSentenceModel from "../../../models/database/api/translations/lyricSentenceModel";
+import MainMatcher from "../matchers/mainMatcher";
+import SimilarMatcher from "../matchers/similarMatcher";
 
 export interface SearchServiceOptions {
     searchPhase: string;
@@ -18,26 +20,6 @@ interface SearchServiceResultGetterOptions {
 }
 
 export default class SearchServiceSearch {
-    private _getSimiliarRegExpForSearchPhase(searchPhase: string): RegExp {
-        if (searchPhase.length === 4)
-            return new RegExp(
-                `\\b\\S${searchPhase}\\S*|\\b\\S?${searchPhase}?[^${searchPhase.slice(
-                    -1
-                )}.,?! ]\\S*`
-            );
-
-        if (searchPhase.length > 4)
-            return new RegExp(
-                `\\b\\S${searchPhase}\\S*|\\b\\S?${searchPhase}?[^${searchPhase.slice(
-                    -1
-                )}.,?! ]\\S*|\\b${searchPhase.slice(0, -1)}\\b`
-            );
-
-        return new RegExp(
-            `"\\b\\S${searchPhase}\\S?[^\\s]*|\\b\\S?${searchPhase}[^.,?! ][^\\s]*"`
-        );
-    }
-
     private async _getResults(
         options: SearchServiceResultGetterOptions,
         regExp: RegExp
@@ -72,9 +54,8 @@ export default class SearchServiceSearch {
         lyrics = lyrics.filter((e) => e.sentences.length === 2);
 
         // Get main and similar results
-        const mainRegExp = new RegExp(`\\b${searchPhase}\\b[^']`);
-        const similarRegExp =
-            this._getSimiliarRegExpForSearchPhase(searchPhase);
+        const mainRegExp = MainMatcher.get(searchPhase);
+        const similarRegExp = SimilarMatcher.get(searchPhase);
 
         const resultGetterOptions: SearchServiceResultGetterOptions = {
             fromLang,
