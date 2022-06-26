@@ -7,20 +7,20 @@ export default class LyricResponse {
     public lyric_id: number;
     public movie: MovieResponse;
     public episode: EpisodeResponse | null;
-    public minute: number;
+    public seconds: number;
     public quality: number | null;
     public sentences: LyricSentenceResponse[];
 
     static fromModel(model: LyricModel) {
         const resp = new LyricResponse();
 
-        const { id, movie, minute, quality, sentences, episode } = model;
+        const { id, movie, seconds, quality, sentences, episode } = model;
 
         resp.lyric_id = id;
         resp.movie = MovieResponse.fromModel(movie);
         resp.episode = EpisodeResponse.fromModel(episode);
         resp.quality = quality;
-        resp.minute = minute;
+        resp.seconds = seconds;
         resp.sentences = sentences.map((e) =>
             LyricSentenceResponse.fromModel(e)
         );

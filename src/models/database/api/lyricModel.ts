@@ -32,7 +32,7 @@ export default class LyricModel extends Model {
     episodeId: number | null;
 
     @Column({ type: DataType.INTEGER, allowNull: false, defaultValue: 0 })
-    minute: number;
+    seconds: number;
 
     @Column({ type: DataType.SMALLINT, allowNull: true })
     quality: number | null;
