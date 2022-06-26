@@ -30,7 +30,11 @@ export default class DatabaseService {
                 EpisodeModel,
                 ErrorModel,
             ],
-            define: { timestamps: false },
+            define: {
+                timestamps: false,
+                charset: "utf8",
+                collate: "utf8_general_ci",
+            },
             logging: true,
             storage: storage,
             host: host,
