@@ -75,9 +75,9 @@ export class LyricController extends Controller {
     @Response<ErrorResponse>(404, "Not found")
     public async putLyric(
         @Path("id") id: number,
-        @Body() reqBody: PutLyricRequest
+        @Body() request: PutLyricRequest
     ) {
-        const lyric = await this.repo.updateLyric(id, reqBody);
+        const lyric = await this.repo.updateLyric(id, request);
 
         return LyricResponse.fromModel(lyric);
     }

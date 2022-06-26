@@ -51,9 +51,9 @@ export class MovieController extends Controller {
     @Response<MovieResponse>(200, "OK")
     public async putMovie(
         @Path("id") movieId: number,
-        @Body() reqBody: PutMovieRequest
+        @Body() request: PutMovieRequest
     ) {
-        const updatedMovie = await this.repo.updateMovie(movieId, reqBody);
+        const updatedMovie = await this.repo.updateMovie(movieId, request);
         return MovieResponse.fromModel(updatedMovie);
     }
 }
