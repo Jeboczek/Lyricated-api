@@ -20,6 +20,7 @@ export default class LyricModel extends Model {
         allowNull: false,
         unique: true,
         primaryKey: true,
+        autoIncrement: true,
     })
     id: number;
 
