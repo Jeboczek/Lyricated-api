@@ -133,6 +133,14 @@
 					"movie": {
 						"$ref": "#/components/schemas/MovieResponse"
 					},
+					"episode": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/EpisodeResponse"
+							}
+						],
+						"nullable": true
+					},
 					"minute": {
 						"type": "number",
 						"format": "double"
@@ -152,6 +160,7 @@
 				"required": [
 					"lyric_id",
 					"movie",
+					"episode",
 					"minute",
 					"quality",
 					"sentences"

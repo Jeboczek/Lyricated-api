@@ -64,6 +64,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "lyric_id": {"dataType":"double","required":true},
             "movie": {"ref":"MovieResponse","required":true},
+            "episode": {"dataType":"union","subSchemas":[{"ref":"EpisodeResponse"},{"dataType":"enum","enums":[null]}],"required":true},
             "minute": {"dataType":"double","required":true},
             "quality": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
             "sentences": {"dataType":"array","array":{"dataType":"refObject","ref":"LyricSentenceResponse"},"required":true},

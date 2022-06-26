@@ -38,7 +38,7 @@ export default class MovieModel extends Model {
     })
     netflixId: number;
 
-    @Column(DataType.TINYINT)
+    @Column(DataType.INTEGER)
     minutes: number; // 140
 
     @HasMany(() => MovieNameModel)
