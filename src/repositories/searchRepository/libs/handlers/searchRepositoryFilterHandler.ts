@@ -1,8 +1,8 @@
-import AbstractHandler from "./abstractHandler";
+import SearchRepositoryAbstractHandler from "./searchRepositoryAbstractHandler";
 import SearchRepositoryState from "../../interfaces/searchRepositoryState";
 import SearchRepositoryResult from "../../interfaces/searchRepositoryResult";
 
-export default class FilterHandler extends AbstractHandler {
+export default class SearchRepositoryFilterHandler extends SearchRepositoryAbstractHandler {
     private _hideCurses(
         result: SearchRepositoryResult[],
         // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -1,7 +1,7 @@
 import LyricModel from "../../../../models/database/api/lyricModel";
 import LyricSentenceModel from "../../../../models/database/api/translations/lyricSentenceModel";
 import SearchRepositoryState from "../../interfaces/searchRepositoryState";
-import AbstractHandler from "./abstractHandler";
+import SearchRepositoryAbstractHandler from "./searchRepositoryAbstractHandler";
 import MainMatcher from "../matchers/mainMatcher";
 import SimilarMatcher from "../matchers/similarMatcher";
 import { Op } from "sequelize";
@@ -26,7 +26,7 @@ interface SearchRepositoryResultGetterOptions {
     lyrics: LyricModel[];
 }
 
-export default class SearchHandler extends AbstractHandler {
+export default class SearchRepositorySearchHandler extends SearchRepositoryAbstractHandler {
     private async _getResults(
         options: SearchRepositoryResultGetterOptions,
         regExp: RegExp

@@ -1,9 +1,11 @@
 import SearchRepositoryState from "../../interfaces/searchRepositoryState";
 
-export default abstract class AbstractHandler {
-    private nextHandler: AbstractHandler;
+export default abstract class SearchRepositoryAbstractHandler {
+    private nextHandler: SearchRepositoryAbstractHandler;
 
-    public setNext(handler: AbstractHandler): AbstractHandler {
+    public setNext(
+        handler: SearchRepositoryAbstractHandler
+    ): SearchRepositoryAbstractHandler {
         this.nextHandler = handler;
         return handler;
     }

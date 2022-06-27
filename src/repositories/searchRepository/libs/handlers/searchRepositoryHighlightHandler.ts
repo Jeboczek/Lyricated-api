@@ -2,10 +2,10 @@ import HighlightResponse from "../../../../models/response/highlightResponse";
 import LyricSentenceModel from "../../../../models/database/api/translations/lyricSentenceModel";
 import LyricModel from "../../../../models/database/api/lyricModel";
 import SearchRepositoryState from "../../interfaces/searchRepositoryState";
-import AbstractHandler from "./abstractHandler";
+import SearchRepositoryAbstractHandler from "./searchRepositoryAbstractHandler";
 import MainMatcher from "../matchers/mainMatcher";
 
-export default class HighlightHandler extends AbstractHandler {
+export default class SearchRepositoryHighlightHandler extends SearchRepositoryAbstractHandler {
     highlightSpecifiedByLangSentence(
         lyric: LyricModel,
         searchPhase: string,
