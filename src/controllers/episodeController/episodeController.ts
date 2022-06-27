@@ -16,7 +16,7 @@ export class EpisodeController extends Controller {
     }
 
     @Put("{id}")
-    @Response<EpisodeResponse>(200, "Not Found")
+    @Response<EpisodeResponse>(200, "")
     public async putEpisode(
         @Path("id") id: number,
         @Body() request: PutEpisodeRequest

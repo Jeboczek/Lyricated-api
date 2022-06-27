@@ -6,6 +6,74 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"CurseResponse": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"content": {
+						"type": "string"
+					},
+					"lang": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"content",
+					"lang"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ErrorResponse": {
+				"properties": {
+					"message": {
+						"type": "string"
+					},
+					"errorUUID": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PutCurseRequest": {
+				"properties": {
+					"lang": {
+						"type": "string"
+					},
+					"content": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"lang",
+					"content"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PostCurseRequest": {
+				"properties": {
+					"lang": {
+						"type": "string"
+					},
+					"content": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"lang",
+					"content"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"EpisodeResponse": {
 				"properties": {
 					"episode_id": {
@@ -53,21 +121,6 @@
 					"episode",
 					"season",
 					"netflixId"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"ErrorResponse": {
-				"properties": {
-					"message": {
-						"type": "string"
-					},
-					"errorUUID": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"message"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -412,6 +465,163 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/curse/{id}": {
+			"put": {
+				"operationId": "PutCurse",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CurseResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Curse"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PutCurseRequest"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "GetCurse",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CurseResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Curse"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/curse/add": {
+			"post": {
+				"operationId": "PostCurse",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CurseResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Curse"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PostCurseRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/curse": {
+			"get": {
+				"operationId": "GetCurses",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"curses": {
+											"items": {
+												"$ref": "#/components/schemas/CurseResponse"
+											},
+											"type": "array"
+										}
+									},
+									"required": [
+										"curses"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Curse"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
 		"/episode/{id}": {
 			"put": {
 				"operationId": "PutEpisode",
