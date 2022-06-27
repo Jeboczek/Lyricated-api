@@ -392,6 +392,31 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/episode/:id',
+            ...(fetchMiddlewares<RequestHandler>(EpisodeController)),
+            ...(fetchMiddlewares<RequestHandler>(EpisodeController.prototype.deleteEpisode)),
+
+            function EpisodeController_deleteEpisode(request: any, response: any, next: any) {
+            const args = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new EpisodeController();
+
+
+              const promise = controller.deleteEpisode.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/lyric/without-quality',
             ...(fetchMiddlewares<RequestHandler>(LyricController)),
             ...(fetchMiddlewares<RequestHandler>(LyricController.prototype.getLyricWithoutQuality)),

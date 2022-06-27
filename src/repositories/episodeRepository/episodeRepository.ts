@@ -1,6 +1,7 @@
 import EpisodeModel from "../../models/database/api/episodeModel";
 import PutEpisodeRequest from "../../models/request/putEpisodeRequest";
 import UpdateError from "../../exceptions/updateError";
+import DeleteError from "../../exceptions/deleteError";
 
 export default class EpisodeRepository {
     getEpisode(id: number): Promise<EpisodeModel | null> {
@@ -22,5 +23,14 @@ export default class EpisodeRepository {
         episodeModel.netflixId = netflixId;
 
         return await episodeModel.save();
+    }
+
+    async deleteEpisode(id: number): Promise<EpisodeModel> {
+        const episode = await EpisodeModel.findByPk(id);
+        if (episode === null)
+            throw new DeleteError("There is no EpisodeModel with the given id");
+
+        await episode.destroy();
+        return episode;
     }
 }

@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Path, Put, Response, Route, Tags } from "tsoa";
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Path,
+    Put,
+    Response,
+    Route,
+    Tags,
+} from "tsoa";
 import EpisodeRepository from "../../repositories/episodeRepository/episodeRepository";
 import EpisodeResponse from "../../models/response/episodeResponse";
 import ErrorResponse from "../../models/response/errors/errorResponse";
@@ -33,6 +43,14 @@ export class EpisodeController extends Controller {
 
         if (episode === null) throw new NotFoundError();
 
+        return EpisodeResponse.fromModel(episode);
+    }
+
+    @Delete("{id}")
+    @Response<EpisodeResponse>(200, "OK")
+    @Response<ErrorResponse>(404, "Not Found")
+    public async deleteEpisode(@Path("id") id: number) {
+        const episode = await this.repo.deleteEpisode(id);
         return EpisodeResponse.fromModel(episode);
     }
 }
