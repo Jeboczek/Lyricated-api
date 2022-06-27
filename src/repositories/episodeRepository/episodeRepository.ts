@@ -4,6 +4,7 @@ import UpdateError from "../../exceptions/updateError";
 import DeleteError from "../../exceptions/deleteError";
 import PostEpisodeRequest from "../../models/request/postEpisodeRequest";
 import CreateError from "../../exceptions/createError";
+import Locale from "../../locale/locale";
 
 export default class EpisodeRepository {
     getEpisode(id: number): Promise<EpisodeModel | null> {
@@ -17,7 +18,7 @@ export default class EpisodeRepository {
         const episodeModel = await EpisodeModel.findByPk(id);
 
         if (episodeModel === null)
-            throw new UpdateError("There is no EpisodeModel with the given id");
+            throw new UpdateError(Locale.createNotFoundErrorText("Episode"));
 
         const { season, episode, netflixId } = request;
         episodeModel.episode = episode;
@@ -30,7 +31,7 @@ export default class EpisodeRepository {
     async deleteEpisode(id: number): Promise<EpisodeModel> {
         const episode = await EpisodeModel.findByPk(id);
         if (episode === null)
-            throw new DeleteError("There is no EpisodeModel with the given id");
+            throw new DeleteError(Locale.createNotFoundErrorText("Episode"));
 
         await episode.destroy();
         return episode;
@@ -47,7 +48,9 @@ export default class EpisodeRepository {
                 movieId,
             });
         } catch (e) {
-            throw new CreateError("There is no MovieModel with the given id");
+            throw new CreateError(
+                Locale.createCreateErrorText("Episode", "check the given movie")
+            );
         }
     }
 }

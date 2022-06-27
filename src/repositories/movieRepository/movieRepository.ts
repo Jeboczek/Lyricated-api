@@ -5,6 +5,7 @@ import { PutMovieRequest } from "../../models/request/putMovieRequest";
 import UpdateError from "../../exceptions/updateError";
 import LangModel from "../../models/database/api/langModel";
 import MovieType from "../../models/enums/movieTypeEnum";
+import Locale from "../../locale/locale";
 
 export default class MovieRepository {
     async getMovies(type?: MovieType): Promise<MovieModel[]> {
@@ -43,11 +44,9 @@ export default class MovieRepository {
         });
 
         if (movieToUpdate === null)
-            throw new UpdateError("Unable to find a movie with the given id");
+            throw new UpdateError(Locale.createNotFoundErrorText("Movie"));
         if (newLang === null)
-            throw new UpdateError(
-                "There is no language you provided, create it first"
-            );
+            throw new UpdateError(Locale.createObjectFirstText("Lang"));
 
         return movieToUpdate.update({
             lang: newLang,

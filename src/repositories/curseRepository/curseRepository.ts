@@ -4,6 +4,8 @@ import PutCurseRequest from "../../models/request/putCurseRequest";
 import UpdateError from "../../exceptions/updateError";
 import PostCurseRequest from "../../models/request/postCurseRequest";
 import DeleteError from "../../exceptions/deleteError";
+import CreateError from "../../exceptions/createError";
+import Locale from "../../locale/locale";
 
 export default class CurseRepository {
     async getCurses(onlyLang?: string): Promise<CurseModel[]> {
@@ -34,31 +36,49 @@ export default class CurseRepository {
         });
 
         if (curse === null)
-            throw new UpdateError("There is no CurseModel with the given id");
+            throw new UpdateError(Locale.createNotFoundErrorText("Curse"));
 
         const { lang: langId, content } = request;
 
-        return await curse.update({
-            langId,
-            content,
-        });
+        try {
+            return await curse.update({
+                langId,
+                content,
+            });
+        } catch (e) {
+            throw new UpdateError(Locale.createUpdateErrorText("Curse"));
+        }
     }
 
     async createCurse(request: PostCurseRequest): Promise<CurseModel> {
         const { content, lang } = request;
 
-        return await CurseModel.create({
-            content,
-            langId: lang,
-        });
+        try {
+            return await CurseModel.create({
+                content,
+                langId: lang,
+            });
+        } catch (e) {
+            throw new CreateError(
+                Locale.createCreateErrorText(
+                    "Curse",
+                    "check the language provided"
+                )
+            );
+        }
     }
 
     async deleteCurse(id: number): Promise<CurseModel> {
         const curse = await CurseModel.findByPk(id);
 
         if (curse === null)
-            throw new DeleteError("There is no CurseModel with the given id");
-        await curse.destroy();
+            throw new DeleteError(Locale.createNotFoundErrorText("Curse"));
+
+        try {
+            await curse.destroy();
+        } catch (e) {
+            throw new DeleteError(Locale.createDeleteErrorText("Curse"));
+        }
 
         return curse;
     }

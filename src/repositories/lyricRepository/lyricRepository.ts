@@ -7,6 +7,7 @@ import PutLyricRequest from "../../models/request/putLyricRequest";
 import UpdateError from "../../exceptions/updateError";
 import MovieNameModel from "../../models/database/api/translations/movieNameModel";
 import EpisodeModel from "../../models/database/api/episodeModel";
+import Locale from "../../locale/locale";
 
 export interface LyricRepositoryQualityOptions {
     qualityBetterThan?: number;
@@ -86,7 +87,7 @@ export default class LyricRepository {
         });
 
         if (lyric === null)
-            throw new UpdateError("Unable to find a movie with the given id");
+            throw new UpdateError(Locale.createNotFoundErrorText("Movie"));
 
         const { minute, quality } = newData;
 
