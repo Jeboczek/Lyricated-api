@@ -266,6 +266,31 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/curse/:id',
+            ...(fetchMiddlewares<RequestHandler>(CurseController)),
+            ...(fetchMiddlewares<RequestHandler>(CurseController.prototype.deleteCurse)),
+
+            function CurseController_deleteCurse(request: any, response: any, next: any) {
+            const args = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new CurseController();
+
+
+              const promise = controller.deleteCurse.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/curse/add',
             ...(fetchMiddlewares<RequestHandler>(CurseController)),
             ...(fetchMiddlewares<RequestHandler>(CurseController.prototype.postCurse)),
@@ -291,7 +316,7 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/curse',
+        app.get('/curse/find',
             ...(fetchMiddlewares<RequestHandler>(CurseController)),
             ...(fetchMiddlewares<RequestHandler>(CurseController.prototype.getCurses)),
 

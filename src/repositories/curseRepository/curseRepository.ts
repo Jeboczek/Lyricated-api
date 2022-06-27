@@ -3,6 +3,7 @@ import NotFoundError from "../../exceptions/notFoundError";
 import PutCurseRequest from "../../models/request/putCurseRequest";
 import UpdateError from "../../exceptions/updateError";
 import PostCurseRequest from "../../models/request/postCurseRequest";
+import DeleteError from "../../exceptions/deleteError";
 
 export default class CurseRepository {
     async getCurses(): Promise<CurseModel[]> {
@@ -47,5 +48,15 @@ export default class CurseRepository {
             content,
             langId: lang,
         });
+    }
+
+    async deleteCurse(id: number): Promise<CurseModel> {
+        const curse = await CurseModel.findByPk(id);
+
+        if (curse === null)
+            throw new DeleteError("There is no CurseModel with the given id");
+        await curse.destroy();
+
+        return curse;
     }
 }

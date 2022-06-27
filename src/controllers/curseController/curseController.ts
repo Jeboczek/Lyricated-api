@@ -1,6 +1,7 @@
 import {
     Body,
     Controller,
+    Delete,
     Get,
     Path,
     Post,
@@ -27,7 +28,7 @@ export class CurseController extends Controller {
     }
 
     @Put("{id}")
-    @Response<CurseResponse>(200, "")
+    @Response<CurseResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Not found")
     public async putCurse(
         @Path("id") id: number,
@@ -48,15 +49,23 @@ export class CurseController extends Controller {
         return CurseResponse.fromModel(curse);
     }
 
+    @Delete("{id}")
+    @Response<CurseResponse>(200, "OK")
+    @Response<ErrorResponse>(404, "Not Found")
+    public async deleteCurse(@Path("id") id: number) {
+        const curse = await this.repo.deleteCurse(id);
+        return CurseResponse.fromModel(curse);
+    }
+
     @Post("add")
-    @Response<CurseResponse>(200, "")
+    @Response<CurseResponse>(200, "OK")
     public async postCurse(@Body() request: PostCurseRequest) {
         const newCurse = await this.repo.addCurse(request);
         return CurseResponse.fromModel(newCurse);
     }
 
-    @Get("")
-    @Response<{ curses: CurseResponse[] }>(200, "")
+    @Get("find")
+    @Response<{ curses: CurseResponse[] }>(200, "OK")
     public async getCurses(): Promise<{ curses: CurseResponse[] }> {
         const curses = await this.repo.getCurses();
         return {

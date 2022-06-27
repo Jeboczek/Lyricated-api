@@ -555,6 +555,46 @@
 						}
 					}
 				]
+			},
+			"delete": {
+				"operationId": "DeleteCurse",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CurseResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Curse"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/curse/add": {
@@ -589,7 +629,7 @@
 				}
 			}
 		},
-		"/curse": {
+		"/curse/find": {
 			"get": {
 				"operationId": "GetCurses",
 				"responses": {
