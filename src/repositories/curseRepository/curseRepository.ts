@@ -6,8 +6,10 @@ import PostCurseRequest from "../../models/request/postCurseRequest";
 import DeleteError from "../../exceptions/deleteError";
 
 export default class CurseRepository {
-    async getCurses(): Promise<CurseModel[]> {
-        return await CurseModel.findAll();
+    async getCurses(onlyLang?: string): Promise<CurseModel[]> {
+        let where = {};
+        if (onlyLang !== undefined) where = { langId: onlyLang };
+        return await CurseModel.findAll({ where });
     }
 
     async getCurse(id: number): Promise<CurseModel> {

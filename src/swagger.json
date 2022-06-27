@@ -27,6 +27,22 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"PostCurseRequest": {
+				"properties": {
+					"lang": {
+						"type": "string"
+					},
+					"content": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"lang",
+					"content"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"ErrorResponse": {
 				"properties": {
 					"message": {
@@ -43,22 +59,6 @@
 				"additionalProperties": false
 			},
 			"PutCurseRequest": {
-				"properties": {
-					"lang": {
-						"type": "string"
-					},
-					"content": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"lang",
-					"content"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"PostCurseRequest": {
 				"properties": {
 					"lang": {
 						"type": "string"
@@ -465,6 +465,80 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/curse/add": {
+			"post": {
+				"operationId": "PostCurse",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CurseResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Curse"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PostCurseRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/curse/find": {
+			"get": {
+				"operationId": "GetCurses",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"curses": {
+											"items": {
+												"$ref": "#/components/schemas/CurseResponse"
+											},
+											"type": "array"
+										}
+									},
+									"required": [
+										"curses"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Curse"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "only_lang",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/curse/{id}": {
 			"put": {
 				"operationId": "PutCurse",
@@ -595,71 +669,6 @@
 						}
 					}
 				]
-			}
-		},
-		"/curse/add": {
-			"post": {
-				"operationId": "PostCurse",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/CurseResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Curse"
-				],
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/PostCurseRequest"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/curse/find": {
-			"get": {
-				"operationId": "GetCurses",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"curses": {
-											"items": {
-												"$ref": "#/components/schemas/CurseResponse"
-											},
-											"type": "array"
-										}
-									},
-									"required": [
-										"curses"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Curse"
-				],
-				"security": [],
-				"parameters": []
 			}
 		},
 		"/episode/{id}": {

@@ -6,6 +6,7 @@ import {
     Path,
     Post,
     Put,
+    Query,
     Response,
     Route,
     Tags,
@@ -25,6 +26,26 @@ export class CurseController extends Controller {
     constructor(repo?: CurseRepository) {
         super();
         this.repo = repo ?? new CurseRepository();
+    }
+
+    @Post("add")
+    @Response<CurseResponse>(200, "OK")
+    public async postCurse(@Body() request: PostCurseRequest) {
+        const newCurse = await this.repo.addCurse(request);
+        return CurseResponse.fromModel(newCurse);
+    }
+
+    @Get("find")
+    @Response<{ curses: CurseResponse[] }>(200, "OK")
+    public async getCurses(
+        @Query("only_lang") onlyLang?: string
+    ): Promise<{ curses: CurseResponse[] }> {
+        const curses = await this.repo.getCurses(onlyLang);
+        return {
+            curses: curses.map((e) => {
+                return CurseResponse.fromModel(e);
+            }),
+        };
     }
 
     @Put("{id}")
@@ -55,23 +76,5 @@ export class CurseController extends Controller {
     public async deleteCurse(@Path("id") id: number) {
         const curse = await this.repo.deleteCurse(id);
         return CurseResponse.fromModel(curse);
-    }
-
-    @Post("add")
-    @Response<CurseResponse>(200, "OK")
-    public async postCurse(@Body() request: PostCurseRequest) {
-        const newCurse = await this.repo.addCurse(request);
-        return CurseResponse.fromModel(newCurse);
-    }
-
-    @Get("find")
-    @Response<{ curses: CurseResponse[] }>(200, "OK")
-    public async getCurses(): Promise<{ curses: CurseResponse[] }> {
-        const curses = await this.repo.getCurses();
-        return {
-            curses: curses.map((e) => {
-                return CurseResponse.fromModel(e);
-            }),
-        };
     }
 }

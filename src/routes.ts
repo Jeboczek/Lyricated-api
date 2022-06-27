@@ -28,6 +28,15 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PostCurseRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "lang": {"dataType":"string","required":true},
+            "content": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ErrorResponse": {
         "dataType": "refObject",
         "properties": {
@@ -38,15 +47,6 @@ const models: TsoaRoute.Models = {
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "PutCurseRequest": {
-        "dataType": "refObject",
-        "properties": {
-            "lang": {"dataType":"string","required":true},
-            "content": {"dataType":"string","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "PostCurseRequest": {
         "dataType": "refObject",
         "properties": {
             "lang": {"dataType":"string","required":true},
@@ -215,6 +215,56 @@ export function RegisterRoutes(app: express.Router) {
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
+        app.post('/curse/add',
+            ...(fetchMiddlewares<RequestHandler>(CurseController)),
+            ...(fetchMiddlewares<RequestHandler>(CurseController.prototype.postCurse)),
+
+            function CurseController_postCurse(request: any, response: any, next: any) {
+            const args = {
+                    request: {"in":"body","name":"request","required":true,"ref":"PostCurseRequest"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new CurseController();
+
+
+              const promise = controller.postCurse.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/curse/find',
+            ...(fetchMiddlewares<RequestHandler>(CurseController)),
+            ...(fetchMiddlewares<RequestHandler>(CurseController.prototype.getCurses)),
+
+            function CurseController_getCurses(request: any, response: any, next: any) {
+            const args = {
+                    onlyLang: {"in":"query","name":"only_lang","dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new CurseController();
+
+
+              const promise = controller.getCurses.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.put('/curse/:id',
             ...(fetchMiddlewares<RequestHandler>(CurseController)),
             ...(fetchMiddlewares<RequestHandler>(CurseController.prototype.putCurse)),
@@ -285,55 +335,6 @@ export function RegisterRoutes(app: express.Router) {
 
 
               const promise = controller.deleteCurse.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, undefined, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/curse/add',
-            ...(fetchMiddlewares<RequestHandler>(CurseController)),
-            ...(fetchMiddlewares<RequestHandler>(CurseController.prototype.postCurse)),
-
-            function CurseController_postCurse(request: any, response: any, next: any) {
-            const args = {
-                    request: {"in":"body","name":"request","required":true,"ref":"PostCurseRequest"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new CurseController();
-
-
-              const promise = controller.postCurse.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, undefined, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/curse/find',
-            ...(fetchMiddlewares<RequestHandler>(CurseController)),
-            ...(fetchMiddlewares<RequestHandler>(CurseController.prototype.getCurses)),
-
-            function CurseController_getCurses(request: any, response: any, next: any) {
-            const args = {
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new CurseController();
-
-
-              const promise = controller.getCurses.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
