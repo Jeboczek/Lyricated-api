@@ -52,7 +52,7 @@ export default class SearchRepositoryHighlightHandler extends SearchRepositoryAb
                     r
                 );
 
-                // TODO: Matcher for similar result's
+                // TODO: Matcher for translated words
             }
         }
         return await super.handle(state);
