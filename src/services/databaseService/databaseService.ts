@@ -9,6 +9,7 @@ import EpisodeModel from "../../models/database/api/episodeModel";
 import LyricModel from "../../models/database/api/lyricModel";
 import LyricSentenceModel from "../../models/database/api/translations/lyricSentenceModel";
 import ErrorModel from "../../models/database/error/errorModel";
+import CurseModel from "../../models/database/api/curseModel";
 
 export default class DatabaseService {
     private static instance: DatabaseService;
@@ -29,6 +30,7 @@ export default class DatabaseService {
                 MovieNameModel,
                 EpisodeModel,
                 ErrorModel,
+                CurseModel,
             ],
             define: {
                 timestamps: false,
