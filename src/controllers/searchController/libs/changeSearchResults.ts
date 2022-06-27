@@ -1,9 +1,9 @@
 import SearchResultResponse from "../../../models/response/searchResultResponse";
 import LyricResponse from "../../../models/response/lyricResponse";
-import SearchServiceResult from "../../../services/searchService/interfaces/searchServiceResult";
+import SearchRepositoryResult from "../../../repositories/searchRepository/interfaces/searchRepositoryResult";
 
 export default class ChangeSearchResults {
-    static change(result: SearchServiceResult[]): SearchResultResponse[] {
+    static change(result: SearchRepositoryResult[]): SearchResultResponse[] {
         return result.map((e) => {
             const { fromHighlights, toHighlights, lyricModel } = e;
 

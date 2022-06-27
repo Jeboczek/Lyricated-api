@@ -1,7 +1,7 @@
 import LyricModel from "../../../models/database/api/lyricModel";
 import { SearchRequestFilterOptions } from "../../../models/request/searchRequest";
 
-export default class SearchServiceFilter {
+export default class SearchRepositoryFilter {
     private _hideCurses(
         lyrics: LyricModel[],
         // eslint-disable-next-line @typescript-eslint/no-unused-vars

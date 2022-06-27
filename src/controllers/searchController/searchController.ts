@@ -2,17 +2,24 @@ import { Body, Controller, Post, Response, Route, Tags } from "tsoa";
 import ErrorResponse from "../../models/response/errors/errorResponse";
 import SearchResponse from "../../models/response/searchResponse";
 import SearchRequest from "../../models/request/searchRequest";
-import SearchService from "../../services/searchService/searchService";
 import ChangeSearchResults from "./libs/changeSearchResults";
+import SearchRepository from "../../repositories/searchRepository/searchRepository";
 
 @Route("search")
 @Tags("Search")
 export class SearchController extends Controller {
+    private repo: SearchRepository;
+
+    constructor(repo?: SearchRepository) {
+        super();
+        this.repo = repo ?? new SearchRepository();
+    }
+
     @Post("")
     @Response<SearchResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Not found")
     async search(@Body() options: SearchRequest) {
-        const searchValue = await new SearchService().search(options);
+        const searchValue = await this.repo.search(options);
 
         const {
             from_lang_id: fromLang,

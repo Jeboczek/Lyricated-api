@@ -2,7 +2,7 @@ import HighlightResponse from "../../../models/response/highlightResponse";
 import LyricSentenceModel from "../../../models/database/api/translations/lyricSentenceModel";
 import LyricModel from "../../../models/database/api/lyricModel";
 
-export default class SearchServiceHighlight {
+export default class SearchRepositoryHighlight {
     highlightSpecifiedByLangSentence(
         lyric: LyricModel,
         searchPhase: string,

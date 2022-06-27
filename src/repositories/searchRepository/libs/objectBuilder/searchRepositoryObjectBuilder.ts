@@ -1,5 +1,5 @@
-import SearchServiceReturn from "../../interfaces/searchServiceReturn";
-import SearchServiceResult from "../../interfaces/searchServiceResult";
+import SearchRepositoryReturn from "../../interfaces/searchRepositoryReturn";
+import SearchRepositoryResult from "../../interfaces/searchRepositoryResult";
 import LyricModel from "../../../../models/database/api/lyricModel";
 import HighlightResponse from "../../../../models/response/highlightResponse";
 
@@ -17,7 +17,7 @@ export interface SearchServiceReturnBuilderOptions {
     toLang: string;
 }
 
-export interface SearchServiceResultBuilderOptions {
+export interface SearchRepositoryResultBuilderOptions {
     lyric: LyricModel;
     r: RegExp;
     highlightFunction: (
@@ -29,22 +29,22 @@ export interface SearchServiceResultBuilderOptions {
     toLang: string;
 }
 
-export default class SearchServiceObjectsBuilder {
+export default class SearchRepositoryObjectsBuilder {
     static buildResult(
-        options: SearchServiceResultBuilderOptions
-    ): SearchServiceResult {
+        options: SearchRepositoryResultBuilderOptions
+    ): SearchRepositoryResult {
         const { lyric, highlightFunction, r, fromLang, toLang } = options;
 
         return {
             lyricModel: lyric,
             fromHighlights: highlightFunction(lyric, r, fromLang),
             toHighlights: highlightFunction(lyric, r, toLang),
-        } as SearchServiceResult;
+        } as SearchRepositoryResult;
     }
 
     static buildReturn(
         options: SearchServiceReturnBuilderOptions
-    ): SearchServiceReturn {
+    ): SearchRepositoryReturn {
         const {
             mainGlobalRegExp,
             mainResults,
@@ -56,7 +56,7 @@ export default class SearchServiceObjectsBuilder {
         } = options;
         return {
             mains: mainResults.map((lyric) =>
-                SearchServiceObjectsBuilder.buildResult({
+                SearchRepositoryObjectsBuilder.buildResult({
                     lyric,
                     r: mainGlobalRegExp,
                     highlightFunction,
@@ -65,7 +65,7 @@ export default class SearchServiceObjectsBuilder {
                 })
             ),
             similar: similarResults.map((lyric) =>
-                SearchServiceObjectsBuilder.buildResult({
+                SearchRepositoryObjectsBuilder.buildResult({
                     lyric,
                     r: similarGlobalRegExp,
                     highlightFunction,

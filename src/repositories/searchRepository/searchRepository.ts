@@ -1,27 +1,27 @@
-import SearchServiceSearch from "./libs/searchServiceSearch";
-import SearchServiceHighlight from "./libs/searchServiceHighlight";
+import SearchRepositorySearch from "./libs/searchRepositorySearch";
+import SearchRepositoryHighlight from "./libs/searchRepositoryHighlight";
 import SearchRequest from "../../models/request/searchRequest";
 import LyricModel from "../../models/database/api/lyricModel";
 import LyricSentenceModel from "../../models/database/api/translations/lyricSentenceModel";
 import { Op } from "sequelize";
-import SearchServiceFilter from "./libs/searchServiceFilter";
+import SearchRepositoryFilter from "./libs/searchRepositoryFilter";
 import MainMatcher from "./libs/matchers/mainMatcher";
 import SimilarMatcher from "./libs/matchers/similarMatcher";
 import MovieModel from "../../models/database/api/movieModel";
 import EpisodeModel from "../../models/database/api/episodeModel";
 import MovieNameModel from "../../models/database/api/translations/movieNameModel";
-import SearchServiceReturn from "./interfaces/searchServiceReturn";
-import SearchServiceObjectsBuilder from "./libs/objectBuilder/searchServiceObjectBuilder";
+import SearchRepositoryReturn from "./interfaces/searchRepositoryReturn";
+import SearchRepositoryObjectsBuilder from "./libs/objectBuilder/searchRepositoryObjectBuilder";
 
-export default class SearchService {
+export default class SearchRepository {
     constructor(
-        private searcher: SearchServiceSearch = new SearchServiceSearch(),
-        private filterer: SearchServiceFilter = new SearchServiceFilter(),
-        private highlighter: SearchServiceHighlight = new SearchServiceHighlight(),
-        private sorter: SearchServiceHighlight = new SearchServiceHighlight()
+        private searcher: SearchRepositorySearch = new SearchRepositorySearch(),
+        private filterer: SearchRepositoryFilter = new SearchRepositoryFilter(),
+        private highlighter: SearchRepositoryHighlight = new SearchRepositoryHighlight(),
+        private sorter: SearchRepositoryHighlight = new SearchRepositoryHighlight()
     ) {}
 
-    async search(options: SearchRequest): Promise<SearchServiceReturn> {
+    async search(options: SearchRequest): Promise<SearchRepositoryReturn> {
         const {
             from_lang_id: fromLang,
             search_phase: searchPhase,
@@ -83,7 +83,7 @@ export default class SearchService {
 
         const mainGlobalRegExp = MainMatcher.get(searchPhase, "g");
         const similarGlobalRegExp = SimilarMatcher.get(searchPhase, "g");
-        return SearchServiceObjectsBuilder.buildReturn({
+        return SearchRepositoryObjectsBuilder.buildReturn({
             highlightFunction: (lyric: LyricModel, r: RegExp, lang: string) => {
                 return this.highlighter.highlightSpecifiedByLangSentence(
                     lyric,

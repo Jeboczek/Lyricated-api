@@ -3,25 +3,25 @@ import LyricSentenceModel from "../../../models/database/api/translations/lyricS
 import MainMatcher from "./matchers/mainMatcher";
 import SimilarMatcher from "./matchers/similarMatcher";
 
-export interface SearchServiceOptions {
+export interface SearchRepositoryOptions {
     searchPhase: string;
     fromLang: string;
     toLang: string;
 }
 
-export interface SearchServiceSearchResults {
+export interface SearchRepositorySearchResults {
     mainResults: LyricModel[];
     similarResults: LyricModel[];
 }
 
-interface SearchServiceResultGetterOptions {
+interface SearchRepositoryResultGetterOptions {
     fromLang: string;
     lyrics: LyricModel[];
 }
 
-export default class SearchServiceSearch {
+export default class SearchRepositorySearch {
     private async _getResults(
-        options: SearchServiceResultGetterOptions,
+        options: SearchRepositoryResultGetterOptions,
         regExp: RegExp
     ): Promise<LyricModel[]> {
         const { lyrics, fromLang } = options;
@@ -46,8 +46,8 @@ export default class SearchServiceSearch {
 
     async search(
         lyrics: LyricModel[],
-        options: SearchServiceOptions
-    ): Promise<SearchServiceSearchResults> {
+        options: SearchRepositoryOptions
+    ): Promise<SearchRepositorySearchResults> {
         const { fromLang, searchPhase } = options;
 
         //  Filter LyricModel's without 2 LyricSentence's
@@ -57,7 +57,7 @@ export default class SearchServiceSearch {
         const mainRegExp = MainMatcher.get(searchPhase);
         const similarRegExp = SimilarMatcher.get(searchPhase);
 
-        const resultGetterOptions: SearchServiceResultGetterOptions = {
+        const resultGetterOptions: SearchRepositoryResultGetterOptions = {
             fromLang,
             lyrics,
         };
