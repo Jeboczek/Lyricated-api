@@ -4,6 +4,7 @@ import LyricModel from "../../../../models/database/api/lyricModel";
 import SearchRepositoryState from "../../interfaces/searchRepositoryState";
 import SearchRepositoryAbstractHandler from "./searchRepositoryAbstractHandler";
 import MainMatcher from "../matchers/mainMatcher";
+import SimilarMatcher from "../matchers/similarMatcher";
 
 export default class SearchRepositoryHighlightHandler extends SearchRepositoryAbstractHandler {
     highlightSpecifiedByLangSentence(
@@ -27,7 +28,7 @@ export default class SearchRepositoryHighlightHandler extends SearchRepositoryAb
         const matches = [...lyricSentence.content.matchAll(r)];
         return matches.map((e) => {
             if (e.index !== undefined)
-                return { from: e.index, to: e.index + searchPhase.length - 1 };
+                return { from: e.index, to: e.index + e[0].length - 1 };
         }) as HighlightResponse[];
     }
 
@@ -36,15 +37,21 @@ export default class SearchRepositoryHighlightHandler extends SearchRepositoryAb
     ): Promise<SearchRepositoryState> {
         const { from_lang_id: fromLang, search_phase: phase } = state.request;
 
-        for (const results of [state.mains, state.similar]) {
+        for (const [i, results] of [state.mains, state.similar].entries()) {
+            let r: RegExp;
+            // If result is main not similar
+            if (i === 0) r = MainMatcher.get(phase, "g");
+            else r = SimilarMatcher.get(phase, "g");
+
             for (const result of results) {
-                const mainGlobalRegExp = MainMatcher.get(phase, "g");
+                // Highlight from results
                 result.fromHighlights = this.highlightSpecifiedByLangSentence(
                     result.lyricModel,
                     phase,
                     fromLang,
-                    mainGlobalRegExp
+                    r
                 );
+
                 // TODO: Matcher for similar result's
             }
         }
