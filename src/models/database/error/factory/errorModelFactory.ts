@@ -41,4 +41,18 @@ export default class ErrorModelFactory {
 
         return this.create();
     }
+
+    createUpdateError(): ErrorModel {
+        this.options.statusCode = 422;
+        this.options.message = "Update Error";
+
+        return this.create();
+    }
+
+    createDeleteError(): ErrorModel {
+        this.options.statusCode = 422;
+        this.options.message = "Delete Error";
+
+        return this.create();
+    }
 }
