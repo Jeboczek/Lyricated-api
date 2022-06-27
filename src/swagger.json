@@ -125,6 +125,34 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"PostEpisodeRequest": {
+				"properties": {
+					"episode": {
+						"type": "number",
+						"format": "double"
+					},
+					"season": {
+						"type": "number",
+						"format": "double"
+					},
+					"netflixId": {
+						"type": "number",
+						"format": "double"
+					},
+					"movieId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"episode",
+					"season",
+					"netflixId",
+					"movieId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"MovieNameResponse": {
 				"properties": {
 					"movie_name_id": {
@@ -791,6 +819,38 @@
 						}
 					}
 				]
+			}
+		},
+		"/episode/new": {
+			"post": {
+				"operationId": "PostEpisode",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EpisodeResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Episode"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PostEpisodeRequest"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/lyric/without-quality": {

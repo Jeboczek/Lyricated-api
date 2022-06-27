@@ -76,6 +76,17 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PostEpisodeRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "episode": {"dataType":"double","required":true},
+            "season": {"dataType":"double","required":true},
+            "netflixId": {"dataType":"double","required":true},
+            "movieId": {"dataType":"double","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "MovieNameResponse": {
         "dataType": "refObject",
         "properties": {
@@ -411,6 +422,31 @@ export function RegisterRoutes(app: express.Router) {
 
 
               const promise = controller.deleteEpisode.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/episode/new',
+            ...(fetchMiddlewares<RequestHandler>(EpisodeController)),
+            ...(fetchMiddlewares<RequestHandler>(EpisodeController.prototype.postEpisode)),
+
+            function EpisodeController_postEpisode(request: any, response: any, next: any) {
+            const args = {
+                    request: {"in":"body","name":"request","required":true,"ref":"PostEpisodeRequest"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new EpisodeController();
+
+
+              const promise = controller.postEpisode.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);

@@ -6,6 +6,7 @@ import NotFoundError from "../../exceptions/notFoundError";
 import ErrorModel from "../../models/database/error/errorModel";
 import DeleteError from "../../exceptions/deleteError";
 import UpdateError from "../../exceptions/updateError";
+import CreateError from "../../exceptions/createError";
 
 export default async function errorHandler(
     err: unknown,
@@ -26,6 +27,8 @@ export default async function errorHandler(
             errorModel = errFactory.createDeleteError();
         else if (err instanceof UpdateError)
             errorModel = errFactory.createUpdateError();
+        else if (err instanceof CreateError)
+            errorModel = errFactory.createCreateError();
         else errorModel = errFactory.createInternalServerError();
 
         await errorModel.save();

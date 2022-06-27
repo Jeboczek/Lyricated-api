@@ -2,6 +2,8 @@ import EpisodeModel from "../../models/database/api/episodeModel";
 import PutEpisodeRequest from "../../models/request/putEpisodeRequest";
 import UpdateError from "../../exceptions/updateError";
 import DeleteError from "../../exceptions/deleteError";
+import PostEpisodeRequest from "../../models/request/postEpisodeRequest";
+import CreateError from "../../exceptions/createError";
 
 export default class EpisodeRepository {
     getEpisode(id: number): Promise<EpisodeModel | null> {
@@ -32,5 +34,20 @@ export default class EpisodeRepository {
 
         await episode.destroy();
         return episode;
+    }
+
+    async createEpisode(request: PostEpisodeRequest): Promise<EpisodeModel> {
+        const { episode, season, netflixId, movieId } = request;
+
+        try {
+            return await EpisodeModel.create({
+                episode,
+                season,
+                netflixId,
+                movieId,
+            });
+        } catch (e) {
+            throw new CreateError("There is no MovieModel with the given id");
+        }
     }
 }

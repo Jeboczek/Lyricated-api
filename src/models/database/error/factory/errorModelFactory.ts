@@ -55,4 +55,11 @@ export default class ErrorModelFactory {
 
         return this.create();
     }
+
+    createCreateError(): ErrorModel {
+        this.options.statusCode = 422;
+        this.options.message = "Create Error";
+
+        return this.create();
+    }
 }

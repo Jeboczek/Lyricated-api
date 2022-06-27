@@ -17,7 +17,7 @@ export class SearchController extends Controller {
 
     @Post("")
     @Response<SearchResponse>(200, "OK")
-    @Response<ErrorResponse>(404, "Not found")
+    @Response<ErrorResponse>(404, "Error")
     async search(@Body() options: SearchRequest) {
         const searchValue = await this.repo.search(options);
 

@@ -31,7 +31,7 @@ export class CurseController extends Controller {
     @Post("add")
     @Response<CurseResponse>(200, "OK")
     public async postCurse(@Body() request: PostCurseRequest) {
-        const newCurse = await this.repo.addCurse(request);
+        const newCurse = await this.repo.createCurse(request);
         return CurseResponse.fromModel(newCurse);
     }
 
@@ -50,7 +50,7 @@ export class CurseController extends Controller {
 
     @Put("{id}")
     @Response<CurseResponse>(200, "OK")
-    @Response<ErrorResponse>(404, "Not found")
+    @Response<ErrorResponse>(404, "Error")
     public async putCurse(
         @Path("id") id: number,
         @Body() request: PutCurseRequest
@@ -61,7 +61,7 @@ export class CurseController extends Controller {
 
     @Get("{id}")
     @Response<CurseResponse>(200, "OK")
-    @Response<ErrorResponse>(404, "Not Found")
+    @Response<ErrorResponse>(404, "Error")
     public async getCurse(@Path("id") id: number) {
         const curse = await this.repo.getCurse(id);
 
@@ -72,7 +72,7 @@ export class CurseController extends Controller {
 
     @Delete("{id}")
     @Response<CurseResponse>(200, "OK")
-    @Response<ErrorResponse>(404, "Not Found")
+    @Response<ErrorResponse>(404, "Error")
     public async deleteCurse(@Path("id") id: number) {
         const curse = await this.repo.deleteCurse(id);
         return CurseResponse.fromModel(curse);

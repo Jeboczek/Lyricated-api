@@ -38,7 +38,7 @@ export class MovieController extends Controller {
 
     @Get("{id}")
     @Response<MovieResponse>(200, "OK")
-    @Response<ErrorResponse>(404, "Not found")
+    @Response<ErrorResponse>(404, "Error")
     public async getMovie(@Path("id") movieId: number) {
         const movie = await this.repo.getMovie(movieId);
 

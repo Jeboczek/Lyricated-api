@@ -27,7 +27,7 @@ export class LyricController extends Controller {
 
     @Get("without-quality")
     @Response<LyricResponse>(200, "OK")
-    @Response<ErrorResponse>(404, "No more content")
+    @Response<ErrorResponse>(404, "Error")
     public async getLyricWithoutQuality() {
         const lyricWithoutQuality = await this.repo.getLyricWithoutQuality();
 
@@ -42,7 +42,7 @@ export class LyricController extends Controller {
 
     @Get("random")
     @Response<LyricResponse>(200, "OK")
-    @Response<ErrorResponse>(404, "Not found")
+    @Response<ErrorResponse>(404, "Error")
     public async getRandomLyric(
         @Query("qualityBetterThan") qualityBetterThan?: number,
         @Query("qualityLowerThan") qualityLowerThan?: number,
@@ -61,7 +61,7 @@ export class LyricController extends Controller {
 
     @Get("{id}")
     @Response<LyricResponse>(200, "OK")
-    @Response<ErrorResponse>(404, "Not found")
+    @Response<ErrorResponse>(404, "Error")
     public async getLyricById(@Path("id") lyricId: number) {
         const movie = await this.repo.getLyricById(lyricId);
 
@@ -72,7 +72,7 @@ export class LyricController extends Controller {
 
     @Put("{id}")
     @Response<LyricResponse>(200, "OK")
-    @Response<ErrorResponse>(404, "Not found")
+    @Response<ErrorResponse>(404, "Error")
     public async putLyric(
         @Path("id") id: number,
         @Body() request: PutLyricRequest

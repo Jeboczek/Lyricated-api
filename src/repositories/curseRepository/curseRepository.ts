@@ -36,14 +36,15 @@ export default class CurseRepository {
         if (curse === null)
             throw new UpdateError("There is no CurseModel with the given id");
 
-        const { lang, content } = request;
-        curse.langId = lang;
-        curse.content = content;
+        const { lang: langId, content } = request;
 
-        return await curse.save();
+        return await curse.update({
+            langId,
+            content,
+        });
     }
 
-    async addCurse(request: PostCurseRequest): Promise<CurseModel> {
+    async createCurse(request: PostCurseRequest): Promise<CurseModel> {
         const { content, lang } = request;
 
         return await CurseModel.create({
