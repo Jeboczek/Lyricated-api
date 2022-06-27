@@ -27,6 +27,14 @@ export class EpisodeController extends Controller {
         this.repo = repo ?? new EpisodeRepository();
     }
 
+    @Post("new")
+    @Response<EpisodeResponse>(200, "OK")
+    @Response<ErrorResponse>(422, "Error")
+    public async postEpisode(@Body() request: PostEpisodeRequest) {
+        const episode = await this.repo.createEpisode(request);
+        return EpisodeResponse.fromModel(episode);
+    }
+
     @Put("{id}")
     @Response<EpisodeResponse>(200, "")
     public async putEpisode(
@@ -53,14 +61,6 @@ export class EpisodeController extends Controller {
     @Response<ErrorResponse>(404, "Error")
     public async deleteEpisode(@Path("id") id: number) {
         const episode = await this.repo.deleteEpisode(id);
-        return EpisodeResponse.fromModel(episode);
-    }
-
-    @Post("new")
-    @Response<EpisodeResponse>(200, "OK")
-    @Response<ErrorResponse>(422, "Error")
-    public async postEpisode(@Body() request: PostEpisodeRequest) {
-        const episode = await this.repo.createEpisode(request);
         return EpisodeResponse.fromModel(episode);
     }
 }

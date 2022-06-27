@@ -102,29 +102,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"PutEpisodeRequest": {
-				"properties": {
-					"episode": {
-						"type": "number",
-						"format": "double"
-					},
-					"season": {
-						"type": "number",
-						"format": "double"
-					},
-					"netflixId": {
-						"type": "number",
-						"format": "double"
-					}
-				},
-				"required": [
-					"episode",
-					"season",
-					"netflixId"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"PostEpisodeRequest": {
 				"properties": {
 					"episode": {
@@ -149,6 +126,29 @@
 					"season",
 					"netflixId",
 					"movieId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PutEpisodeRequest": {
+				"properties": {
+					"episode": {
+						"type": "number",
+						"format": "double"
+					},
+					"season": {
+						"type": "number",
+						"format": "double"
+					},
+					"netflixId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"episode",
+					"season",
+					"netflixId"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -582,7 +582,7 @@
 						}
 					},
 					"404": {
-						"description": "Not found",
+						"description": "Error",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -632,7 +632,7 @@
 						}
 					},
 					"404": {
-						"description": "Not Found",
+						"description": "Error",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -672,7 +672,7 @@
 						}
 					},
 					"404": {
-						"description": "Not Found",
+						"description": "Error",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -697,6 +697,48 @@
 						}
 					}
 				]
+			}
+		},
+		"/episode/new": {
+			"post": {
+				"operationId": "PostEpisode",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EpisodeResponse"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Episode"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PostEpisodeRequest"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/episode/{id}": {
@@ -754,7 +796,7 @@
 						}
 					},
 					"404": {
-						"description": "Not Found",
+						"description": "Error",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -794,7 +836,7 @@
 						}
 					},
 					"404": {
-						"description": "Not Found",
+						"description": "Error",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -821,38 +863,6 @@
 				]
 			}
 		},
-		"/episode/new": {
-			"post": {
-				"operationId": "PostEpisode",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/EpisodeResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Episode"
-				],
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/PostEpisodeRequest"
-							}
-						}
-					}
-				}
-			}
-		},
 		"/lyric/without-quality": {
 			"get": {
 				"operationId": "GetLyricWithoutQuality",
@@ -875,7 +885,7 @@
 						}
 					},
 					"404": {
-						"description": "No more content",
+						"description": "Error",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -907,7 +917,7 @@
 						}
 					},
 					"404": {
-						"description": "Not found",
+						"description": "Error",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -967,7 +977,7 @@
 						}
 					},
 					"404": {
-						"description": "Not found",
+						"description": "Error",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -1007,7 +1017,7 @@
 						}
 					},
 					"404": {
-						"description": "Not found",
+						"description": "Error",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -1101,7 +1111,7 @@
 						}
 					},
 					"404": {
-						"description": "Not found",
+						"description": "Error",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -1222,7 +1232,7 @@
 						}
 					},
 					"404": {
-						"description": "Not found",
+						"description": "Error",
 						"content": {
 							"application/json": {
 								"schema": {
