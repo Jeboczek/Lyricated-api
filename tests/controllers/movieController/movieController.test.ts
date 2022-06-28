@@ -27,9 +27,9 @@ describe("MovieController", () => {
         repo = new MovieRepository() as jest.MockedObject<MovieRepository>;
         repo.getMovies.mockImplementation(async () => testMovies);
         repo.getMovie.mockImplementation(
-            async (movieId): Promise<MovieModel | null> => {
+            async (movieId): Promise<MovieModel> => {
                 const foundMovie = testMovies.find((e) => e.id === movieId);
-                if (foundMovie === undefined) return null;
+                if (foundMovie === undefined) throw new NotFoundError();
                 return foundMovie;
             }
         );

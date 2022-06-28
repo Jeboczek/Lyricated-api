@@ -66,7 +66,7 @@ export default class LyricRepository {
             include: this.modelsToIncludeWithLyricModel,
         });
 
-        if (lyricModel == null)
+        if (lyricModel === null)
             throw new NotFoundError(Locale.createNotFoundErrorText("Lyric"));
         return lyricModel;
     }
