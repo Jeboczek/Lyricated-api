@@ -25,4 +25,8 @@ export default class LangRepository {
             throw new DeleteError(Locale.createDeleteErrorText("Lang"));
         }
     }
+
+    async getLangs(): Promise<LangModel[]> {
+        return await LangModel.findAll();
+    }
 }
