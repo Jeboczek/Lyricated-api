@@ -41,6 +41,6 @@ export default class Locale {
     }
 
     static createThereIsNoObjectText(objectName: string): string {
-        return `There is no any ${objectName}`
+        return `There is no any ${objectName}`;
     }
 }
