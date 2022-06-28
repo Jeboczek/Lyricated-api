@@ -162,6 +162,16 @@ const models: TsoaRoute.Models = {
         "enums": ["only_movies","only_series"],
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PostMovieRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "lang": {"dataType":"string","required":true},
+            "netflix_id": {"dataType":"double"},
+            "minutes": {"dataType":"double","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "PutMovieRequest": {
         "dataType": "refObject",
         "properties": {
@@ -644,6 +654,31 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/movie/new',
+            ...(fetchMiddlewares<RequestHandler>(MovieController)),
+            ...(fetchMiddlewares<RequestHandler>(MovieController.prototype.createMovie)),
+
+            function MovieController_createMovie(request: any, response: any, next: any) {
+            const args = {
+                    request: {"in":"body","name":"request","required":true,"ref":"PostMovieRequest"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new MovieController();
+
+
+              const promise = controller.createMovie.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/movie/:id',
             ...(fetchMiddlewares<RequestHandler>(MovieController)),
             ...(fetchMiddlewares<RequestHandler>(MovieController.prototype.getMovie)),
@@ -689,6 +724,31 @@ export function RegisterRoutes(app: express.Router) {
 
 
               const promise = controller.putMovie.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/movie/:id',
+            ...(fetchMiddlewares<RequestHandler>(MovieController)),
+            ...(fetchMiddlewares<RequestHandler>(MovieController.prototype.deleteMovie)),
+
+            function MovieController_deleteMovie(request: any, response: any, next: any) {
+            const args = {
+                    movieId: {"in":"path","name":"id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new MovieController();
+
+
+              const promise = controller.deleteMovie.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);

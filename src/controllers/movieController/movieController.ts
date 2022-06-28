@@ -1,8 +1,10 @@
 import {
     Body,
     Controller,
+    Delete,
     Get,
     Path,
+    Post,
     Put,
     Query,
     Response,
@@ -14,6 +16,7 @@ import MovieRepository from "../../repositories/movieRepository/movieRepository"
 import ErrorResponse from "../../models/response/errors/errorResponse";
 import { PutMovieRequest } from "../../models/request/putMovieRequest";
 import MovieType from "../../models/enums/movieTypeEnum";
+import { PostMovieRequest } from "../../models/request/postMovieRequest";
 
 @Route("movie")
 @Tags("Movie")
@@ -35,6 +38,14 @@ export class MovieController extends Controller {
         return { movies: movies.map((e) => MovieResponse.fromModel(e)) };
     }
 
+    @Post("new")
+    @Response<MovieResponse>(200, "OK")
+    public async createMovie(@Body() request: PostMovieRequest) {
+        const movie = await this.repo.createMovie(request);
+
+        return MovieResponse.fromModel(movie);
+    }
+
     @Get("{id}")
     @Response<MovieResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Error")
@@ -51,6 +62,16 @@ export class MovieController extends Controller {
         @Body() request: PutMovieRequest
     ) {
         const updatedMovie = await this.repo.updateMovie(movieId, request);
+
         return MovieResponse.fromModel(updatedMovie);
+    }
+
+    @Delete("{id}")
+    @Response<MovieResponse>(200, "OK")
+    @Response<ErrorResponse>(400, "Error")
+    public async deleteMovie(@Path("id") movieId: number) {
+        const movie = await this.repo.deleteMovie(movieId);
+
+        return MovieResponse.fromModel(movie);
     }
 }

@@ -68,7 +68,7 @@ export default class MovieRepository {
         }
     }
 
-    async addMovie(request: PostMovieRequest): Promise<MovieModel> {
+    async createMovie(request: PostMovieRequest): Promise<MovieModel> {
         const { lang: langId, netflix_id: netflixId, minutes } = request;
 
         const lyric = LyricModel.findByPk(langId);

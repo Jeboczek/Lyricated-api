@@ -358,6 +358,27 @@
 				],
 				"type": "string"
 			},
+			"PostMovieRequest": {
+				"properties": {
+					"lang": {
+						"type": "string"
+					},
+					"netflix_id": {
+						"type": "number",
+						"format": "double"
+					},
+					"minutes": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"lang",
+					"minutes"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"PutMovieRequest": {
 				"properties": {
 					"lang": {
@@ -1223,6 +1244,38 @@
 				]
 			}
 		},
+		"/movie/new": {
+			"post": {
+				"operationId": "CreateMovie",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MovieResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Movie"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PostMovieRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/movie/{id}": {
 			"get": {
 				"operationId": "GetMovie",
@@ -1303,6 +1356,46 @@
 						}
 					}
 				}
+			},
+			"delete": {
+				"operationId": "DeleteMovie",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MovieResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Movie"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/search": {
