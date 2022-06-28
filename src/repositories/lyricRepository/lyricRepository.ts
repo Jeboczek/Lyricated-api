@@ -8,6 +8,7 @@ import UpdateError from "../../exceptions/updateError";
 import MovieNameModel from "../../models/database/api/translations/movieNameModel";
 import EpisodeModel from "../../models/database/api/episodeModel";
 import Locale from "../../locale/locale";
+import NotFoundError from "../../exceptions/notFoundError";
 
 export interface LyricRepositoryQualityOptions {
     qualityBetterThan?: number;
@@ -38,24 +39,31 @@ export default class LyricRepository {
         return qualityMustBe;
     }
 
-    getLyricById(id: number): Promise<LyricModel | null> {
-        return LyricModel.findOne({
+    async getLyricById(id: number): Promise<LyricModel> {
+        const lyricModel = await LyricModel.findOne({
             where: { id },
             include: this.modelsToIncludeWithLyricModel,
         });
+
+        if (lyricModel == null)
+            throw new NotFoundError(Locale.createNotFoundErrorText("Lyric"));
+        return lyricModel;
     }
 
-    getRandomLyric(
+    async getRandomLyric(
         options: LyricRepositoryQualityOptions
-    ): Promise<LyricModel | null> {
+    ): Promise<LyricModel> {
         const qualityMustBe = this._createSearchSettingsForQuality(options);
         const db = DatabaseService.getInstance();
 
-        return LyricModel.findOne({
+        const lyric = await LyricModel.findOne({
             order: db.sequelize.random(),
             where: { quality: qualityMustBe },
             include: this.modelsToIncludeWithLyricModel,
         });
+        if (lyric === null)
+            throw new NotFoundError(Locale.createThereIsNoObjectText("Lyric"));
+        return lyric;
     }
 
     getLyricsByQuality(
@@ -70,11 +78,14 @@ export default class LyricRepository {
         });
     }
 
-    getLyricWithoutQuality(): Promise<LyricModel | null> {
-        return LyricModel.findOne({
+    async getLyricWithoutQuality(): Promise<LyricModel | null> {
+        const lyric = await LyricModel.findOne({
             include: this.modelsToIncludeWithLyricModel,
             where: { quality: null },
         });
+        if (lyric === null)
+            throw new NotFoundError(Locale.createThereIsNoObjectText("Lyric"));
+        return lyric;
     }
 
     async updateLyric(
@@ -91,9 +102,13 @@ export default class LyricRepository {
 
         const { minute, quality } = newData;
 
-        return lyric.update({
-            minute,
-            quality,
-        });
+        try {
+            return lyric.update({
+                minute,
+                quality,
+            });
+        } catch (e) {
+            throw new UpdateError(Locale.createUpdateErrorText("Lyric"));
+        }
     }
 }

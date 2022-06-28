@@ -20,16 +20,16 @@ export default async function errorHandler(
         let errorModel: ErrorModel;
 
         if (err instanceof ValidateError)
-            errorModel = errFactory.createValidationError();
+            errorModel = errFactory.createValidationError(err.message);
         else if (err instanceof NotFoundError)
-            errorModel = errFactory.createNotFoundError();
+            errorModel = errFactory.createNotFoundError(err.message);
         else if (err instanceof DeleteError)
-            errorModel = errFactory.createDeleteError();
+            errorModel = errFactory.createDeleteError(err.message);
         else if (err instanceof UpdateError)
-            errorModel = errFactory.createUpdateError();
+            errorModel = errFactory.createUpdateError(err.message);
         else if (err instanceof CreateError)
-            errorModel = errFactory.createCreateError();
-        else errorModel = errFactory.createInternalServerError();
+            errorModel = errFactory.createCreateError(err.message);
+        else errorModel = errFactory.createInternalServerError(err.message);
 
         await errorModel.save();
         console.error(err);

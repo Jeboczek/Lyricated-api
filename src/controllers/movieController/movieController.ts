@@ -12,7 +12,6 @@ import {
 import MovieResponse from "../../models/response/movieResponse";
 import MovieRepository from "../../repositories/movieRepository/movieRepository";
 import ErrorResponse from "../../models/response/errors/errorResponse";
-import NotFoundError from "../../exceptions/notFoundError";
 import { PutMovieRequest } from "../../models/request/putMovieRequest";
 import MovieType from "../../models/enums/movieTypeEnum";
 
@@ -42,9 +41,7 @@ export class MovieController extends Controller {
     public async getMovie(@Path("id") movieId: number) {
         const movie = await this.repo.getMovie(movieId);
 
-        if (movie != null) return MovieResponse.fromModel(movie);
-
-        throw new NotFoundError();
+        return MovieResponse.fromModel(movie);
     }
 
     @Put("{id}")

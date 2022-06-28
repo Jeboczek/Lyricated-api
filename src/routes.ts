@@ -40,6 +40,7 @@ const models: TsoaRoute.Models = {
     "ErrorResponse": {
         "dataType": "refObject",
         "properties": {
+            "name": {"dataType":"string","required":true},
             "message": {"dataType":"string","required":true},
             "errorUUID": {"dataType":"string"},
         },

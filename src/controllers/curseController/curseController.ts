@@ -12,7 +12,6 @@ import {
     Tags,
 } from "tsoa";
 import ErrorResponse from "../../models/response/errors/errorResponse";
-import NotFoundError from "../../exceptions/notFoundError";
 import PutCurseRequest from "../../models/request/putCurseRequest";
 import CurseResponse from "../../models/response/curseResponse";
 import CurseRepository from "../../repositories/curseRepository/curseRepository";
@@ -64,9 +63,6 @@ export class CurseController extends Controller {
     @Response<ErrorResponse>(404, "Error")
     public async getCurse(@Path("id") id: number) {
         const curse = await this.repo.getCurse(id);
-
-        if (curse === null) throw new NotFoundError();
-
         return CurseResponse.fromModel(curse);
     }
 

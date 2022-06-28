@@ -14,7 +14,6 @@ import EpisodeRepository from "../../repositories/episodeRepository/episodeRepos
 import EpisodeResponse from "../../models/response/episodeResponse";
 import ErrorResponse from "../../models/response/errors/errorResponse";
 import PutEpisodeRequest from "../../models/request/putEpisodeRequest";
-import NotFoundError from "../../exceptions/notFoundError";
 import PostEpisodeRequest from "../../models/request/postEpisodeRequest";
 
 @Route("episode")
@@ -50,8 +49,6 @@ export class EpisodeController extends Controller {
     @Response<ErrorResponse>(404, "Error")
     public async getEpisode(@Path("id") id: number) {
         const episode = await this.repo.getEpisode(id);
-
-        if (episode === null) throw new NotFoundError();
 
         return EpisodeResponse.fromModel(episode);
     }

@@ -21,44 +21,50 @@ export default class ErrorModelFactory {
         return model;
     }
 
-    createInternalServerError(): ErrorModel {
+    createInternalServerError(message: string): ErrorModel {
         this.options.statusCode = 500;
-        this.options.message = "Internal Server Error";
+        this.options.name = "Internal Server Error";
+        this.options.message = message;
 
         return this.create();
     }
 
-    createNotFoundError(): ErrorModel {
+    createNotFoundError(message: string): ErrorModel {
         this.options.statusCode = 404;
-        this.options.message = "Not Found";
+        this.options.name = "Not Found";
+        this.options.message = message;
 
         return this.create();
     }
 
-    createValidationError(): ErrorModel {
+    createValidationError(message: string): ErrorModel {
         this.options.statusCode = 400;
-        this.options.message = "Validation Error";
+        this.options.name = "Validation Error";
+        this.options.message = message;
 
         return this.create();
     }
 
-    createUpdateError(): ErrorModel {
+    createUpdateError(message: string): ErrorModel {
         this.options.statusCode = 422;
-        this.options.message = "Update Error";
+        this.options.name = "Update Error";
+        this.options.message = message;
 
         return this.create();
     }
 
-    createDeleteError(): ErrorModel {
+    createDeleteError(message: string): ErrorModel {
         this.options.statusCode = 422;
-        this.options.message = "Delete Error";
+        this.options.name = "Delete Error";
+        this.options.message = message;
 
         return this.create();
     }
 
-    createCreateError(): ErrorModel {
+    createCreateError(message: string): ErrorModel {
         this.options.statusCode = 422;
-        this.options.message = "Create Error";
+        this.options.name = "Create Error";
+        this.options.message = message;
 
         return this.create();
     }

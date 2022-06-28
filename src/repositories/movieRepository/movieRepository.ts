@@ -6,6 +6,7 @@ import UpdateError from "../../exceptions/updateError";
 import LangModel from "../../models/database/api/langModel";
 import MovieType from "../../models/enums/movieTypeEnum";
 import Locale from "../../locale/locale";
+import NotFoundError from "../../exceptions/notFoundError";
 
 export default class MovieRepository {
     async getMovies(type?: MovieType): Promise<MovieModel[]> {
@@ -24,11 +25,15 @@ export default class MovieRepository {
         return movieModels;
     }
 
-    async getMovie(movieId: number): Promise<MovieModel | null> {
-        return await MovieModel.findOne({
+    async getMovie(movieId: number): Promise<MovieModel> {
+        const movie = await MovieModel.findOne({
             where: { id: movieId },
             include: [EpisodeModel, MovieNameModel, LangModel],
         });
+
+        if (movie === null)
+            throw new NotFoundError(Locale.createNotFoundErrorText("Movie"));
+        return movie;
     }
 
     async updateMovie(

@@ -12,7 +12,6 @@ import {
 import LyricResponse from "../../models/response/lyricResponse";
 import LyricRepository from "../../repositories/lyricRepository/lyricRepository";
 import ErrorResponse from "../../models/response/errors/errorResponse";
-import NotFoundError from "../../exceptions/notFoundError";
 import PutLyricRequest from "../../models/request/putLyricRequest";
 
 @Route("lyric")
@@ -54,9 +53,7 @@ export class LyricController extends Controller {
             qualityLowerThan,
         });
 
-        if (randomLyric != null) return LyricResponse.fromModel(randomLyric);
-
-        throw new NotFoundError();
+        return LyricResponse.fromModel(randomLyric);
     }
 
     @Get("{id}")
@@ -64,10 +61,7 @@ export class LyricController extends Controller {
     @Response<ErrorResponse>(404, "Error")
     public async getLyricById(@Path("id") lyricId: number) {
         const movie = await this.repo.getLyricById(lyricId);
-
-        if (movie != null) return LyricResponse.fromModel(movie);
-
-        throw new NotFoundError();
+        return LyricResponse.fromModel(movie);
     }
 
     @Put("{id}")
@@ -78,7 +72,6 @@ export class LyricController extends Controller {
         @Body() request: PutLyricRequest
     ) {
         const lyric = await this.repo.updateLyric(id, request);
-
         return LyricResponse.fromModel(lyric);
     }
 }

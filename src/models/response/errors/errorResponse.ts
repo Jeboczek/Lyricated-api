@@ -1,14 +1,18 @@
 import ErrorModel from "../../database/error/errorModel";
 
 export default class ErrorResponse {
+    public name: string;
     public message: string;
     public errorUUID?: string;
 
     static fromErrorModel(errorModel: ErrorModel) {
         const resp = new ErrorResponse();
 
-        resp.message = errorModel.message;
-        resp.errorUUID = errorModel.uuid;
+        const { name, uuid, message } = errorModel;
+
+        resp.name = name;
+        resp.message = message;
+        resp.errorUUID = uuid;
 
         return resp;
     }

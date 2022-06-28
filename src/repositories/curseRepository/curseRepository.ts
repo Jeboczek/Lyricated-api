@@ -21,7 +21,8 @@ export default class CurseRepository {
             },
         });
 
-        if (curse === null) throw new NotFoundError();
+        if (curse === null)
+            throw new NotFoundError(Locale.createNotFoundErrorText("Curse"));
         return curse;
     }
 

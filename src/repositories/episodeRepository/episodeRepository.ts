@@ -5,10 +5,15 @@ import DeleteError from "../../exceptions/deleteError";
 import PostEpisodeRequest from "../../models/request/postEpisodeRequest";
 import CreateError from "../../exceptions/createError";
 import Locale from "../../locale/locale";
+import NotFoundError from "../../exceptions/notFoundError";
 
 export default class EpisodeRepository {
-    getEpisode(id: number): Promise<EpisodeModel | null> {
-        return EpisodeModel.findByPk(id);
+    async getEpisode(id: number): Promise<EpisodeModel> {
+        const episode = await EpisodeModel.findByPk(id);
+
+        if (episode === null)
+            throw new NotFoundError(Locale.createNotFoundErrorText("Episode"));
+        return episode;
     }
 
     async updateEpisode(

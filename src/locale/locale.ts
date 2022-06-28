@@ -37,6 +37,10 @@ export default class Locale {
     }
 
     static createObjectFirstText(objectName: string): string {
-        return `"There is no ${objectName} you provided, create it first"`;
+        return `There is no ${objectName} you provided, create it first`;
+    }
+
+    static createThereIsNoObjectText(objectName: string): string {
+        return `There is no any ${objectName}`
     }
 }
