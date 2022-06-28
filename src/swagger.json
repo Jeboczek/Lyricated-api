@@ -157,6 +157,18 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"PostLangRequest": {
+				"properties": {
+					"lang": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"lang"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"MovieNameResponse": {
 				"properties": {
 					"movie_name_id": {
@@ -924,6 +936,148 @@
 						"schema": {
 							"format": "double",
 							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/lang/new": {
+			"post": {
+				"operationId": "PostLang",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"lang": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"lang"
+									],
+									"type": "object"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Lang"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PostLangRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/lang/all": {
+			"get": {
+				"operationId": "GetLangs",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"langs": {
+											"items": {
+												"type": "string"
+											},
+											"type": "array"
+										}
+									},
+									"required": [
+										"langs"
+									],
+									"type": "object"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Lang"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/lang/{lang}": {
+			"delete": {
+				"operationId": "DeleteLang",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"lang": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"lang"
+									],
+									"type": "object"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Lang"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "lang",
+						"required": true,
+						"schema": {
+							"type": "string"
 						}
 					}
 				]

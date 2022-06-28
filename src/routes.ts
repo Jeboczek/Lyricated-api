@@ -7,6 +7,8 @@ import { CurseController } from './controllers/curseController/curseController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { EpisodeController } from './controllers/episodeController/episodeController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { LangController } from './controllers/langController/langController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { LyricController } from './controllers/lyricController/lyricController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { MovieController } from './controllers/movieController/movieController';
@@ -84,6 +86,14 @@ const models: TsoaRoute.Models = {
             "episode": {"dataType":"double","required":true},
             "season": {"dataType":"double","required":true},
             "netflixId": {"dataType":"double","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PostLangRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "lang": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },
@@ -471,6 +481,80 @@ export function RegisterRoutes(app: express.Router) {
 
 
               const promise = controller.deleteEpisode.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/lang/new',
+            ...(fetchMiddlewares<RequestHandler>(LangController)),
+            ...(fetchMiddlewares<RequestHandler>(LangController.prototype.postLang)),
+
+            function LangController_postLang(request: any, response: any, next: any) {
+            const args = {
+                    request: {"in":"body","name":"request","required":true,"ref":"PostLangRequest"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new LangController();
+
+
+              const promise = controller.postLang.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/lang/all',
+            ...(fetchMiddlewares<RequestHandler>(LangController)),
+            ...(fetchMiddlewares<RequestHandler>(LangController.prototype.getLangs)),
+
+            function LangController_getLangs(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new LangController();
+
+
+              const promise = controller.getLangs.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/lang/:lang',
+            ...(fetchMiddlewares<RequestHandler>(LangController)),
+            ...(fetchMiddlewares<RequestHandler>(LangController.prototype.deleteLang)),
+
+            function LangController_deleteLang(request: any, response: any, next: any) {
+            const args = {
+                    lang: {"in":"path","name":"lang","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new LangController();
+
+
+              const promise = controller.deleteLang.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
