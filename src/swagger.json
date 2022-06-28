@@ -293,7 +293,7 @@
 			},
 			"PutLyricRequest": {
 				"properties": {
-					"minute": {
+					"seconds": {
 						"type": "number",
 						"format": "double"
 					},
@@ -301,11 +301,21 @@
 						"type": "number",
 						"format": "double",
 						"nullable": true
+					},
+					"movieId": {
+						"type": "number",
+						"format": "double"
+					},
+					"episodeId": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
-					"minute",
-					"quality"
+					"seconds",
+					"quality",
+					"movieId",
+					"episodeId"
 				],
 				"type": "object",
 				"additionalProperties": false

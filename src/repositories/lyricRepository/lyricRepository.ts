@@ -9,6 +9,8 @@ import MovieNameModel from "../../models/database/api/translations/movieNameMode
 import EpisodeModel from "../../models/database/api/episodeModel";
 import Locale from "../../locale/locale";
 import NotFoundError from "../../exceptions/notFoundError";
+import PostLyricRequest from "../../models/request/postLyricRequest";
+import DeleteError from "../../exceptions/deleteError";
 
 export interface LyricRepositoryQualityOptions {
     qualityBetterThan?: number;
@@ -25,7 +27,16 @@ export default class LyricRepository {
         },
     ];
 
-    _createSearchSettingsForQuality(
+    private _checkIfAllDependenciesExists(movieId: number, episodeId: number) {
+        const movie = MovieModel.findByPk(movieId);
+        if (movie === null)
+            throw new UpdateError(Locale.createThereIsNoObjectText("Movie"));
+        const episode = EpisodeModel.findByPk(episodeId);
+        if (episode === null)
+            throw new UpdateError(Locale.createThereIsNoObjectText("Episode"));
+    }
+
+    private _createSearchSettingsForQuality(
         options: LyricRepositoryQualityOptions
     ): { [key: symbol]: number } | undefined {
         const { qualityBetterThan, qualityLowerThan, qualityEqual } = options;
@@ -98,15 +109,49 @@ export default class LyricRepository {
         });
 
         if (lyric === null)
-            throw new UpdateError(Locale.createNotFoundErrorText("Movie"));
+            throw new UpdateError(Locale.createNotFoundErrorText("Lyric"));
 
-        const { minute, quality } = newData;
+        const { seconds, quality, movieId, episodeId } = newData;
+
+        await this._checkIfAllDependenciesExists(movieId, episodeId);
 
         try {
             return lyric.update({
-                minute,
+                seconds,
                 quality,
+                movieId,
+                episodeId,
             });
+        } catch (e) {
+            throw new UpdateError(Locale.createUpdateErrorText("Lyric"));
+        }
+    }
+
+    async createLyric(data: PostLyricRequest): Promise<LyricModel> {
+        const { seconds, quality, movieId, episodeId } = data;
+
+        await this._checkIfAllDependenciesExists(movieId, episodeId);
+
+        try {
+            return await LyricModel.create({
+                seconds,
+                quality,
+                movieId,
+                episodeId,
+            });
+        } catch (e) {
+            throw new UpdateError(Locale.createUpdateErrorText("Lyric"));
+        }
+    }
+
+    async deleteLyric(id: number): Promise<LyricModel> {
+        const lyric = await LyricModel.findByPk(id);
+        if (lyric === null)
+            throw new DeleteError(Locale.createNotFoundErrorText("Lyric"));
+
+        try {
+            await lyric.destroy();
+            return lyric;
         } catch (e) {
             throw new UpdateError(Locale.createUpdateErrorText("Lyric"));
         }

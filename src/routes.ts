@@ -138,8 +138,10 @@ const models: TsoaRoute.Models = {
     "PutLyricRequest": {
         "dataType": "refObject",
         "properties": {
-            "minute": {"dataType":"double","required":true},
+            "seconds": {"dataType":"double","required":true},
             "quality": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
+            "movieId": {"dataType":"double","required":true},
+            "episodeId": {"dataType":"double","required":true},
         },
         "additionalProperties": false,
     },
