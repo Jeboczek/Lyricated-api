@@ -13,8 +13,8 @@ import {
 import EpisodeRepository from "../../repositories/episodeRepository/episodeRepository";
 import EpisodeResponse from "../../models/response/episodeResponse";
 import ErrorResponse from "../../models/response/errors/errorResponse";
-import PutEpisodeRequest from "../../models/request/putEpisodeRequest";
 import PostEpisodeRequest from "../../models/request/postEpisodeRequest";
+import PutEpisodeRequest from "../../models/request/putEpisodeRequest";
 
 @Route("episode")
 @Tags("Episode")
@@ -34,6 +34,15 @@ export class EpisodeController extends Controller {
         return EpisodeResponse.fromModel(episode);
     }
 
+    @Get("{id}")
+    @Response<EpisodeResponse>(200, "OK")
+    @Response<ErrorResponse>(404, "Error")
+    public async getEpisode(@Path("id") id: number) {
+        const episode = await this.repo.getEpisode(id);
+
+        return EpisodeResponse.fromModel(episode);
+    }
+
     @Put("{id}")
     @Response<EpisodeResponse>(200, "")
     public async putEpisode(
@@ -42,15 +51,6 @@ export class EpisodeController extends Controller {
     ) {
         const updatedEpisode = await this.repo.updateEpisode(id, request);
         return EpisodeResponse.fromModel(updatedEpisode);
-    }
-
-    @Get("{id}")
-    @Response<EpisodeResponse>(200, "OK")
-    @Response<ErrorResponse>(404, "Error")
-    public async getEpisode(@Path("id") id: number) {
-        const episode = await this.repo.getEpisode(id);
-
-        return EpisodeResponse.fromModel(episode);
     }
 
     @Delete("{id}")

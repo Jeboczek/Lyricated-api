@@ -47,6 +47,14 @@ export class CurseController extends Controller {
         };
     }
 
+    @Get("{id}")
+    @Response<CurseResponse>(200, "OK")
+    @Response<ErrorResponse>(404, "Error")
+    public async getCurse(@Path("id") id: number) {
+        const curse = await this.repo.getCurse(id);
+        return CurseResponse.fromModel(curse);
+    }
+
     @Put("{id}")
     @Response<CurseResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Error")
@@ -56,14 +64,6 @@ export class CurseController extends Controller {
     ) {
         const updatedCurse = await this.repo.updateCurse(id, request);
         return CurseResponse.fromModel(updatedCurse);
-    }
-
-    @Get("{id}")
-    @Response<CurseResponse>(200, "OK")
-    @Response<ErrorResponse>(404, "Error")
-    public async getCurse(@Path("id") id: number) {
-        const curse = await this.repo.getCurse(id);
-        return CurseResponse.fromModel(curse);
     }
 
     @Delete("{id}")

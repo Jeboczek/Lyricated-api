@@ -300,6 +300,31 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/curse/:id',
+            ...(fetchMiddlewares<RequestHandler>(CurseController)),
+            ...(fetchMiddlewares<RequestHandler>(CurseController.prototype.getCurse)),
+
+            function CurseController_getCurse(request: any, response: any, next: any) {
+            const args = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new CurseController();
+
+
+              const promise = controller.getCurse.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.put('/curse/:id',
             ...(fetchMiddlewares<RequestHandler>(CurseController)),
             ...(fetchMiddlewares<RequestHandler>(CurseController.prototype.putCurse)),
@@ -320,31 +345,6 @@ export function RegisterRoutes(app: express.Router) {
 
 
               const promise = controller.putCurse.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, undefined, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/curse/:id',
-            ...(fetchMiddlewares<RequestHandler>(CurseController)),
-            ...(fetchMiddlewares<RequestHandler>(CurseController.prototype.getCurse)),
-
-            function CurseController_getCurse(request: any, response: any, next: any) {
-            const args = {
-                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new CurseController();
-
-
-              const promise = controller.getCurse.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
@@ -401,6 +401,31 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/episode/:id',
+            ...(fetchMiddlewares<RequestHandler>(EpisodeController)),
+            ...(fetchMiddlewares<RequestHandler>(EpisodeController.prototype.getEpisode)),
+
+            function EpisodeController_getEpisode(request: any, response: any, next: any) {
+            const args = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new EpisodeController();
+
+
+              const promise = controller.getEpisode.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.put('/episode/:id',
             ...(fetchMiddlewares<RequestHandler>(EpisodeController)),
             ...(fetchMiddlewares<RequestHandler>(EpisodeController.prototype.putEpisode)),
@@ -421,31 +446,6 @@ export function RegisterRoutes(app: express.Router) {
 
 
               const promise = controller.putEpisode.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, undefined, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/episode/:id',
-            ...(fetchMiddlewares<RequestHandler>(EpisodeController)),
-            ...(fetchMiddlewares<RequestHandler>(EpisodeController.prototype.getEpisode)),
-
-            function EpisodeController_getEpisode(request: any, response: any, next: any) {
-            const args = {
-                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new EpisodeController();
-
-
-              const promise = controller.getEpisode.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
