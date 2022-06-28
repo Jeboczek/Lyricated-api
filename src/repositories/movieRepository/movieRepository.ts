@@ -7,6 +7,9 @@ import LangModel from "../../models/database/api/langModel";
 import MovieType from "../../models/enums/movieTypeEnum";
 import Locale from "../../locale/locale";
 import NotFoundError from "../../exceptions/notFoundError";
+import { PostMovieRequest } from "../../models/request/postMovieRequest";
+import LyricModel from "../../models/database/api/lyricModel";
+import CreateError from "../../exceptions/createError";
 
 export default class MovieRepository {
     async getMovies(type?: MovieType): Promise<MovieModel[]> {
@@ -61,6 +64,25 @@ export default class MovieRepository {
             });
         } catch (e) {
             throw new UpdateError(Locale.createUpdateErrorText("Movie"));
+        }
+    }
+
+    async addMovie(request: PostMovieRequest): Promise<MovieModel> {
+        const { lang: langId, netflix_id: netflixId, minutes } = request;
+
+        const lyric = LyricModel.findByPk(langId);
+        if (lyric === null)
+            throw new CreateError(Locale.createObjectFirstText("Lyric"));
+
+        try {
+            const movie = MovieModel.build({
+                langId,
+                netflixId,
+                minutes,
+            });
+            return await movie.save();
+        } catch (e) {
+            throw new CreateError(Locale.createCreateErrorText("Movie"));
         }
     }
 }
