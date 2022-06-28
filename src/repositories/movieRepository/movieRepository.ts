@@ -53,10 +53,14 @@ export default class MovieRepository {
         if (newLang === null)
             throw new UpdateError(Locale.createObjectFirstText("Lang"));
 
-        return movieToUpdate.update({
-            lang: newLang,
-            minutes: newData.minutes,
-            netflixId: newData.netflix_id,
-        });
+        try {
+            return movieToUpdate.update({
+                lang: newLang,
+                minutes: newData.minutes,
+                netflixId: newData.netflix_id,
+            });
+        } catch (e) {
+            throw new UpdateError(Locale.createUpdateErrorText("Movie"));
+        }
     }
 }

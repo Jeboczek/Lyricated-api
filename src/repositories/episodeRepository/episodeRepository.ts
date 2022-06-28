@@ -26,11 +26,16 @@ export default class EpisodeRepository {
             throw new UpdateError(Locale.createNotFoundErrorText("Episode"));
 
         const { season, episode, netflixId } = request;
-        episodeModel.episode = episode;
-        episodeModel.season = season;
-        episodeModel.netflixId = netflixId;
 
-        return await episodeModel.save();
+        try {
+            return await episodeModel.update({
+                episode,
+                season,
+                netflixId,
+            });
+        } catch (e) {
+            throw new UpdateError(Locale.createUpdateErrorText("Episode"));
+        }
     }
 
     async deleteEpisode(id: number): Promise<EpisodeModel> {
@@ -38,7 +43,11 @@ export default class EpisodeRepository {
         if (episode === null)
             throw new DeleteError(Locale.createNotFoundErrorText("Episode"));
 
-        await episode.destroy();
+        try {
+            await episode.destroy();
+        } catch (e) {
+            throw new DeleteError(Locale.createDeleteErrorText("Episode"));
+        }
         return episode;
     }
 
