@@ -291,9 +291,13 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"PutLyricRequest": {
+			"PostLyricRequest": {
 				"properties": {
 					"seconds": {
+						"type": "number",
+						"format": "double"
+					},
+					"movieId": {
 						"type": "number",
 						"format": "double"
 					},
@@ -302,19 +306,46 @@
 						"format": "double",
 						"nullable": true
 					},
-					"movieId": {
-						"type": "number",
-						"format": "double"
-					},
 					"episodeId": {
 						"type": "number",
-						"format": "double"
+						"format": "double",
+						"nullable": true
 					}
 				},
 				"required": [
 					"seconds",
-					"quality",
 					"movieId",
+					"quality",
+					"episodeId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PutLyricRequest": {
+				"properties": {
+					"seconds": {
+						"type": "number",
+						"format": "double"
+					},
+					"movieId": {
+						"type": "number",
+						"format": "double"
+					},
+					"quality": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"episodeId": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					}
+				},
+				"required": [
+					"seconds",
+					"movieId",
+					"quality",
 					"episodeId"
 				],
 				"type": "object",
@@ -877,6 +908,48 @@
 				]
 			}
 		},
+		"/lyric/new": {
+			"post": {
+				"operationId": "CreateLyric",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LyricResponse"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Lyric"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PostLyricRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/lyric/without-quality": {
 			"get": {
 				"operationId": "GetLyricWithoutQuality",
@@ -1066,6 +1139,46 @@
 						}
 					}
 				}
+			},
+			"delete": {
+				"operationId": "DeleteLyric",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LyricResponse"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Lyric"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/movie/find": {

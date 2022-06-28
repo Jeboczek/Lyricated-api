@@ -16,6 +16,8 @@ export default class LyricResponse {
 
         const { id, movie, seconds, quality, sentences, episode } = model;
 
+        console.log(episode);
+
         resp.lyric_id = id;
         resp.movie = MovieResponse.fromModel(movie);
         resp.episode = episode ? EpisodeResponse.fromModel(episode) : null;

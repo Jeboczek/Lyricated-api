@@ -1,8 +1,10 @@
 import {
     Body,
     Controller,
+    Delete,
     Get,
     Path,
+    Post,
     Put,
     Query,
     Response,
@@ -13,6 +15,7 @@ import LyricResponse from "../../models/response/lyricResponse";
 import LyricRepository from "../../repositories/lyricRepository/lyricRepository";
 import ErrorResponse from "../../models/response/errors/errorResponse";
 import PutLyricRequest from "../../models/request/putLyricRequest";
+import PostLyricRequest from "../../models/request/postLyricRequest";
 
 @Route("lyric")
 @Tags("Lyric")
@@ -22,6 +25,14 @@ export class LyricController extends Controller {
     constructor(repo?: LyricRepository) {
         super();
         this.repo = repo ?? new LyricRepository();
+    }
+
+    @Post("new")
+    @Response<LyricResponse>(200, "OK")
+    @Response<ErrorResponse>(422, "Error")
+    public async createLyric(@Body() request: PostLyricRequest) {
+        const lyric = await this.repo.createLyric(request);
+        return LyricResponse.fromModel(lyric);
     }
 
     @Get("without-quality")
@@ -72,6 +83,14 @@ export class LyricController extends Controller {
         @Body() request: PutLyricRequest
     ) {
         const lyric = await this.repo.updateLyric(id, request);
+        return LyricResponse.fromModel(lyric);
+    }
+
+    @Delete("{id}")
+    @Response<LyricResponse>(200, "OK")
+    @Response<ErrorResponse>(422, "Error")
+    public async deleteLyric(@Path("id") id: number) {
+        const lyric = await this.repo.deleteLyric(id);
         return LyricResponse.fromModel(lyric);
     }
 }

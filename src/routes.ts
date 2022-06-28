@@ -135,13 +135,24 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PostLyricRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "seconds": {"dataType":"double","required":true},
+            "movieId": {"dataType":"double","required":true},
+            "quality": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
+            "episodeId": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "PutLyricRequest": {
         "dataType": "refObject",
         "properties": {
             "seconds": {"dataType":"double","required":true},
-            "quality": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
             "movieId": {"dataType":"double","required":true},
-            "episodeId": {"dataType":"double","required":true},
+            "quality": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
+            "episodeId": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
         },
         "additionalProperties": false,
     },
@@ -456,6 +467,31 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/lyric/new',
+            ...(fetchMiddlewares<RequestHandler>(LyricController)),
+            ...(fetchMiddlewares<RequestHandler>(LyricController.prototype.createLyric)),
+
+            function LyricController_createLyric(request: any, response: any, next: any) {
+            const args = {
+                    request: {"in":"body","name":"request","required":true,"ref":"PostLyricRequest"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new LyricController();
+
+
+              const promise = controller.createLyric.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/lyric/without-quality',
             ...(fetchMiddlewares<RequestHandler>(LyricController)),
             ...(fetchMiddlewares<RequestHandler>(LyricController.prototype.getLyricWithoutQuality)),
@@ -552,6 +588,31 @@ export function RegisterRoutes(app: express.Router) {
 
 
               const promise = controller.putLyric.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/lyric/:id',
+            ...(fetchMiddlewares<RequestHandler>(LyricController)),
+            ...(fetchMiddlewares<RequestHandler>(LyricController.prototype.deleteLyric)),
+
+            function LyricController_deleteLyric(request: any, response: any, next: any) {
+            const args = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new LyricController();
+
+
+              const promise = controller.deleteLyric.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);

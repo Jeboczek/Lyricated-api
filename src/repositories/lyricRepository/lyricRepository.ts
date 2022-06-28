@@ -11,6 +11,7 @@ import Locale from "../../locale/locale";
 import NotFoundError from "../../exceptions/notFoundError";
 import PostLyricRequest from "../../models/request/postLyricRequest";
 import DeleteError from "../../exceptions/deleteError";
+import CreateError from "../../exceptions/createError";
 
 export interface LyricRepositoryQualityOptions {
     qualityBetterThan?: number;
@@ -21,19 +22,28 @@ export interface LyricRepositoryQualityOptions {
 export default class LyricRepository {
     private readonly modelsToIncludeWithLyricModel = [
         LyricSentenceModel,
+        EpisodeModel,
         {
             model: MovieModel,
             include: [MovieNameModel, EpisodeModel],
         },
     ];
 
-    private _checkIfAllDependenciesExists(movieId: number, episodeId: number) {
+    private _checkIfAllDependenciesExists(
+        movieId: number,
+        episodeId: number | null
+    ) {
         const movie = MovieModel.findByPk(movieId);
         if (movie === null)
             throw new UpdateError(Locale.createThereIsNoObjectText("Movie"));
-        const episode = EpisodeModel.findByPk(episodeId);
-        if (episode === null)
-            throw new UpdateError(Locale.createThereIsNoObjectText("Episode"));
+
+        if (episodeId !== null) {
+            const episode = EpisodeModel.findByPk(episodeId);
+            if (episode === null)
+                throw new UpdateError(
+                    Locale.createThereIsNoObjectText("Episode")
+                );
+        }
     }
 
     private _createSearchSettingsForQuality(
@@ -133,19 +143,25 @@ export default class LyricRepository {
         await this._checkIfAllDependenciesExists(movieId, episodeId);
 
         try {
-            return await LyricModel.create({
+            const lyric = LyricModel.build({
                 seconds,
                 quality,
                 movieId,
                 episodeId,
             });
+            await lyric.save();
+            return await lyric.reload({
+                include: this.modelsToIncludeWithLyricModel,
+            });
         } catch (e) {
-            throw new UpdateError(Locale.createUpdateErrorText("Lyric"));
+            throw new CreateError(Locale.createUpdateErrorText("Lyric"));
         }
     }
 
     async deleteLyric(id: number): Promise<LyricModel> {
-        const lyric = await LyricModel.findByPk(id);
+        const lyric = await LyricModel.findByPk(id, {
+            include: this.modelsToIncludeWithLyricModel,
+        });
         if (lyric === null)
             throw new DeleteError(Locale.createNotFoundErrorText("Lyric"));
 
@@ -153,7 +169,7 @@ export default class LyricRepository {
             await lyric.destroy();
             return lyric;
         } catch (e) {
-            throw new UpdateError(Locale.createUpdateErrorText("Lyric"));
+            throw new DeleteError(Locale.createUpdateErrorText("Lyric"));
         }
     }
 }
