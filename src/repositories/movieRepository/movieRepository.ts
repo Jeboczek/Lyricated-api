@@ -10,6 +10,7 @@ import NotFoundError from "../../exceptions/notFoundError";
 import { PostMovieRequest } from "../../models/request/postMovieRequest";
 import LyricModel from "../../models/database/api/lyricModel";
 import CreateError from "../../exceptions/createError";
+import DeleteError from "../../exceptions/deleteError";
 
 export default class MovieRepository {
     async getMovies(type?: MovieType): Promise<MovieModel[]> {
@@ -83,6 +84,20 @@ export default class MovieRepository {
             return await movie.save();
         } catch (e) {
             throw new CreateError(Locale.createCreateErrorText("Movie"));
+        }
+    }
+
+    async deleteMovie(id: number): Promise<MovieModel> {
+        const movie = await MovieModel.findByPk(id);
+
+        if (movie === null)
+            throw new DeleteError(Locale.createNotFoundErrorText("Movie"));
+
+        try {
+            await movie.destroy();
+            return movie;
+        } catch (e) {
+            throw new DeleteError(Locale.createDeleteErrorText("Movie"));
         }
     }
 }
