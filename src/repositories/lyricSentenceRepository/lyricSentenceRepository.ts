@@ -1,9 +1,12 @@
 import LyricSentenceModel from "../../models/database/api/translations/lyricSentenceModel";
 import NotFoundError from "../../exceptions/notFoundError";
 import Locale from "../../locale/locale";
-import PutLyricSentenceRequest from "../../models/request/putLyricSentence";
+import PutLyricSentenceRequest from "../../models/request/putLyricSentenceRequest";
 import UpdateError from "../../exceptions/updateError";
 import LangModel from "../../models/database/api/langModel";
+import { PostLyricSentenceRequest } from "../../models/request/postLyricSentenceRequest";
+import LyricModel from "../../models/database/api/lyricModel";
+import CreateError from "../../exceptions/createError";
 
 export default class LyricSentenceRepository {
     async getLyricSentence(id: number): Promise<LyricSentenceModel> {
@@ -24,6 +27,13 @@ export default class LyricSentenceRepository {
             throw new NotFoundError(Locale.createCreateObjectFirstText("Lang"));
     }
 
+    private async _checkIfLyricExists(id: number) {
+        const lyricModel = await LyricModel.findByPk(id);
+
+        if (lyricModel === null)
+            throw new NotFoundError(Locale.createNotFoundErrorText("Lyric"));
+    }
+
     async updateLyricSentence(
         id: number,
         request: PutLyricSentenceRequest
@@ -37,7 +47,7 @@ export default class LyricSentenceRepository {
 
         const { lang, content } = request;
 
-        this._checkIfLangExists(lang);
+        await this._checkIfLangExists(lang);
 
         try {
             return await lyricSentence.update({
@@ -47,6 +57,27 @@ export default class LyricSentenceRepository {
         } catch (e) {
             throw new UpdateError(
                 Locale.createUpdateErrorText("LyricSentence")
+            );
+        }
+    }
+
+    async createLyricSentence(
+        request: PostLyricSentenceRequest
+    ): Promise<LyricSentenceModel> {
+        const { lang, lyricId, content } = request;
+
+        await this._checkIfLangExists(lang);
+        await this._checkIfLyricExists(lyricId);
+
+        try {
+            return await LyricSentenceModel.create({
+                langId: lang,
+                lyricId,
+                content,
+            });
+        } catch (e) {
+            throw new CreateError(
+                Locale.createCreateErrorText("LyricSentence")
             );
         }
     }
