@@ -413,6 +413,48 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"PostMovieNameRequest": {
+				"properties": {
+					"lang": {
+						"type": "string"
+					},
+					"content": {
+						"type": "string"
+					},
+					"movieId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"lang",
+					"content",
+					"movieId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PutMovieNameRequest": {
+				"properties": {
+					"lang": {
+						"type": "string"
+					},
+					"content": {
+						"type": "string"
+					},
+					"movieId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"lang",
+					"content",
+					"movieId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"HighlightResponse": {
 				"properties": {
 					"from": {
@@ -1537,6 +1579,180 @@
 				},
 				"tags": [
 					"Movie"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/movie-name/new": {
+			"post": {
+				"operationId": "PostMovieName",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MovieNameResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"MovieName"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PostMovieNameRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/movie-name/{id}": {
+			"get": {
+				"operationId": "GetMovieName",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MovieNameResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"MovieName"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "PutMovieName",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MovieNameResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"MovieName"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PutMovieNameRequest"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteMovieName",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MovieNameResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"MovieName"
 				],
 				"security": [],
 				"parameters": [

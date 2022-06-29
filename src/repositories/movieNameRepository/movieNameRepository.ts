@@ -1,11 +1,11 @@
 import MovieNameModel from "../../models/database/api/translations/movieNameModel";
 import NotFoundError from "../../exceptions/notFoundError";
 import Locale from "../../locale/locale";
-import PutMovieName from "../../models/request/putMovieName";
+import PutMovieNameRequest from "../../models/request/putMovieNameRequest";
 import UpdateError from "../../exceptions/updateError";
 import LangModel from "../../models/database/api/langModel";
 import DeleteError from "../../exceptions/deleteError";
-import PostMovieName from "../../models/request/postMovieName";
+import PostMovieNameRequest from "../../models/request/postMovieNameRequest";
 import CreateError from "../../exceptions/createError";
 import MovieModel from "../../models/database/api/movieModel";
 
@@ -37,7 +37,7 @@ export default class MovieNameRepository {
 
     async updateMovieName(
         id: number,
-        request: PutMovieName
+        request: PutMovieNameRequest
     ): Promise<MovieNameModel> {
         const { lang, content, movieId } = request;
         const movieName = await MovieNameModel.findByPk(id);
@@ -72,7 +72,9 @@ export default class MovieNameRepository {
         }
     }
 
-    async createMovieName(request: PostMovieName): Promise<MovieNameModel> {
+    async createMovieName(
+        request: PostMovieNameRequest
+    ): Promise<MovieNameModel> {
         const { lang, content, movieId } = request;
 
         await this._checkIfLangModelExists(lang);

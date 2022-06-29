@@ -1,4 +1,4 @@
-export default interface PutMovieName {
+export default interface PutMovieNameRequest {
     lang: string;
     content: string;
     movieId: number;

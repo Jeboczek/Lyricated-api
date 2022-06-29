@@ -13,6 +13,8 @@ import { LyricController } from './controllers/lyricController/lyricController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { MovieController } from './controllers/movieController/movieController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { MovieNameController } from './controllers/movieNameController/movieNameController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { SearchController } from './controllers/searchController/searchController';
 import type { RequestHandler } from 'express';
 import * as express from 'express';
@@ -188,6 +190,26 @@ const models: TsoaRoute.Models = {
             "lang": {"dataType":"string","required":true},
             "netflix_id": {"dataType":"double","required":true},
             "minutes": {"dataType":"double","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PostMovieNameRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "lang": {"dataType":"string","required":true},
+            "content": {"dataType":"string","required":true},
+            "movieId": {"dataType":"double","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PutMovieNameRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "lang": {"dataType":"string","required":true},
+            "content": {"dataType":"string","required":true},
+            "movieId": {"dataType":"double","required":true},
         },
         "additionalProperties": false,
     },
@@ -833,6 +855,107 @@ export function RegisterRoutes(app: express.Router) {
 
 
               const promise = controller.deleteMovie.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/movie-name/new',
+            ...(fetchMiddlewares<RequestHandler>(MovieNameController)),
+            ...(fetchMiddlewares<RequestHandler>(MovieNameController.prototype.postMovieName)),
+
+            function MovieNameController_postMovieName(request: any, response: any, next: any) {
+            const args = {
+                    request: {"in":"body","name":"request","required":true,"ref":"PostMovieNameRequest"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new MovieNameController();
+
+
+              const promise = controller.postMovieName.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/movie-name/:id',
+            ...(fetchMiddlewares<RequestHandler>(MovieNameController)),
+            ...(fetchMiddlewares<RequestHandler>(MovieNameController.prototype.getMovieName)),
+
+            function MovieNameController_getMovieName(request: any, response: any, next: any) {
+            const args = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new MovieNameController();
+
+
+              const promise = controller.getMovieName.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.put('/movie-name/:id',
+            ...(fetchMiddlewares<RequestHandler>(MovieNameController)),
+            ...(fetchMiddlewares<RequestHandler>(MovieNameController.prototype.putMovieName)),
+
+            function MovieNameController_putMovieName(request: any, response: any, next: any) {
+            const args = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+                    request: {"in":"body","name":"request","required":true,"ref":"PutMovieNameRequest"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new MovieNameController();
+
+
+              const promise = controller.putMovieName.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/movie-name/:id',
+            ...(fetchMiddlewares<RequestHandler>(MovieNameController)),
+            ...(fetchMiddlewares<RequestHandler>(MovieNameController.prototype.deleteMovieName)),
+
+            function MovieNameController_deleteMovieName(request: any, response: any, next: any) {
+            const args = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new MovieNameController();
+
+
+              const promise = controller.deleteMovieName.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
