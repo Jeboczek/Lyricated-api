@@ -441,16 +441,11 @@
 					},
 					"content": {
 						"type": "string"
-					},
-					"movieId": {
-						"type": "number",
-						"format": "double"
 					}
 				},
 				"required": [
 					"lang",
-					"content",
-					"movieId"
+					"content"
 				],
 				"type": "object",
 				"additionalProperties": false

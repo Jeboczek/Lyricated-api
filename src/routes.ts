@@ -209,7 +209,6 @@ const models: TsoaRoute.Models = {
         "properties": {
             "lang": {"dataType":"string","required":true},
             "content": {"dataType":"string","required":true},
-            "movieId": {"dataType":"double","required":true},
         },
         "additionalProperties": false,
     },

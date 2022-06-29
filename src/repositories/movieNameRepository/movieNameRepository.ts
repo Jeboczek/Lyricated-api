@@ -39,20 +39,18 @@ export default class MovieNameRepository {
         id: number,
         request: PutMovieNameRequest
     ): Promise<MovieNameModel> {
-        const { lang, content, movieId } = request;
+        const { lang, content } = request;
         const movieName = await MovieNameModel.findByPk(id);
 
         if (movieName === null)
             throw new UpdateError(Locale.createNotFoundErrorText("MovieName"));
         await this._checkIfLangModelExists(lang);
-        await this._checkIfMovieModelExists(movieId);
-
-        movieName.content = content;
-        movieName.langId = lang;
-        movieName.movieId = movieId;
 
         try {
-            return await movieName.save();
+            return await movieName.update({
+                content,
+                langId: lang,
+            });
         } catch (e) {
             throw new UpdateError(Locale.createUpdateErrorText("MovieName"));
         }
