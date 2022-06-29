@@ -5,6 +5,9 @@ import PutMovieName from "../../models/request/putMovieName";
 import UpdateError from "../../exceptions/updateError";
 import LangModel from "../../models/database/api/langModel";
 import DeleteError from "../../exceptions/deleteError";
+import PostMovieName from "../../models/request/postMovieName";
+import CreateError from "../../exceptions/createError";
+import MovieModel from "../../models/database/api/movieModel";
 
 export default class MovieNameRepository {
     async getMovieName(id: number): Promise<MovieNameModel> {
@@ -21,22 +24,32 @@ export default class MovieNameRepository {
     private async _checkIfLangModelExists(lang: string) {
         const langModel = await LangModel.findByPk(lang);
         if (langModel === null)
-            throw new UpdateError(Locale.createCreateObjectFirstText("Lang"));
+            throw new NotFoundError(Locale.createCreateObjectFirstText("Lang"));
+    }
+
+    private async _checkIfMovieModelExists(id: number) {
+        const movieModel = await MovieModel.findByPk(id);
+        if (movieModel === null)
+            throw new NotFoundError(
+                Locale.createCreateObjectFirstText("Movie")
+            );
     }
 
     async updateMovieName(
         id: number,
         request: PutMovieName
     ): Promise<MovieNameModel> {
-        const { lang, content } = request;
+        const { lang, content, movieId } = request;
         const movieName = await MovieNameModel.findByPk(id);
 
         if (movieName === null)
             throw new UpdateError(Locale.createNotFoundErrorText("MovieName"));
         await this._checkIfLangModelExists(lang);
+        await this._checkIfMovieModelExists(movieId);
 
         movieName.content = content;
         movieName.langId = lang;
+        movieName.movieId = movieId;
 
         try {
             return await movieName.save();
@@ -56,6 +69,24 @@ export default class MovieNameRepository {
             return movieName;
         } catch (e) {
             throw new DeleteError(Locale.createDeleteErrorText("MovieName"));
+        }
+    }
+
+    async createMovieName(request: PostMovieName): Promise<MovieNameModel> {
+        const { lang, content, movieId } = request;
+
+        await this._checkIfLangModelExists(lang);
+        await this._checkIfMovieModelExists(movieId);
+
+        try {
+            const movieName = MovieNameModel.build({
+                lang,
+                content,
+                movieId,
+            });
+            return await movieName.save();
+        } catch (e) {
+            throw new CreateError(Locale.createCreateErrorText("MovieName"));
         }
     }
 }
