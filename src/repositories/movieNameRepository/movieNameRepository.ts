@@ -4,6 +4,7 @@ import Locale from "../../locale/locale";
 import PutMovieName from "../../models/request/putMovieName";
 import UpdateError from "../../exceptions/updateError";
 import LangModel from "../../models/database/api/langModel";
+import DeleteError from "../../exceptions/deleteError";
 
 export default class MovieNameRepository {
     async getMovieName(id: number): Promise<MovieNameModel> {
@@ -41,6 +42,20 @@ export default class MovieNameRepository {
             return await movieName.save();
         } catch (e) {
             throw new UpdateError(Locale.createUpdateErrorText("MovieName"));
+        }
+    }
+
+    async deleteMovieName(id: number): Promise<MovieNameModel> {
+        const movieName = await MovieNameModel.findByPk(id);
+
+        if (movieName === null)
+            throw new DeleteError(Locale.createNotFoundErrorText("MovieName"));
+
+        try {
+            await movieName.destroy();
+            return movieName;
+        } catch (e) {
+            throw new DeleteError(Locale.createDeleteErrorText("MovieName"));
         }
     }
 }
