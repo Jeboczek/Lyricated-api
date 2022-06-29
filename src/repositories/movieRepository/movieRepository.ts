@@ -55,7 +55,7 @@ export default class MovieRepository {
         if (movieToUpdate === null)
             throw new UpdateError(Locale.createNotFoundErrorText("Movie"));
         if (newLang === null)
-            throw new UpdateError(Locale.createObjectFirstText("Lang"));
+            throw new UpdateError(Locale.createCreateObjectFirstText("Lang"));
 
         try {
             return movieToUpdate.update({
@@ -73,7 +73,7 @@ export default class MovieRepository {
 
         const lyric = LyricModel.findByPk(langId);
         if (lyric === null)
-            throw new CreateError(Locale.createObjectFirstText("Lyric"));
+            throw new CreateError(Locale.createCreateObjectFirstText("Lyric"));
 
         try {
             const movie = MovieModel.build({

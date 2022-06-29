@@ -36,7 +36,7 @@ export default class Locale {
         }`;
     }
 
-    static createObjectFirstText(objectName: string): string {
+    static createCreateObjectFirstText(objectName: string): string {
         return `There is no ${objectName} you provided, create it first`;
     }
 
