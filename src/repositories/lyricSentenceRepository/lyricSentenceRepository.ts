@@ -7,6 +7,7 @@ import LangModel from "../../models/database/api/langModel";
 import { PostLyricSentenceRequest } from "../../models/request/postLyricSentenceRequest";
 import LyricModel from "../../models/database/api/lyricModel";
 import CreateError from "../../exceptions/createError";
+import DeleteError from "../../exceptions/deleteError";
 
 export default class LyricSentenceRepository {
     async getLyricSentence(id: number): Promise<LyricSentenceModel> {
@@ -78,6 +79,24 @@ export default class LyricSentenceRepository {
         } catch (e) {
             throw new CreateError(
                 Locale.createCreateErrorText("LyricSentence")
+            );
+        }
+    }
+
+    async deleteLyricSentence(id: number): Promise<LyricSentenceModel> {
+        const lyricSentence = await LyricSentenceModel.findByPk(id);
+
+        if (lyricSentence === null)
+            throw new DeleteError(
+                Locale.createDeleteErrorText("LyricSentence")
+            );
+
+        try {
+            await lyricSentence.destroy();
+            return lyricSentence;
+        } catch (e) {
+            throw new DeleteError(
+                Locale.createDeleteErrorText("LyricSentence")
             );
         }
     }
