@@ -3,12 +3,14 @@ import SearchRepositoryHighlightHandler from "./libs/handlers/searchRepositoryHi
 import SearchRequest from "../../models/request/searchRequest";
 import SearchRepositoryFilterHandler from "./libs/handlers/searchRepositoryFilterHandler";
 import SearchRepositoryState from "./interfaces/searchRepositoryState";
+import SearchRepositoryTranslationsHandler from "./libs/handlers/searchRepositoryTranslationsHandler";
 
 export default class SearchRepository {
     constructor(
         private searcher: SearchRepositorySearchHandler = new SearchRepositorySearchHandler(),
         private filterer: SearchRepositoryFilterHandler = new SearchRepositoryFilterHandler(),
         private highlighter: SearchRepositoryHighlightHandler = new SearchRepositoryHighlightHandler(),
+        private translater: SearchRepositoryTranslationsHandler = new SearchRepositoryTranslationsHandler(),
         private sorter: SearchRepositoryHighlightHandler = new SearchRepositoryHighlightHandler()
     ) {}
 
@@ -22,7 +24,10 @@ export default class SearchRepository {
 
         const firstHandler = this.searcher;
 
-        this.searcher.setNext(this.filterer).setNext(this.highlighter);
+        this.searcher
+            .setNext(this.filterer)
+            .setNext(this.translater)
+            .setNext(this.highlighter);
 
         return await firstHandler.handle(state);
     }

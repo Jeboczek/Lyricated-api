@@ -19,7 +19,7 @@ export class SearchController extends Controller {
     @Response<SearchResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Error")
     async search(@Body() options: SearchRequest) {
-        const searchValue = await this.repo.search(options);
+        const searchResult = await this.repo.search(options);
 
         const {
             from_lang_id: fromLang,
@@ -32,9 +32,9 @@ export class SearchController extends Controller {
             to_lang_id: toLang,
             search_phase: phase,
             cached: false, // TODO: Implement this
-            translations: [], // TODO: Implement this
-            main_results: ChangeSearchResults.change(searchValue.mains),
-            similar_results: ChangeSearchResults.change(searchValue.similar),
+            translations: searchResult.translations, // TODO: Implement this
+            main_results: ChangeSearchResults.change(searchResult.mains),
+            similar_results: ChangeSearchResults.change(searchResult.similar),
         };
     }
 }
