@@ -36,7 +36,7 @@ export default class TranslateService {
 
         const words = [];
         for (const entry of data["dictionary_entry_list"]) {
-            words.push(entry["term"]);
+            words.push(entry["term"].toLowerCase());
         }
         return words;
     }
