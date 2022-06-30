@@ -65,7 +65,7 @@ export default class LyricSentenceRepository {
     async createLyricSentence(
         request: PostLyricSentenceRequest
     ): Promise<LyricSentenceModel> {
-        const { lang, lyricId, content } = request;
+        const { lang, lyric_id: lyricId, content } = request;
 
         await this._checkIfLangExists(lang);
         await this._checkIfLyricExists(lyricId);
@@ -73,7 +73,7 @@ export default class LyricSentenceRepository {
         try {
             return await LyricSentenceModel.create({
                 langId: lang,
-                lyricId,
+                lyric_id: lyricId,
                 content,
             });
         } catch (e) {

@@ -1,5 +1,5 @@
 export interface PostLyricSentenceRequest {
-    lyricId: number;
+    lyric_id: number;
     lang: string;
     content: string;
 }
