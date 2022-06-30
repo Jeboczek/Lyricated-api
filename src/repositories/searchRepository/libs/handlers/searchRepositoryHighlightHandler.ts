@@ -25,7 +25,7 @@ export default class SearchRepositoryHighlightHandler extends SearchRepositoryAb
         searchPhase: string,
         r: RegExp
     ): HighlightResponse[] {
-        const matches = [...lyricSentence.content.matchAll(r)];
+        const matches = [...lyricSentence.content.toLowerCase().matchAll(r)];
         return matches.map((e) => {
             if (e.index !== undefined)
                 return { from: e.index, to: e.index + e[0].length - 1 };

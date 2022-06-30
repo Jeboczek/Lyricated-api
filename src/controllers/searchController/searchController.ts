@@ -19,6 +19,8 @@ export class SearchController extends Controller {
     @Response<SearchResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Error")
     async search(@Body() options: SearchRequest) {
+        options.search_phase = options.search_phase.toLowerCase();
+
         const searchResult = await this.repo.search(options);
 
         const {
