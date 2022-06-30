@@ -35,7 +35,11 @@ export default class SearchRepositoryHighlightHandler extends SearchRepositoryAb
     public async handle(
         state: SearchRepositoryState
     ): Promise<SearchRepositoryState> {
-        const { from_lang_id: fromLang, search_phase: phase } = state.request;
+        const {
+            from_lang_id: fromLang,
+            to_lang_id: toLang,
+            search_phase: phase,
+        } = state.request;
 
         for (const [i, results] of [state.mains, state.similar].entries()) {
             let r: RegExp;
@@ -52,7 +56,19 @@ export default class SearchRepositoryHighlightHandler extends SearchRepositoryAb
                     r
                 );
 
-                // TODO: Matcher for translated words
+                for (const word of state.translations) {
+                    r = MainMatcher.get(word, "g");
+                    const highlights = this.highlightSpecifiedByLangSentence(
+                        result.lyricModel,
+                        word,
+                        toLang,
+                        r
+                    );
+                    result.toHighlights = [
+                        ...result.toHighlights,
+                        ...highlights,
+                    ];
+                }
             }
         }
         return await super.handle(state);
