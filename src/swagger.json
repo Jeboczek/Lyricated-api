@@ -603,6 +603,14 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"SortingMode": {
+				"enum": [
+					"shortest",
+					"best_match",
+					"longest"
+				],
+				"type": "string"
+			},
 			"SearchRequest": {
 				"properties": {
 					"search_phase": {
@@ -617,6 +625,9 @@
 					"filter_options": {
 						"$ref": "#/components/schemas/SearchRequestFilterOptions"
 					},
+					"sorting_mode": {
+						"$ref": "#/components/schemas/SortingMode"
+					},
 					"dont_use_cache": {
 						"type": "boolean"
 					}
@@ -626,6 +637,7 @@
 					"from_lang_id",
 					"to_lang_id",
 					"filter_options",
+					"sorting_mode",
 					"dont_use_cache"
 				],
 				"type": "object",

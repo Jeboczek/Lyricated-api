@@ -280,6 +280,11 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "SortingMode": {
+        "dataType": "refEnum",
+        "enums": ["shortest","best_match","longest"],
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "SearchRequest": {
         "dataType": "refObject",
         "properties": {
@@ -287,6 +292,7 @@ const models: TsoaRoute.Models = {
             "from_lang_id": {"dataType":"string","required":true},
             "to_lang_id": {"dataType":"string","required":true},
             "filter_options": {"ref":"SearchRequestFilterOptions","required":true},
+            "sorting_mode": {"ref":"SortingMode","required":true},
             "dont_use_cache": {"dataType":"boolean","required":true},
         },
         "additionalProperties": false,
