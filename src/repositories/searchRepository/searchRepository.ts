@@ -4,6 +4,7 @@ import SearchRequest from "../../models/request/searchRequest";
 import SearchRepositoryFilterHandler from "./libs/handlers/searchRepositoryFilterHandler";
 import SearchRepositoryState from "./interfaces/searchRepositoryState";
 import SearchRepositoryTranslationsHandler from "./libs/handlers/searchRepositoryTranslationsHandler";
+import SearchRepositorySortHandler from "./libs/handlers/searchRepositorySortHandler";
 
 export default class SearchRepository {
     constructor(
@@ -11,7 +12,7 @@ export default class SearchRepository {
         private filterer: SearchRepositoryFilterHandler = new SearchRepositoryFilterHandler(),
         private highlighter: SearchRepositoryHighlightHandler = new SearchRepositoryHighlightHandler(),
         private translater: SearchRepositoryTranslationsHandler = new SearchRepositoryTranslationsHandler(),
-        private sorter: SearchRepositoryHighlightHandler = new SearchRepositoryHighlightHandler()
+        private sorter: SearchRepositorySortHandler = new SearchRepositorySortHandler()
     ) {}
 
     async search(options: SearchRequest): Promise<SearchRepositoryState> {
@@ -27,7 +28,8 @@ export default class SearchRepository {
         this.searcher
             .setNext(this.filterer)
             .setNext(this.translater)
-            .setNext(this.highlighter);
+            .setNext(this.highlighter)
+            .setNext(this.sorter);
 
         return await firstHandler.handle(state);
     }
