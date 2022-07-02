@@ -13,9 +13,9 @@ describe("DatabaseService", () => {
     let config: DatabaseConfigOptions;
     beforeEach(() => {
         config = {
-            user: "testUser",
+            username: "testUser",
             password: "testPass",
-            name: "testName",
+            database: "testName",
             host: "testHost",
             dialect: "sqlite",
             storage: "testStorage",
@@ -41,10 +41,10 @@ describe("DatabaseService", () => {
             const options: SequelizeOptions = call[0] as SequelizeOptions;
 
             expect(options.dialect).toBe(config.dialect);
-            expect(options.username).toBe(config.user);
+            expect(options.username).toBe(config.username);
             expect(options.password).toBe(config.password);
             expect(options.host).toBe(config.host);
-            expect(options.database).toBe(config.name);
+            expect(options.database).toBe(config.database);
             expect(options.storage).toBe(config.storage);
         }
     });

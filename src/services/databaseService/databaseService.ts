@@ -19,7 +19,8 @@ export default class DatabaseService {
     private constructor(databaseConfig: DatabaseConfig) {
         this.databaseConfig = databaseConfig;
 
-        const { user, password, host, dialect, name, storage } = databaseConfig;
+        const { username, password, host, dialect, database, storage } =
+            databaseConfig;
 
         this.sequelize = new Sequelize({
             models: [
@@ -38,12 +39,12 @@ export default class DatabaseService {
                 collate: "utf8_general_ci",
             },
             logging: false,
-            storage: storage,
-            host: host,
-            username: user,
-            password: password,
-            database: name,
-            dialect: dialect,
+            storage,
+            host,
+            username,
+            password,
+            database,
+            dialect,
         });
     }
 
