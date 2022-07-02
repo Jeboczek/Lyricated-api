@@ -487,22 +487,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"HandlerTimeResponse": {
-				"properties": {
-					"name": {
-						"type": "string"
-					},
-					"time": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"name",
-					"time"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"HighlightResponse": {
 				"properties": {
 					"from": {
@@ -551,6 +535,22 @@
 					"to_sentence",
 					"from_highlights",
 					"to_highlights"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"HandlerTimeResponse": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"time": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"time"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -2013,60 +2013,7 @@
 						"description": "Ok",
 						"content": {
 							"application/json": {
-								"schema": {
-									"anyOf": [
-										{
-											"type": "string"
-										},
-										{
-											"properties": {
-												"similar_results": {
-													"items": {
-														"$ref": "#/components/schemas/SearchResultResponse"
-													},
-													"type": "array"
-												},
-												"main_results": {
-													"items": {
-														"$ref": "#/components/schemas/SearchResultResponse"
-													},
-													"type": "array"
-												},
-												"handlers_time": {
-													"items": {
-														"$ref": "#/components/schemas/HandlerTimeResponse"
-													},
-													"type": "array"
-												},
-												"translations": {
-													"items": {
-														"type": "string"
-													},
-													"type": "array"
-												},
-												"search_phase": {
-													"type": "string"
-												},
-												"to_lang_id": {
-													"type": "string"
-												},
-												"from_lang_id": {
-													"type": "string"
-												}
-											},
-											"required": [
-												"similar_results",
-												"main_results",
-												"handlers_time",
-												"translations",
-												"search_phase",
-												"to_lang_id",
-												"from_lang_id"
-											],
-											"type": "object"
-										}
-									]
-								}
+								"schema": {}
 							}
 						}
 					},

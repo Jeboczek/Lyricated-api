@@ -234,15 +234,6 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "HandlerTimeResponse": {
-        "dataType": "refObject",
-        "properties": {
-            "name": {"dataType":"string","required":true},
-            "time": {"dataType":"string","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "HighlightResponse": {
         "dataType": "refObject",
         "properties": {
@@ -260,6 +251,15 @@ const models: TsoaRoute.Models = {
             "to_sentence": {"ref":"LyricSentenceResponse","required":true},
             "from_highlights": {"dataType":"array","array":{"dataType":"refObject","ref":"HighlightResponse"},"required":true},
             "to_highlights": {"dataType":"array","array":{"dataType":"refObject","ref":"HighlightResponse"},"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "HandlerTimeResponse": {
+        "dataType": "refObject",
+        "properties": {
+            "name": {"dataType":"string","required":true},
+            "time": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },

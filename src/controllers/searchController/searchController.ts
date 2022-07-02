@@ -24,7 +24,9 @@ export class SearchController extends Controller {
         if (CacheService.isCacheEnabled && !options.dont_use_cache) {
             cacheService = CacheService.getInstance();
             if (await cacheService.checkIfRequestIsInCache(options)) {
-                return cacheService.getRequestFromCache(options);
+                return JSON.parse(
+                    await cacheService.getRequestFromCache(options)
+                );
             }
         }
         options.search_phase = options.search_phase.toLowerCase();
