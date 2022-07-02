@@ -1,5 +1,6 @@
 import { createClient, RedisClientType } from "redis";
 import CacheConfig from "../../config/cacheConfig";
+import md5 from "md5";
 
 export default class CacheService {
     private static instance: CacheService;
@@ -29,5 +30,16 @@ export default class CacheService {
     static get isCacheEnabled() {
         const cache = (process.env.ENABLE_CACHE ?? "").toLowerCase();
         return cache === "true" || cache === "yes" || cache === "1";
+    }
+
+    requestToHash(request: { [key: string]: any }): string {
+        let requestConceitedString = "";
+
+        for (const key in request) {
+            requestConceitedString += key.toString();
+            requestConceitedString += request[key].toString();
+        }
+
+        return md5(requestConceitedString);
     }
 }
