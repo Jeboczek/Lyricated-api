@@ -60,18 +60,19 @@ export default class SearchRepositoryHighlightHandler extends SearchRepositoryAb
                 );
 
                 for (const word of state.translations) {
-                    r = MainMatcher.get(word, "g");
+                    const tR = MainMatcher.get(word, "g");
                     const highlights = this.highlightSpecifiedByLangSentence(
                         result.lyricModel,
                         word,
                         toLang,
-                        r
+                        tR
                     );
                     result.toHighlights = [
                         ...result.toHighlights,
                         ...highlights,
                     ];
                 }
+                console.log(result.fromHighlights);
             }
         }
 
