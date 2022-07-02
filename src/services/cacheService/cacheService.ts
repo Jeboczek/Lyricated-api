@@ -16,6 +16,10 @@ export default class CacheService {
         this.prefix = config.prefix;
     }
 
+    async connect() {
+        await this.client.connect();
+    }
+
     static getInstance(config?: CacheConfig) {
         if (!CacheService.instance) {
             if (config == null)
@@ -57,6 +61,7 @@ export default class CacheService {
         response: object
     ) {
         const requestHash = this.requestToHash(request);
+        console.log(requestHash);
         await this.client.set(
             this.createPrefix(requestHash),
             JSON.stringify(response)

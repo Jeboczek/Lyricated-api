@@ -21,10 +21,11 @@ async function initializeDatabaseService(): Promise<DatabaseService> {
     return databaseService;
 }
 
-function initializeCacheService(): CacheService | undefined {
+async function initializeCacheService(): Promise<CacheService | undefined> {
     if (CacheService.isCacheEnabled) {
         const cacheConfig = new CacheConfig();
         const cacheService = CacheService.getInstance(cacheConfig);
+        await cacheService.connect();
 
         console.log("Cache initialized.");
 
@@ -48,7 +49,7 @@ function initializeExpress(): Express {
 
 (async () => {
     await initializeDatabaseService();
-    initializeCacheService();
+    await initializeCacheService();
     const app = initializeExpress();
 
     const PORT = process.env.PORT || 8080;
