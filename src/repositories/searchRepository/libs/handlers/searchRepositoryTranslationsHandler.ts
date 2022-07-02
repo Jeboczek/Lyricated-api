@@ -21,6 +21,10 @@ export default class SearchRepositoryTranslationsHandler extends SearchRepositor
             toLang
         );
 
+        state.translations = state.translations.filter(
+            (e) => e !== state.request.search_phase.toLowerCase()
+        );
+
         this._afterHandle(state);
         return await super.handle(state);
     }
