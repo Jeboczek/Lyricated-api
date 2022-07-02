@@ -4,6 +4,7 @@ import SortingMode from "../../../../models/enums/sortingMode";
 import SearchRepositorySorter from "../sorters/searchRepositorySorter";
 import SearchRepositoryLongestSorter from "../sorters/searchRepositoryLongestSorter";
 import SearchRepositoryShortestSorter from "../sorters/searchRepositoryShortestSorter";
+import SearchRepositoryBestMatchSorter from "../sorters/searchRepositoryBestMatchSorter";
 
 export default class SearchRepositorySortHandler extends SearchRepositoryAbstractHandler {
     public async handle(state: SearchRepositoryState) {
@@ -17,6 +18,9 @@ export default class SearchRepositorySortHandler extends SearchRepositoryAbstrac
                 break;
             case SortingMode.shortest:
                 sorter = new SearchRepositoryShortestSorter();
+                break;
+            case SortingMode.bestMatch:
+                sorter = new SearchRepositoryBestMatchSorter();
                 break;
             default:
                 return await super.handle(state);
