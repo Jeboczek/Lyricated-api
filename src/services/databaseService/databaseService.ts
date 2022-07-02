@@ -37,7 +37,7 @@ export default class DatabaseService {
                 charset: "utf8",
                 collate: "utf8_general_ci",
             },
-            logging: true,
+            logging: false,
             storage: storage,
             host: host,
             username: user,
