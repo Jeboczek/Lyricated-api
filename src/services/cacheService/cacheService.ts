@@ -1,6 +1,7 @@
 import { createClient, RedisClientType } from "redis";
 import CacheConfig from "../../config/cacheConfig";
 import md5 from "md5";
+import { gzip, ungzip } from "node-gzip";
 
 export default class CacheService {
     private static instance: CacheService;
@@ -61,10 +62,10 @@ export default class CacheService {
         response: object
     ) {
         const requestHash = this.requestToHash(request);
-        console.log(requestHash);
+        const dataToSave = await gzip(JSON.stringify(response));
         await this.client.set(
             this.createPrefix(requestHash),
-            JSON.stringify(response)
+            dataToSave.toString("base64")
         );
     }
 
@@ -72,6 +73,8 @@ export default class CacheService {
         [key: string]: any;
     }): Promise<string> {
         const requestHash = this.requestToHash(request);
-        return (await this.client.get(this.createPrefix(requestHash))) ?? "";
+        const cacheData = await this.client.get(this.createPrefix(requestHash));
+        if (cacheData === null) return "";
+        return (await ungzip(Buffer.from(cacheData, "base64"))).toString();
     }
 }
