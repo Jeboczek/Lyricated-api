@@ -56,7 +56,7 @@ export default class SearchRepositorySearchHandler extends SearchRepositoryAbstr
         toLang: string,
         searchPhase: string
     ): Promise<LyricModel[]> {
-        const idsWithPhase = (
+        let idsWithPhase = (
             await LyricModel.findAll({
                 include: [
                     {
@@ -75,6 +75,10 @@ export default class SearchRepositorySearchHandler extends SearchRepositoryAbstr
         ).map((e) => {
             return e.id;
         });
+
+        if (idsWithPhase.length > 1000) {
+            idsWithPhase = idsWithPhase.slice(0, 1000);
+        }
 
         return await LyricModel.findAll({
             where: {
