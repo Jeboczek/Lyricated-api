@@ -30,7 +30,7 @@ export default class DatabaseConfig {
         this.storage = storage; // ./database.db
     }
 
-    _databaseConfigOptionsFromEnv(): DatabaseConfigOptions {
+    private _databaseConfigOptionsFromEnv(): DatabaseConfigOptions {
         const { DB_USER, DB_PASS, DB_DIALECT, DB_NAME, DB_HOST, DB_STORAGE } =
             process.env;
         return {
@@ -45,7 +45,7 @@ export default class DatabaseConfig {
         };
     }
 
-    _checkIfIsDialectType(x?: string): x is Dialect {
+    private _checkIfIsDialectType(x?: string): x is Dialect {
         if (x == null) {
             return false;
         } else {
