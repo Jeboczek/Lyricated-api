@@ -3,7 +3,10 @@ import SearchRepositoryState from "../../interfaces/searchRepositoryState";
 import TranslateService from "../../../../services/translateService/translateService";
 
 export default class SearchRepositoryTranslationsHandler extends SearchRepositoryAbstractHandler {
+    handlerName = "translate";
+
     public async handle(state: SearchRepositoryState) {
+        this._beforeHandle();
         const {
             search_phase: phase,
             from_lang_id: fromLang,
@@ -17,6 +20,8 @@ export default class SearchRepositoryTranslationsHandler extends SearchRepositor
             fromLang,
             toLang
         );
+
+        this._afterHandle(state);
         return await super.handle(state);
     }
 }

@@ -234,6 +234,15 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "HandlerTimeResponse": {
+        "dataType": "refObject",
+        "properties": {
+            "name": {"dataType":"string","required":true},
+            "time": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "HighlightResponse": {
         "dataType": "refObject",
         "properties": {
@@ -265,6 +274,7 @@ const models: TsoaRoute.Models = {
             "translations": {"dataType":"array","array":{"dataType":"string"},"required":true},
             "main_results": {"dataType":"array","array":{"dataType":"refObject","ref":"SearchResultResponse"},"required":true},
             "similar_results": {"dataType":"array","array":{"dataType":"refObject","ref":"SearchResultResponse"},"required":true},
+            "handlers_time": {"dataType":"array","array":{"dataType":"refObject","ref":"HandlerTimeResponse"},"required":true},
         },
         "additionalProperties": false,
     },

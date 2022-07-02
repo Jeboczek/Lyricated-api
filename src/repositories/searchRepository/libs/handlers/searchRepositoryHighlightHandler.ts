@@ -7,6 +7,8 @@ import MainMatcher from "../matchers/mainMatcher";
 import SimilarMatcher from "../matchers/similarMatcher";
 
 export default class SearchRepositoryHighlightHandler extends SearchRepositoryAbstractHandler {
+    handlerName = "highlight";
+
     highlightSpecifiedByLangSentence(
         lyric: LyricModel,
         searchPhase: string,
@@ -35,6 +37,7 @@ export default class SearchRepositoryHighlightHandler extends SearchRepositoryAb
     public async handle(
         state: SearchRepositoryState
     ): Promise<SearchRepositoryState> {
+        this._beforeHandle();
         const {
             from_lang_id: fromLang,
             to_lang_id: toLang,
@@ -71,6 +74,8 @@ export default class SearchRepositoryHighlightHandler extends SearchRepositoryAb
                 }
             }
         }
+
+        this._afterHandle(state);
         return await super.handle(state);
     }
 }

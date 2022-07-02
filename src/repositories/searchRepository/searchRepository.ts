@@ -21,6 +21,7 @@ export default class SearchRepository {
             request: options,
             similar: [],
             translations: [],
+            handlersTime: [],
         };
 
         const firstHandler = this.searcher;

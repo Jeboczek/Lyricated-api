@@ -27,6 +27,8 @@ interface SearchRepositoryResultGetterOptions {
 }
 
 export default class SearchRepositorySearchHandler extends SearchRepositoryAbstractHandler {
+    handlerName = "search";
+
     private async _getResults(
         options: SearchRepositoryResultGetterOptions,
         regExp: RegExp
@@ -103,6 +105,7 @@ export default class SearchRepositorySearchHandler extends SearchRepositoryAbstr
     public async handle(
         state: SearchRepositoryState
     ): Promise<SearchRepositoryState> {
+        this._beforeHandle();
         const {
             from_lang_id: fromLang,
             search_phase: searchPhase,
@@ -146,6 +149,7 @@ export default class SearchRepositorySearchHandler extends SearchRepositoryAbstr
             state.similar = data;
         }
 
+        this._afterHandle(state);
         return await super.handle(state);
     }
 }

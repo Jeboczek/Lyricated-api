@@ -35,6 +35,7 @@ export class SearchController extends Controller {
             search_phase: phase,
             cached: false, // TODO: Implement this
             translations: searchResult.translations,
+            handlers_time: searchResult.handlersTime,
             main_results: ChangeSearchResults.change(searchResult.mains),
             similar_results: ChangeSearchResults.change(searchResult.similar),
         };

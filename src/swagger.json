@@ -487,6 +487,22 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"HandlerTimeResponse": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"time": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"time"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"HighlightResponse": {
 				"properties": {
 					"from": {
@@ -570,6 +586,12 @@
 							"$ref": "#/components/schemas/SearchResultResponse"
 						},
 						"type": "array"
+					},
+					"handlers_time": {
+						"items": {
+							"$ref": "#/components/schemas/HandlerTimeResponse"
+						},
+						"type": "array"
 					}
 				},
 				"required": [
@@ -579,7 +601,8 @@
 					"cached",
 					"translations",
 					"main_results",
-					"similar_results"
+					"similar_results",
+					"handlers_time"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -2008,6 +2031,12 @@
 											},
 											"type": "array"
 										},
+										"handlers_time": {
+											"items": {
+												"$ref": "#/components/schemas/HandlerTimeResponse"
+											},
+											"type": "array"
+										},
 										"translations": {
 											"items": {
 												"type": "string"
@@ -2030,6 +2059,7 @@
 									"required": [
 										"similar_results",
 										"main_results",
+										"handlers_time",
 										"translations",
 										"cached",
 										"search_phase",

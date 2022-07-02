@@ -7,10 +7,11 @@ import SearchRepositoryShortestSorter from "../sorters/searchRepositoryShortestS
 import SearchRepositoryBestMatchSorter from "../sorters/searchRepositoryBestMatchSorter";
 
 export default class SearchRepositorySortHandler extends SearchRepositoryAbstractHandler {
-    public async handle(state: SearchRepositoryState) {
-        let sorter: SearchRepositorySorter;
+    handlerName = "sort";
 
-        console.log(state.request.sorting_mode);
+    public async handle(state: SearchRepositoryState) {
+        this._beforeHandle();
+        let sorter: SearchRepositorySorter;
 
         switch (state.request.sorting_mode) {
             case SortingMode.longest:
@@ -28,6 +29,7 @@ export default class SearchRepositorySortHandler extends SearchRepositoryAbstrac
 
         state.mains = sorter.sort(state.mains);
         state.similar = sorter.sort(state.similar);
+        this._afterHandle(state);
         return await super.handle(state);
     }
 }

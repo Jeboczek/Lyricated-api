@@ -4,6 +4,8 @@ import SearchRepositoryResult from "../../interfaces/searchRepositoryResult";
 import CurseRepository from "../../../curseRepository/curseRepository";
 
 export default class SearchRepositoryFilterHandler extends SearchRepositoryAbstractHandler {
+    handlerName = "filter";
+
     private async _hideCurses(
         result: SearchRepositoryResult[],
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -60,6 +62,7 @@ export default class SearchRepositoryFilterHandler extends SearchRepositoryAbstr
     public async handle(
         state: SearchRepositoryState
     ): Promise<SearchRepositoryState> {
+        this._beforeHandle();
         const {
             only_movie_id: onlyMovieId,
             hide_curses: hideCurses,
@@ -77,6 +80,7 @@ export default class SearchRepositoryFilterHandler extends SearchRepositoryAbstr
             state.similar = result;
         }
 
+        this._afterHandle(state);
         return await super.handle(state);
     }
 }
