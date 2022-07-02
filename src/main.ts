@@ -7,6 +7,8 @@ import swaggerUi from "swagger-ui-express";
 import { RegisterRoutes } from "./routes";
 import SwaggerDoc from "./swagger.json";
 import errorHandler from "./middlewares/errorHandler/errorHandler";
+import CacheService from "./services/cacheService/cacheService";
+import CacheConfig from "./config/cacheConfig";
 
 dotenv.config();
 
@@ -17,6 +19,17 @@ async function initializeDatabaseService(): Promise<DatabaseService> {
     console.log("Database initialized.");
 
     return databaseService;
+}
+
+function initializeCacheService(): CacheService | undefined {
+    if (CacheService.isCacheEnabled) {
+        const cacheConfig = new CacheConfig();
+        const cacheService = CacheService.getInstance(cacheConfig);
+
+        console.log("Cache initialized.");
+
+        return cacheService;
+    }
 }
 
 function initializeExpress(): Express {
@@ -35,6 +48,7 @@ function initializeExpress(): Express {
 
 (async () => {
     await initializeDatabaseService();
+    initializeCacheService();
     const app = initializeExpress();
 
     const PORT = process.env.PORT || 8080;

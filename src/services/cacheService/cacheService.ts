@@ -8,7 +8,7 @@ export default class CacheService {
     private config: CacheConfig;
     public prefix: string;
 
-    constructor(config: CacheConfig) {
+    private constructor(config: CacheConfig) {
         this.config = config;
         this.client = createClient({
             url: config.connectionPath,

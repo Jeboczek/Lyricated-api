@@ -4,6 +4,7 @@ import SearchResponse from "../../models/response/searchResponse";
 import SearchRequest from "../../models/request/searchRequest";
 import ChangeSearchResults from "./libs/changeSearchResults";
 import SearchRepository from "../../repositories/searchRepository/searchRepository";
+import CacheService from "../../services/cacheService/cacheService";
 
 @Route("search")
 @Tags("Search")
@@ -19,6 +20,13 @@ export class SearchController extends Controller {
     @Response<SearchResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Error")
     async search(@Body() options: SearchRequest) {
+        let cacheService: CacheService | undefined;
+        if (CacheService.isCacheEnabled && !options.dont_use_cache) {
+            cacheService = CacheService.getInstance();
+            if (await cacheService.checkIfRequestIsInCache(options)) {
+                return cacheService.getRequestFromCache(options);
+            }
+        }
         options.search_phase = options.search_phase.toLowerCase();
 
         const searchResult = await this.repo.search(options);
@@ -29,15 +37,17 @@ export class SearchController extends Controller {
             search_phase: phase,
         } = options;
 
-        return {
+        const toReturn = {
             from_lang_id: fromLang,
             to_lang_id: toLang,
             search_phase: phase,
-            cached: false, // TODO: Implement this
             translations: searchResult.translations,
             handlers_time: searchResult.handlersTime,
             main_results: ChangeSearchResults.change(searchResult.mains),
             similar_results: ChangeSearchResults.change(searchResult.similar),
         };
+        if (cacheService !== undefined)
+            await cacheService.saveRequestResponseInCache(options, toReturn);
+        return toReturn;
     }
 }

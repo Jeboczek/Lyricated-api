@@ -566,9 +566,6 @@
 					"search_phase": {
 						"type": "string"
 					},
-					"cached": {
-						"type": "boolean"
-					},
 					"translations": {
 						"items": {
 							"type": "string"
@@ -598,7 +595,6 @@
 					"from_lang_id",
 					"to_lang_id",
 					"search_phase",
-					"cached",
 					"translations",
 					"main_results",
 					"similar_results",
@@ -2018,55 +2014,58 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {
-										"similar_results": {
-											"items": {
-												"$ref": "#/components/schemas/SearchResultResponse"
-											},
-											"type": "array"
-										},
-										"main_results": {
-											"items": {
-												"$ref": "#/components/schemas/SearchResultResponse"
-											},
-											"type": "array"
-										},
-										"handlers_time": {
-											"items": {
-												"$ref": "#/components/schemas/HandlerTimeResponse"
-											},
-											"type": "array"
-										},
-										"translations": {
-											"items": {
-												"type": "string"
-											},
-											"type": "array"
-										},
-										"cached": {
-											"type": "boolean"
-										},
-										"search_phase": {
+									"anyOf": [
+										{
 											"type": "string"
 										},
-										"to_lang_id": {
-											"type": "string"
-										},
-										"from_lang_id": {
-											"type": "string"
+										{
+											"properties": {
+												"similar_results": {
+													"items": {
+														"$ref": "#/components/schemas/SearchResultResponse"
+													},
+													"type": "array"
+												},
+												"main_results": {
+													"items": {
+														"$ref": "#/components/schemas/SearchResultResponse"
+													},
+													"type": "array"
+												},
+												"handlers_time": {
+													"items": {
+														"$ref": "#/components/schemas/HandlerTimeResponse"
+													},
+													"type": "array"
+												},
+												"translations": {
+													"items": {
+														"type": "string"
+													},
+													"type": "array"
+												},
+												"search_phase": {
+													"type": "string"
+												},
+												"to_lang_id": {
+													"type": "string"
+												},
+												"from_lang_id": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"similar_results",
+												"main_results",
+												"handlers_time",
+												"translations",
+												"search_phase",
+												"to_lang_id",
+												"from_lang_id"
+											],
+											"type": "object"
 										}
-									},
-									"required": [
-										"similar_results",
-										"main_results",
-										"handlers_time",
-										"translations",
-										"cached",
-										"search_phase",
-										"to_lang_id",
-										"from_lang_id"
-									],
-									"type": "object"
+									]
 								}
 							}
 						}
