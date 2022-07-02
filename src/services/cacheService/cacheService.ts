@@ -4,7 +4,7 @@ import md5 from "md5";
 
 export default class CacheService {
     private static instance: CacheService;
-    private client: RedisClientType;
+    private readonly client: RedisClientType;
     private config: CacheConfig;
     public prefix: string;
 
@@ -41,5 +41,32 @@ export default class CacheService {
         }
 
         return md5(requestConceitedString);
+    }
+
+    private createPrefix(hash: string): string {
+        return `${this.prefix}::${hash}`;
+    }
+
+    async checkIfRequestIsInCache(request: { [key: string]: any }) {
+        const requestHash = this.requestToHash(request);
+        return (await this.client.exists(this.createPrefix(requestHash))) === 1;
+    }
+
+    async saveRequestResponseInCache(
+        request: { [key: string]: any },
+        response: object
+    ) {
+        const requestHash = this.requestToHash(request);
+        await this.client.set(
+            this.createPrefix(requestHash),
+            JSON.stringify(response)
+        );
+    }
+
+    async getRequestFromCache(request: {
+        [key: string]: any;
+    }): Promise<string> {
+        const requestHash = this.requestToHash(request);
+        return (await this.client.get(this.createPrefix(requestHash))) ?? "";
     }
 }
