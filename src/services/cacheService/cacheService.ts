@@ -7,4 +7,9 @@ export default class CacheService {
         }
         return CacheService.instance;
     }
+
+    static get isCacheEnabled() {
+        const cache = (process.env.ENABLE_CACHE ?? "").toLowerCase();
+        return cache === "true" || cache === "yes" || cache === "1";
+    }
 }
