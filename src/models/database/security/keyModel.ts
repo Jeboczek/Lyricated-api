@@ -21,7 +21,7 @@ export default class KeyModel extends Model {
     })
     id: number;
 
-    @Column({ type: DataType.STRING(256), allowNull: false, unique: true })
+    @Column({ type: DataType.STRING(64), allowNull: false, unique: true })
     key: string;
 
     @Column({ type: DataType.STRING(256), allowNull: false })
