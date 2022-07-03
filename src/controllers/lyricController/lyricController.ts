@@ -9,6 +9,7 @@ import {
     Query,
     Response,
     Route,
+    Security,
     Tags,
 } from "tsoa";
 import LyricResponse from "../../models/response/lyricResponse";
@@ -28,6 +29,7 @@ export class LyricController extends Controller {
     }
 
     @Post("new")
+    @Security("apiKey", ["contributor"])
     @Response<LyricResponse>(200, "OK")
     @Response<ErrorResponse>(422, "Error")
     public async createLyric(@Body() request: PostLyricRequest) {
@@ -36,6 +38,7 @@ export class LyricController extends Controller {
     }
 
     @Get("without-quality")
+    @Security("apiKey", ["client"])
     @Response<LyricResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Error")
     public async getLyricWithoutQuality() {
@@ -51,6 +54,7 @@ export class LyricController extends Controller {
     }
 
     @Get("random")
+    @Security("apiKey", ["client"])
     @Response<LyricResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Error")
     public async getRandomLyric(
@@ -68,6 +72,7 @@ export class LyricController extends Controller {
     }
 
     @Get("{id}")
+    @Security("apiKey", ["client"])
     @Response<LyricResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Error")
     public async getLyricById(@Path("id") lyricId: number) {
@@ -76,6 +81,7 @@ export class LyricController extends Controller {
     }
 
     @Put("{id}")
+    @Security("apiKey", ["contributor"])
     @Response<LyricResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Error")
     public async putLyric(
@@ -87,6 +93,7 @@ export class LyricController extends Controller {
     }
 
     @Delete("{id}")
+    @Security("apiKey", ["contributor"])
     @Response<LyricResponse>(200, "OK")
     @Response<ErrorResponse>(422, "Error")
     public async deleteLyric(@Path("id") id: number) {

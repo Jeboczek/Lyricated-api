@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Response, Route, Tags } from "tsoa";
+import { Body, Controller, Post, Response, Route, Security, Tags } from "tsoa";
 import ErrorResponse from "../../models/response/errors/errorResponse";
 import SearchResponse from "../../models/response/searchResponse";
 import SearchRequest from "../../models/request/searchRequest";
@@ -17,6 +17,7 @@ export class SearchController extends Controller {
     }
 
     @Post("")
+    @Security("apiKey", ["client"])
     @Response<SearchResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Error")
     async search(@Body() options: SearchRequest) {

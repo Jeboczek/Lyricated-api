@@ -8,6 +8,7 @@ import {
     Put,
     Response,
     Route,
+    Security,
     Tags,
 } from "tsoa";
 import EpisodeRepository from "../../repositories/episodeRepository/episodeRepository";
@@ -27,6 +28,7 @@ export class EpisodeController extends Controller {
     }
 
     @Post("new")
+    @Security("apiKey", ["contributor"])
     @Response<EpisodeResponse>(200, "OK")
     @Response<ErrorResponse>(422, "Error")
     public async postEpisode(@Body() request: PostEpisodeRequest) {
@@ -35,6 +37,7 @@ export class EpisodeController extends Controller {
     }
 
     @Get("{id}")
+    @Security("apiKey", ["client"])
     @Response<EpisodeResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Error")
     public async getEpisode(@Path("id") id: number) {
@@ -44,6 +47,7 @@ export class EpisodeController extends Controller {
     }
 
     @Put("{id}")
+    @Security("apiKey", ["contributor"])
     @Response<EpisodeResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Error")
     public async putEpisode(
@@ -55,6 +59,7 @@ export class EpisodeController extends Controller {
     }
 
     @Delete("{id}")
+    @Security("apiKey", ["contributor"])
     @Response<EpisodeResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Error")
     public async deleteEpisode(@Path("id") id: number) {

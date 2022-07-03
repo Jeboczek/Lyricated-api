@@ -1,5 +1,6 @@
 import express from "express";
 import PermissionService from "../permissionService";
+import AuthenticationError from "../../../exceptions/authenticationError";
 
 export async function expressAuthentication(
     request: express.Request,
@@ -14,14 +15,14 @@ export async function expressAuthentication(
                 if (
                     !(await service.checkIfKeyHavePermission(key, permission))
                 ) {
-                    await Promise.reject(
+                    throw new AuthenticationError(
                         "The key has no permissions to access this content."
                     );
                 }
             }
             await Promise.resolve();
         }
-        await Promise.reject(
+        throw new AuthenticationError(
             "The key, or the absence of a key, prevents you from accessing the content."
         );
     }

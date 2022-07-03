@@ -8,6 +8,7 @@ import {
     Put,
     Response,
     Route,
+    Security,
     Tags,
 } from "tsoa";
 import LyricSentenceRepository from "../../repositories/lyricSentenceRepository/lyricSentenceRepository";
@@ -27,6 +28,7 @@ export class LyricSentenceController extends Controller {
     }
 
     @Post("new")
+    @Security("apiKey", ["contributor"])
     @Response<LyricSentenceResponse>(200, "OK")
     @Response<ErrorResponse>(400, "Error")
     public async createLyricSentence(
@@ -38,6 +40,7 @@ export class LyricSentenceController extends Controller {
     }
 
     @Get("{id}")
+    @Security("apiKey", ["client"])
     @Response<LyricSentenceResponse>(200, "OK")
     @Response<ErrorResponse>(400, "Error")
     public async getLyricSentence(@Path("id") id: number) {
@@ -47,6 +50,7 @@ export class LyricSentenceController extends Controller {
     }
 
     @Put("{id}")
+    @Security("apiKey", ["contributor"])
     @Response<PutLyricSentenceRequest>(200, "OK")
     @Response<ErrorResponse>(400, "Error")
     public async putLyricSentence(
@@ -59,6 +63,7 @@ export class LyricSentenceController extends Controller {
     }
 
     @Delete("{id}")
+    @Security("apiKey", ["contributor"])
     @Response<LyricSentenceResponse>(200, "OK")
     @Response<ErrorResponse>(400, "Error")
     public async deleteMovie(@Path("id") id: number) {

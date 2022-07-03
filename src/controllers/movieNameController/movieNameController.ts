@@ -8,6 +8,7 @@ import {
     Put,
     Response,
     Route,
+    Security,
     Tags,
 } from "tsoa";
 import ErrorResponse from "../../models/response/errors/errorResponse";
@@ -27,6 +28,7 @@ export class MovieNameController extends Controller {
     }
 
     @Post("new")
+    @Security("apiKey", ["contributor"])
     @Response<MovieNameResponse>(200, "OK")
     @Response<ErrorResponse>(400, "Error")
     public async postMovieName(@Body() request: PostMovieNameRequest) {
@@ -36,6 +38,7 @@ export class MovieNameController extends Controller {
     }
 
     @Get("{id}")
+    @Security("apiKey", ["client"])
     @Response<MovieNameResponse>(200, "OK")
     @Response<ErrorResponse>(400, "Error")
     public async getMovieName(@Path("id") id: number) {
@@ -45,6 +48,7 @@ export class MovieNameController extends Controller {
     }
 
     @Put("{id}")
+    @Security("apiKey", ["contributor"])
     @Response<MovieNameResponse>(200, "OK")
     @Response<ErrorResponse>(400, "Error")
     public async putMovieName(
@@ -57,6 +61,7 @@ export class MovieNameController extends Controller {
     }
 
     @Delete("{id}")
+    @Security("apiKey", ["contributor"])
     @Response<MovieNameResponse>(200, "OK")
     @Response<ErrorResponse>(400, "Error")
     public async deleteMovieName(@Path("id") id: number) {

@@ -7,6 +7,7 @@ import ErrorModel from "../../models/database/error/errorModel";
 import DeleteError from "../../exceptions/deleteError";
 import UpdateError from "../../exceptions/updateError";
 import CreateError from "../../exceptions/createError";
+import AuthenticationError from "../../exceptions/authenticationError";
 
 export default async function errorHandler(
     err: unknown,
@@ -29,6 +30,8 @@ export default async function errorHandler(
             errorModel = errFactory.createUpdateError(err.message);
         else if (err instanceof CreateError)
             errorModel = errFactory.createCreateError(err.message);
+        else if (err instanceof AuthenticationError)
+            errorModel = errFactory.createAuthenticationError(err.message);
         else errorModel = errFactory.createInternalServerError(err.message);
 
         await errorModel.save();

@@ -321,6 +321,7 @@ export function RegisterRoutes(app: express.Router) {
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
         app.post('/curse/add',
+            authenticateMiddleware([{"apiKey":["contributor"]}]),
             ...(fetchMiddlewares<RequestHandler>(CurseController)),
             ...(fetchMiddlewares<RequestHandler>(CurseController.prototype.postCurse)),
 
@@ -346,6 +347,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/curse/find',
+            authenticateMiddleware([{"apiKey":["client"]}]),
             ...(fetchMiddlewares<RequestHandler>(CurseController)),
             ...(fetchMiddlewares<RequestHandler>(CurseController.prototype.getCurses)),
 
@@ -371,6 +373,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/curse/:id',
+            authenticateMiddleware([{"apiKey":["client"]}]),
             ...(fetchMiddlewares<RequestHandler>(CurseController)),
             ...(fetchMiddlewares<RequestHandler>(CurseController.prototype.getCurse)),
 
@@ -396,6 +399,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.put('/curse/:id',
+            authenticateMiddleware([{"apiKey":["contributor"]}]),
             ...(fetchMiddlewares<RequestHandler>(CurseController)),
             ...(fetchMiddlewares<RequestHandler>(CurseController.prototype.putCurse)),
 
@@ -422,6 +426,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/curse/:id',
+            authenticateMiddleware([{"apiKey":["contributor"]}]),
             ...(fetchMiddlewares<RequestHandler>(CurseController)),
             ...(fetchMiddlewares<RequestHandler>(CurseController.prototype.deleteCurse)),
 
@@ -447,6 +452,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/episode/new',
+            authenticateMiddleware([{"apiKey":["contributor"]}]),
             ...(fetchMiddlewares<RequestHandler>(EpisodeController)),
             ...(fetchMiddlewares<RequestHandler>(EpisodeController.prototype.postEpisode)),
 
@@ -472,6 +478,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/episode/:id',
+            authenticateMiddleware([{"apiKey":["client"]}]),
             ...(fetchMiddlewares<RequestHandler>(EpisodeController)),
             ...(fetchMiddlewares<RequestHandler>(EpisodeController.prototype.getEpisode)),
 
@@ -497,6 +504,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.put('/episode/:id',
+            authenticateMiddleware([{"apiKey":["contributor"]}]),
             ...(fetchMiddlewares<RequestHandler>(EpisodeController)),
             ...(fetchMiddlewares<RequestHandler>(EpisodeController.prototype.putEpisode)),
 
@@ -523,6 +531,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/episode/:id',
+            authenticateMiddleware([{"apiKey":["contributor"]}]),
             ...(fetchMiddlewares<RequestHandler>(EpisodeController)),
             ...(fetchMiddlewares<RequestHandler>(EpisodeController.prototype.deleteEpisode)),
 
@@ -548,6 +557,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/lang/new',
+            authenticateMiddleware([{"apiKey":["contributor"]}]),
             ...(fetchMiddlewares<RequestHandler>(LangController)),
             ...(fetchMiddlewares<RequestHandler>(LangController.prototype.postLang)),
 
@@ -573,6 +583,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/lang/all',
+            authenticateMiddleware([{"apiKey":["client"]}]),
             ...(fetchMiddlewares<RequestHandler>(LangController)),
             ...(fetchMiddlewares<RequestHandler>(LangController.prototype.getLangs)),
 
@@ -597,6 +608,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/lang/:lang',
+            authenticateMiddleware([{"apiKey":["contributor"]}]),
             ...(fetchMiddlewares<RequestHandler>(LangController)),
             ...(fetchMiddlewares<RequestHandler>(LangController.prototype.deleteLang)),
 
@@ -622,6 +634,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/lyric/new',
+            authenticateMiddleware([{"apiKey":["contributor"]}]),
             ...(fetchMiddlewares<RequestHandler>(LyricController)),
             ...(fetchMiddlewares<RequestHandler>(LyricController.prototype.createLyric)),
 
@@ -647,6 +660,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/lyric/without-quality',
+            authenticateMiddleware([{"apiKey":["client"]}]),
             ...(fetchMiddlewares<RequestHandler>(LyricController)),
             ...(fetchMiddlewares<RequestHandler>(LyricController.prototype.getLyricWithoutQuality)),
 
@@ -671,6 +685,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/lyric/random',
+            authenticateMiddleware([{"apiKey":["client"]}]),
             ...(fetchMiddlewares<RequestHandler>(LyricController)),
             ...(fetchMiddlewares<RequestHandler>(LyricController.prototype.getRandomLyric)),
 
@@ -698,6 +713,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/lyric/:id',
+            authenticateMiddleware([{"apiKey":["client"]}]),
             ...(fetchMiddlewares<RequestHandler>(LyricController)),
             ...(fetchMiddlewares<RequestHandler>(LyricController.prototype.getLyricById)),
 
@@ -723,6 +739,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.put('/lyric/:id',
+            authenticateMiddleware([{"apiKey":["contributor"]}]),
             ...(fetchMiddlewares<RequestHandler>(LyricController)),
             ...(fetchMiddlewares<RequestHandler>(LyricController.prototype.putLyric)),
 
@@ -749,6 +766,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/lyric/:id',
+            authenticateMiddleware([{"apiKey":["contributor"]}]),
             ...(fetchMiddlewares<RequestHandler>(LyricController)),
             ...(fetchMiddlewares<RequestHandler>(LyricController.prototype.deleteLyric)),
 
@@ -774,6 +792,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/lyric-sentence/new',
+            authenticateMiddleware([{"apiKey":["contributor"]}]),
             ...(fetchMiddlewares<RequestHandler>(LyricSentenceController)),
             ...(fetchMiddlewares<RequestHandler>(LyricSentenceController.prototype.createLyricSentence)),
 
@@ -799,6 +818,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/lyric-sentence/:id',
+            authenticateMiddleware([{"apiKey":["client"]}]),
             ...(fetchMiddlewares<RequestHandler>(LyricSentenceController)),
             ...(fetchMiddlewares<RequestHandler>(LyricSentenceController.prototype.getLyricSentence)),
 
@@ -824,6 +844,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.put('/lyric-sentence/:id',
+            authenticateMiddleware([{"apiKey":["contributor"]}]),
             ...(fetchMiddlewares<RequestHandler>(LyricSentenceController)),
             ...(fetchMiddlewares<RequestHandler>(LyricSentenceController.prototype.putLyricSentence)),
 
@@ -850,6 +871,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/lyric-sentence/:id',
+            authenticateMiddleware([{"apiKey":["contributor"]}]),
             ...(fetchMiddlewares<RequestHandler>(LyricSentenceController)),
             ...(fetchMiddlewares<RequestHandler>(LyricSentenceController.prototype.deleteMovie)),
 
@@ -875,6 +897,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/movie/find',
+            authenticateMiddleware([{"apiKey":["client"]}]),
             ...(fetchMiddlewares<RequestHandler>(MovieController)),
             ...(fetchMiddlewares<RequestHandler>(MovieController.prototype.getMovies)),
 
@@ -900,6 +923,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/movie/new',
+            authenticateMiddleware([{"apiKey":["contributor"]}]),
             ...(fetchMiddlewares<RequestHandler>(MovieController)),
             ...(fetchMiddlewares<RequestHandler>(MovieController.prototype.createMovie)),
 
@@ -925,6 +949,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/movie/:id',
+            authenticateMiddleware([{"apiKey":["client"]}]),
             ...(fetchMiddlewares<RequestHandler>(MovieController)),
             ...(fetchMiddlewares<RequestHandler>(MovieController.prototype.getMovie)),
 
@@ -950,6 +975,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.put('/movie/:id',
+            authenticateMiddleware([{"apiKey":["contributor"]}]),
             ...(fetchMiddlewares<RequestHandler>(MovieController)),
             ...(fetchMiddlewares<RequestHandler>(MovieController.prototype.putMovie)),
 
@@ -976,6 +1002,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/movie/:id',
+            authenticateMiddleware([{"apiKey":["contributor"]}]),
             ...(fetchMiddlewares<RequestHandler>(MovieController)),
             ...(fetchMiddlewares<RequestHandler>(MovieController.prototype.deleteMovie)),
 
@@ -1001,6 +1028,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/movie-name/new',
+            authenticateMiddleware([{"apiKey":["contributor"]}]),
             ...(fetchMiddlewares<RequestHandler>(MovieNameController)),
             ...(fetchMiddlewares<RequestHandler>(MovieNameController.prototype.postMovieName)),
 
@@ -1026,6 +1054,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/movie-name/:id',
+            authenticateMiddleware([{"apiKey":["client"]}]),
             ...(fetchMiddlewares<RequestHandler>(MovieNameController)),
             ...(fetchMiddlewares<RequestHandler>(MovieNameController.prototype.getMovieName)),
 
@@ -1051,6 +1080,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.put('/movie-name/:id',
+            authenticateMiddleware([{"apiKey":["contributor"]}]),
             ...(fetchMiddlewares<RequestHandler>(MovieNameController)),
             ...(fetchMiddlewares<RequestHandler>(MovieNameController.prototype.putMovieName)),
 
@@ -1077,6 +1107,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/movie-name/:id',
+            authenticateMiddleware([{"apiKey":["contributor"]}]),
             ...(fetchMiddlewares<RequestHandler>(MovieNameController)),
             ...(fetchMiddlewares<RequestHandler>(MovieNameController.prototype.deleteMovieName)),
 
@@ -1102,6 +1133,7 @@ export function RegisterRoutes(app: express.Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/search',
+            authenticateMiddleware([{"apiKey":["client"]}]),
             ...(fetchMiddlewares<RequestHandler>(SearchController)),
             ...(fetchMiddlewares<RequestHandler>(SearchController.prototype.search)),
 
@@ -1129,6 +1161,65 @@ export function RegisterRoutes(app: express.Router) {
 
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
+
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+    function authenticateMiddleware(security: TsoaRoute.Security[] = []) {
+        return async function runAuthenticationMiddleware(request: any, _response: any, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            // keep track of failed auth attempts so we can hand back the most
+            // recent one.  This behavior was previously existing so preserving it
+            // here
+            const failedAttempts: any[] = [];
+            const pushAndRethrow = (error: any) => {
+                failedAttempts.push(error);
+                throw error;
+            };
+
+            const secMethodOrPromises: Promise<any>[] = [];
+            for (const secMethod of security) {
+                if (Object.keys(secMethod).length > 1) {
+                    const secMethodAndPromises: Promise<any>[] = [];
+
+                    for (const name in secMethod) {
+                        secMethodAndPromises.push(
+                            expressAuthentication(request, name, secMethod[name])
+                                .catch(pushAndRethrow)
+                        );
+                    }
+
+                    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+                    secMethodOrPromises.push(Promise.all(secMethodAndPromises)
+                        .then(users => { return users[0]; }));
+                } else {
+                    for (const name in secMethod) {
+                        secMethodOrPromises.push(
+                            expressAuthentication(request, name, secMethod[name])
+                                .catch(pushAndRethrow)
+                        );
+                    }
+                }
+            }
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            try {
+                request['user'] = await promiseAny(secMethodOrPromises);
+                next();
+            }
+            catch(err) {
+                // Show most recent error as response
+                const error = failedAttempts.pop();
+                error.status = error.status || 401;
+                next(error);
+            }
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        }
+    }
 
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 

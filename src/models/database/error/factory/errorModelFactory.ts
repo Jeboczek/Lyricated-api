@@ -22,7 +22,7 @@ export default class ErrorModelFactory {
     }
 
     createInternalServerError(message: string): ErrorModel {
-        this.options.statusCode = 500;
+        this.options.statusCode = 400;
         this.options.name = "Internal Server Error";
         this.options.message = message;
 
@@ -30,7 +30,7 @@ export default class ErrorModelFactory {
     }
 
     createNotFoundError(message: string): ErrorModel {
-        this.options.statusCode = 404;
+        this.options.statusCode = 400;
         this.options.name = "Not Found";
         this.options.message = message;
 
@@ -46,7 +46,7 @@ export default class ErrorModelFactory {
     }
 
     createUpdateError(message: string): ErrorModel {
-        this.options.statusCode = 422;
+        this.options.statusCode = 400;
         this.options.name = "Update Error";
         this.options.message = message;
 
@@ -54,7 +54,7 @@ export default class ErrorModelFactory {
     }
 
     createDeleteError(message: string): ErrorModel {
-        this.options.statusCode = 422;
+        this.options.statusCode = 400;
         this.options.name = "Delete Error";
         this.options.message = message;
 
@@ -62,8 +62,16 @@ export default class ErrorModelFactory {
     }
 
     createCreateError(message: string): ErrorModel {
-        this.options.statusCode = 422;
+        this.options.statusCode = 400;
         this.options.name = "Create Error";
+        this.options.message = message;
+
+        return this.create();
+    }
+
+    createAuthenticationError(message: string): ErrorModel {
+        this.options.statusCode = 400;
+        this.options.name = "Permission Denied Error";
         this.options.message = message;
 
         return this.create();

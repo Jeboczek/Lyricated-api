@@ -9,6 +9,7 @@ import {
     Query,
     Response,
     Route,
+    Security,
     Tags,
 } from "tsoa";
 import MovieResponse from "../../models/response/movieResponse";
@@ -29,6 +30,7 @@ export class MovieController extends Controller {
     }
 
     @Get("find")
+    @Security("apiKey", ["client"])
     @Response<MovieResponse>(200, "OK")
     public async getMovies(
         @Query() type?: MovieType
@@ -39,6 +41,7 @@ export class MovieController extends Controller {
     }
 
     @Post("new")
+    @Security("apiKey", ["contributor"])
     @Response<MovieResponse>(200, "OK")
     public async createMovie(@Body() request: PostMovieRequest) {
         const movie = await this.repo.createMovie(request);
@@ -47,6 +50,7 @@ export class MovieController extends Controller {
     }
 
     @Get("{id}")
+    @Security("apiKey", ["client"])
     @Response<MovieResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Error")
     public async getMovie(@Path("id") movieId: number) {
@@ -56,6 +60,7 @@ export class MovieController extends Controller {
     }
 
     @Put("{id}")
+    @Security("apiKey", ["contributor"])
     @Response<MovieResponse>(200, "OK")
     public async putMovie(
         @Path("id") movieId: number,
@@ -67,6 +72,7 @@ export class MovieController extends Controller {
     }
 
     @Delete("{id}")
+    @Security("apiKey", ["contributor"])
     @Response<MovieResponse>(200, "OK")
     @Response<ErrorResponse>(400, "Error")
     public async deleteMovie(@Path("id") movieId: number) {
