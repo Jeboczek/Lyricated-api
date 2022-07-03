@@ -1,23 +1,23 @@
-import PermissionRepository from "../../repositories/permissionRepository/permissionRepository";
 import KeyModel from "../../models/database/security/keyModel";
+import SecurityRepository from "../../repositories/securityRepository/securityRepository";
 
-export default class PermissionService {
-    private static instance: PermissionService;
-    private repo: PermissionRepository;
+export default class SecurityService {
+    private static instance: SecurityService;
+    private repo: SecurityRepository;
 
-    private constructor(repo: PermissionRepository) {
+    private constructor(repo: SecurityRepository) {
         this.repo = repo;
     }
 
-    static getInstance(repo?: PermissionRepository) {
-        if (!PermissionService.instance) {
+    static getInstance(repo?: SecurityRepository) {
+        if (!SecurityService.instance) {
             if (repo === undefined)
                 throw Error(
                     "When you first initialize PermissionService you need to provide a PermissionRepository."
                 );
-            PermissionService.instance = new PermissionService(repo);
+            SecurityService.instance = new SecurityService(repo);
         }
-        return PermissionService.instance;
+        return SecurityService.instance;
     }
 
     async addAllDefaultPermissions() {

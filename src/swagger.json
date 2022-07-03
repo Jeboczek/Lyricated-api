@@ -487,57 +487,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"PermissionResponse": {
-				"properties": {
-					"name": {
-						"type": "string"
-					},
-					"description": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"name",
-					"description"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"KeyResponse": {
-				"properties": {
-					"key": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"permissions": {
-						"items": {
-							"$ref": "#/components/schemas/PermissionResponse"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"key",
-					"name",
-					"permissions"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"PostKeyRequest": {
-				"properties": {
-					"name": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"name"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"HighlightResponse": {
 				"properties": {
 					"from": {
@@ -709,6 +658,57 @@
 					"filter_options",
 					"sorting_mode",
 					"dont_use_cache"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PermissionResponse": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"description"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"KeyResponse": {
+				"properties": {
+					"key": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"permissions": {
+						"items": {
+							"$ref": "#/components/schemas/PermissionResponse"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"key",
+					"name",
+					"permissions"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PostKeyRequest": {
+				"properties": {
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -2263,6 +2263,52 @@
 				]
 			}
 		},
+		"/search": {
+			"post": {
+				"operationId": "Search",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					},
+					"404": {
+						"description": "Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Search"
+				],
+				"security": [
+					{
+						"api_key": [
+							"client"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SearchRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/security/permissions": {
 			"get": {
 				"operationId": "GetPermissions",
@@ -2558,52 +2604,6 @@
 						}
 					}
 				]
-			}
-		},
-		"/search": {
-			"post": {
-				"operationId": "Search",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {}
-							}
-						}
-					},
-					"404": {
-						"description": "Error",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/ErrorResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Search"
-				],
-				"security": [
-					{
-						"api_key": [
-							"client"
-						]
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/SearchRequest"
-							}
-						}
-					}
-				}
 			}
 		}
 	},

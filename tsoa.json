@@ -23,7 +23,7 @@
     "description": "API for Lyricated app."
   },
   "routes": {
-    "authenticationModule": "src/services/permissionService/expressAuthentication/expressAuthentication.ts",
+    "authenticationModule": "src/services/securityService/expressAuthentication/expressAuthentication.ts",
     "routesDir": "src"
   }
 }

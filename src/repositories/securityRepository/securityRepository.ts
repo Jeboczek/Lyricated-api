@@ -8,7 +8,7 @@ import KeyToPermissionModel from "../../models/database/security/relationships/k
 import NotFoundError from "../../exceptions/notFoundError";
 import DeleteError from "../../exceptions/deleteError";
 
-export default class PermissionRepository {
+export default class SecurityRepository {
     async createNewKey(name: string, length = 64): Promise<KeyModel> {
         const key = randomstring.generate(length);
         try {

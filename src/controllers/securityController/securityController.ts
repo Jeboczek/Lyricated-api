@@ -13,18 +13,18 @@ import {
 } from "tsoa";
 import ErrorResponse from "../../models/response/errors/errorResponse";
 import PermissionResponse from "../../models/response/permissionResponse";
-import PermissionRepository from "../../repositories/permissionRepository/permissionRepository";
 import KeyResponse from "../../models/response/keyResponse";
 import PostKeyRequest from "../../models/request/postKeyRequest";
+import SecurityRepository from "../../repositories/securityRepository/securityRepository";
 
 @Route("security")
 @Tags("Security")
-export class PermissionController extends Controller {
-    private repo: PermissionRepository;
+export class SecurityController extends Controller {
+    private repo: SecurityRepository;
 
-    constructor(repo?: PermissionRepository) {
+    constructor(repo?: SecurityRepository) {
         super();
-        this.repo = repo ?? new PermissionRepository();
+        this.repo = repo ?? new SecurityRepository();
     }
 
     @Get("permissions")

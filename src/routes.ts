@@ -17,10 +17,10 @@ import { MovieController } from './controllers/movieController/movieController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { MovieNameController } from './controllers/movieNameController/movieNameController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { PermissionController } from './controllers/permissionControler/permissionController';
-// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { SearchController } from './controllers/searchController/searchController';
-import { expressAuthentication } from './services/permissionService/expressAuthentication/expressAuthentication';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { SecurityController } from './controllers/securityController/securityController';
+import { expressAuthentication } from './services/securityService/expressAuthentication/expressAuthentication';
 // @ts-ignore - no great way to install types from subpackage
 const promiseAny = require('promise.any');
 import type { RequestHandler } from 'express';
@@ -239,33 +239,6 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "PermissionResponse": {
-        "dataType": "refObject",
-        "properties": {
-            "name": {"dataType":"string","required":true},
-            "description": {"dataType":"string","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "KeyResponse": {
-        "dataType": "refObject",
-        "properties": {
-            "key": {"dataType":"string","required":true},
-            "name": {"dataType":"string","required":true},
-            "permissions": {"dataType":"array","array":{"dataType":"refObject","ref":"PermissionResponse"},"required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "PostKeyRequest": {
-        "dataType": "refObject",
-        "properties": {
-            "name": {"dataType":"string","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "HighlightResponse": {
         "dataType": "refObject",
         "properties": {
@@ -335,6 +308,33 @@ const models: TsoaRoute.Models = {
             "filter_options": {"ref":"SearchRequestFilterOptions","required":true},
             "sorting_mode": {"ref":"SortingMode","required":true},
             "dont_use_cache": {"dataType":"boolean","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PermissionResponse": {
+        "dataType": "refObject",
+        "properties": {
+            "name": {"dataType":"string","required":true},
+            "description": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "KeyResponse": {
+        "dataType": "refObject",
+        "properties": {
+            "key": {"dataType":"string","required":true},
+            "name": {"dataType":"string","required":true},
+            "permissions": {"dataType":"array","array":{"dataType":"refObject","ref":"PermissionResponse"},"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PostKeyRequest": {
+        "dataType": "refObject",
+        "properties": {
+            "name": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },
@@ -1161,163 +1161,6 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/security/permissions',
-            authenticateMiddleware([{"api_key":["admin"]}]),
-            ...(fetchMiddlewares<RequestHandler>(PermissionController)),
-            ...(fetchMiddlewares<RequestHandler>(PermissionController.prototype.getPermissions)),
-
-            function PermissionController_getPermissions(request: any, response: any, next: any) {
-            const args = {
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new PermissionController();
-
-
-              const promise = controller.getPermissions.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, undefined, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/security/key/:key',
-            authenticateMiddleware([{"api_key":["admin"]}]),
-            ...(fetchMiddlewares<RequestHandler>(PermissionController)),
-            ...(fetchMiddlewares<RequestHandler>(PermissionController.prototype.getKey)),
-
-            function PermissionController_getKey(request: any, response: any, next: any) {
-            const args = {
-                    key: {"in":"path","name":"key","required":true,"dataType":"string"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new PermissionController();
-
-
-              const promise = controller.getKey.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, undefined, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.delete('/security/key/:key',
-            authenticateMiddleware([{"api_key":["admin"]}]),
-            ...(fetchMiddlewares<RequestHandler>(PermissionController)),
-            ...(fetchMiddlewares<RequestHandler>(PermissionController.prototype.deleteKey)),
-
-            function PermissionController_deleteKey(request: any, response: any, next: any) {
-            const args = {
-                    key: {"in":"path","name":"key","required":true,"dataType":"string"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new PermissionController();
-
-
-              const promise = controller.deleteKey.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, undefined, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/security/key/new',
-            authenticateMiddleware([{"api_key":["admin"]}]),
-            ...(fetchMiddlewares<RequestHandler>(PermissionController)),
-            ...(fetchMiddlewares<RequestHandler>(PermissionController.prototype.newKey)),
-
-            function PermissionController_newKey(request: any, response: any, next: any) {
-            const args = {
-                    request: {"in":"body","name":"request","required":true,"ref":"PostKeyRequest"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new PermissionController();
-
-
-              const promise = controller.newKey.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, undefined, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.put('/security/key/:key/permission/:permission',
-            authenticateMiddleware([{"api_key":["admin"]}]),
-            ...(fetchMiddlewares<RequestHandler>(PermissionController)),
-            ...(fetchMiddlewares<RequestHandler>(PermissionController.prototype.setPermission)),
-
-            function PermissionController_setPermission(request: any, response: any, next: any) {
-            const args = {
-                    key: {"in":"path","name":"key","required":true,"dataType":"string"},
-                    permission: {"in":"path","name":"permission","required":true,"dataType":"string"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new PermissionController();
-
-
-              const promise = controller.setPermission.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, undefined, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.delete('/security/key/:key/permission/:permission',
-            authenticateMiddleware([{"api_key":["admin"]}]),
-            ...(fetchMiddlewares<RequestHandler>(PermissionController)),
-            ...(fetchMiddlewares<RequestHandler>(PermissionController.prototype.unsetPermission)),
-
-            function PermissionController_unsetPermission(request: any, response: any, next: any) {
-            const args = {
-                    key: {"in":"path","name":"key","required":true,"dataType":"string"},
-                    permission: {"in":"path","name":"permission","required":true,"dataType":"string"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new PermissionController();
-
-
-              const promise = controller.unsetPermission.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, undefined, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/search',
             authenticateMiddleware([{"api_key":["client"]}]),
             ...(fetchMiddlewares<RequestHandler>(SearchController)),
@@ -1338,6 +1181,163 @@ export function RegisterRoutes(app: express.Router) {
 
 
               const promise = controller.search.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/security/permissions',
+            authenticateMiddleware([{"api_key":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(SecurityController)),
+            ...(fetchMiddlewares<RequestHandler>(SecurityController.prototype.getPermissions)),
+
+            function SecurityController_getPermissions(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SecurityController();
+
+
+              const promise = controller.getPermissions.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/security/key/:key',
+            authenticateMiddleware([{"api_key":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(SecurityController)),
+            ...(fetchMiddlewares<RequestHandler>(SecurityController.prototype.getKey)),
+
+            function SecurityController_getKey(request: any, response: any, next: any) {
+            const args = {
+                    key: {"in":"path","name":"key","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SecurityController();
+
+
+              const promise = controller.getKey.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/security/key/:key',
+            authenticateMiddleware([{"api_key":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(SecurityController)),
+            ...(fetchMiddlewares<RequestHandler>(SecurityController.prototype.deleteKey)),
+
+            function SecurityController_deleteKey(request: any, response: any, next: any) {
+            const args = {
+                    key: {"in":"path","name":"key","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SecurityController();
+
+
+              const promise = controller.deleteKey.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/security/key/new',
+            authenticateMiddleware([{"api_key":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(SecurityController)),
+            ...(fetchMiddlewares<RequestHandler>(SecurityController.prototype.newKey)),
+
+            function SecurityController_newKey(request: any, response: any, next: any) {
+            const args = {
+                    request: {"in":"body","name":"request","required":true,"ref":"PostKeyRequest"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SecurityController();
+
+
+              const promise = controller.newKey.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.put('/security/key/:key/permission/:permission',
+            authenticateMiddleware([{"api_key":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(SecurityController)),
+            ...(fetchMiddlewares<RequestHandler>(SecurityController.prototype.setPermission)),
+
+            function SecurityController_setPermission(request: any, response: any, next: any) {
+            const args = {
+                    key: {"in":"path","name":"key","required":true,"dataType":"string"},
+                    permission: {"in":"path","name":"permission","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SecurityController();
+
+
+              const promise = controller.setPermission.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/security/key/:key/permission/:permission',
+            authenticateMiddleware([{"api_key":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(SecurityController)),
+            ...(fetchMiddlewares<RequestHandler>(SecurityController.prototype.unsetPermission)),
+
+            function SecurityController_unsetPermission(request: any, response: any, next: any) {
+            const args = {
+                    key: {"in":"path","name":"key","required":true,"dataType":"string"},
+                    permission: {"in":"path","name":"permission","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SecurityController();
+
+
+              const promise = controller.unsetPermission.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);

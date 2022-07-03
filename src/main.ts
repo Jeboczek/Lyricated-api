@@ -9,8 +9,8 @@ import SwaggerDoc from "./swagger.json";
 import errorHandler from "./middlewares/errorHandler/errorHandler";
 import CacheService from "./services/cacheService/cacheService";
 import CacheConfig from "./config/cacheConfig";
-import PermissionService from "./services/permissionService/permissionService";
-import PermissionRepository from "./repositories/permissionRepository/permissionRepository";
+import SecurityRepository from "./repositories/securityRepository/securityRepository";
+import SecurityService from "./services/securityService/securityService";
 
 dotenv.config();
 
@@ -23,15 +23,15 @@ async function initializeDatabaseService(): Promise<DatabaseService> {
     return databaseService;
 }
 
-async function initializePermissionService(): Promise<PermissionService> {
-    const repo = new PermissionRepository();
-    const service = PermissionService.getInstance(repo);
+async function initializeSecurityService(): Promise<SecurityService> {
+    const repo = new SecurityRepository();
+    const service = SecurityService.getInstance(repo);
     await service.addAllDefaultPermissions();
 
     const key = await service.createAdminKeyIfThereIsNoKeys();
     if (key) console.log(`YOUR SUPER ADMIN KEY: ${key.key}`);
 
-    console.log("Permission initialized.");
+    console.log("Security service initialized.");
 
     return service;
 }
@@ -65,7 +65,7 @@ function initializeExpress(): Express {
 (async () => {
     await initializeDatabaseService();
     await initializeCacheService();
-    await initializePermissionService();
+    await initializeSecurityService();
     const app = initializeExpress();
 
     const PORT = process.env.PORT || 8080;

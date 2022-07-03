@@ -1,5 +1,5 @@
 import express from "express";
-import PermissionService from "../permissionService";
+import SecurityService from "../securityService";
 import AuthenticationError from "../../../exceptions/authenticationError";
 
 export async function expressAuthentication(
@@ -8,7 +8,7 @@ export async function expressAuthentication(
     scopes?: string[]
 ): Promise<any> {
     if (securityName === "api_key") {
-        const service = PermissionService.getInstance();
+        const service = SecurityService.getInstance();
         const key = request.headers["authorization"];
         if (key && key.length == 64) {
             for (const permission of scopes ?? []) {
