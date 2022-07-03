@@ -94,6 +94,10 @@ export default class PermissionRepository {
         );
     }
 
+    async getAllPermissions(): Promise<PermissionModel[]> {
+        return await PermissionModel.findAll();
+    }
+
     async thereIsSomeKeyInTheDatabase(): Promise<boolean> {
         const numberOfKeys = await KeyModel.count();
         return numberOfKeys !== 0;

@@ -17,6 +17,8 @@ import { MovieController } from './controllers/movieController/movieController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { MovieNameController } from './controllers/movieNameController/movieNameController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { PermissionController } from './controllers/permissionControler/permissionController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { SearchController } from './controllers/searchController/searchController';
 import { expressAuthentication } from './services/permissionService/expressAuthentication/expressAuthentication';
 // @ts-ignore - no great way to install types from subpackage
@@ -233,6 +235,15 @@ const models: TsoaRoute.Models = {
         "properties": {
             "lang": {"dataType":"string","required":true},
             "content": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "PermissionResponse": {
+        "dataType": "refObject",
+        "properties": {
+            "name": {"dataType":"string","required":true},
+            "description": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },
@@ -1126,6 +1137,31 @@ export function RegisterRoutes(app: express.Router) {
 
 
               const promise = controller.deleteMovieName.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/security/permissions',
+            authenticateMiddleware([{"api_key":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(PermissionController)),
+            ...(fetchMiddlewares<RequestHandler>(PermissionController.prototype.getPermissions)),
+
+            function PermissionController_getPermissions(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new PermissionController();
+
+
+              const promise = controller.getPermissions.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
