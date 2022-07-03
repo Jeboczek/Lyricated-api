@@ -1212,32 +1212,6 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/security/key/:key',
-            authenticateMiddleware([{"api_key":["admin"]}]),
-            ...(fetchMiddlewares<RequestHandler>(SecurityController)),
-            ...(fetchMiddlewares<RequestHandler>(SecurityController.prototype.getKey)),
-
-            function SecurityController_getKey(request: any, response: any, next: any) {
-            const args = {
-                    key: {"in":"path","name":"key","required":true,"dataType":"string"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new SecurityController();
-
-
-              const promise = controller.getKey.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, undefined, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.delete('/security/key/:key',
             authenticateMiddleware([{"api_key":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(SecurityController)),
@@ -1258,6 +1232,31 @@ export function RegisterRoutes(app: express.Router) {
 
 
               const promise = controller.deleteKey.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/security/key/all',
+            authenticateMiddleware([{"api_key":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(SecurityController)),
+            ...(fetchMiddlewares<RequestHandler>(SecurityController.prototype.getKeys)),
+
+            function SecurityController_getKeys(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SecurityController();
+
+
+              const promise = controller.getKeys.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
@@ -1290,13 +1289,14 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/security/key',
+        app.get('/security/key/:key',
             authenticateMiddleware([{"api_key":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(SecurityController)),
-            ...(fetchMiddlewares<RequestHandler>(SecurityController.prototype.getKeys)),
+            ...(fetchMiddlewares<RequestHandler>(SecurityController.prototype.getKey)),
 
-            function SecurityController_getKeys(request: any, response: any, next: any) {
+            function SecurityController_getKey(request: any, response: any, next: any) {
             const args = {
+                    key: {"in":"path","name":"key","required":true,"dataType":"string"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -1308,7 +1308,7 @@ export function RegisterRoutes(app: express.Router) {
                 const controller = new SecurityController();
 
 
-              const promise = controller.getKeys.apply(controller, validatedArgs as any);
+              const promise = controller.getKey.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);
