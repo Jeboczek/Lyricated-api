@@ -753,7 +753,7 @@
 						}
 					}
 				},
-				"description": "It allows to add a curse to the database.\nYou need \"contributor\" permission to use this endpoint.",
+				"description": "It allows to add a new Curse to the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"Curse"
 				],
@@ -803,7 +803,7 @@
 						}
 					}
 				},
-				"description": "It allows to find the curse words that exist in the database.\nThe only_lang option is optional, it allows you to get curse words only for a specific language.\nYou need \"client\" permission to use this endpoint.",
+				"description": "It allows to find the Curse's that exist in the database.\nThe only_lang option is optional, it allows you to get Curse's only for a specific language.\nYou need \"client\" permission to use this endpoint.",
 				"tags": [
 					"Curse"
 				],
@@ -1004,6 +1004,7 @@
 						}
 					}
 				},
+				"description": "It allows to add a new Episode to the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"Episode"
 				],
@@ -1052,6 +1053,7 @@
 						}
 					}
 				},
+				"description": "It allows you to get the Episode specified with id.\nYou need \"client\" permission to use this endpoint.",
 				"tags": [
 					"Episode"
 				],
@@ -1098,6 +1100,7 @@
 						}
 					}
 				},
+				"description": "It allows you to update a Episode that is already in the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"Episode"
 				],
@@ -1154,6 +1157,7 @@
 						}
 					}
 				},
+				"description": "It allows you to delete a Episode that is already in the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"Episode"
 				],

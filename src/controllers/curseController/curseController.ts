@@ -29,7 +29,7 @@ export class CurseController extends Controller {
     }
 
     /**
-     * It allows to add a curse to the database.
+     * It allows to add a new Curse to the database.
      * You need "contributor" permission to use this endpoint.
      **/
     @Post("add")
@@ -41,8 +41,8 @@ export class CurseController extends Controller {
     }
 
     /**
-     * It allows to find the curse words that exist in the database.
-     * The only_lang option is optional, it allows you to get curse words only for a specific language.
+     * It allows to find the Curse's that exist in the database.
+     * The only_lang option is optional, it allows you to get Curse's only for a specific language.
      * You need "client" permission to use this endpoint.
      **/
     @Get("find")
