@@ -1,7 +1,7 @@
 import SearchServiceAbstractHandler from "./searchServiceAbstractHandler";
 import SearchServiceState from "../../interfaces/searchServiceState";
 import SearchServiceResult from "../../interfaces/searchServiceResult";
-import CurseRepository from "../../../curseRepository/curseRepository";
+import CurseRepository from "../../../../repositories/curseRepository/curseRepository";
 
 export default class SearchServiceFilterHandler extends SearchServiceAbstractHandler {
     handlerName = "filter";

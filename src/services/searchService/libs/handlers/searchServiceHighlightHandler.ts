@@ -72,7 +72,6 @@ export default class SearchServiceHighlightHandler extends SearchServiceAbstract
                         ...highlights,
                     ];
                 }
-                console.log(result.fromHighlights);
             }
         }
 

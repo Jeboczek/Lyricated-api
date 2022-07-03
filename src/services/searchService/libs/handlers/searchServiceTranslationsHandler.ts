@@ -1,6 +1,6 @@
 import SearchServiceAbstractHandler from "./searchServiceAbstractHandler";
 import SearchServiceState from "../../interfaces/searchServiceState";
-import TranslateService from "../../../../services/translateService/translateService";
+import TranslateService from "../../../translateService/translateService";
 
 export default class SearchServiceTranslationsHandler extends SearchServiceAbstractHandler {
     handlerName = "translate";

@@ -4,7 +4,7 @@ import SearchResponse from "../../models/response/searchResponse";
 import SearchRequest from "../../models/request/searchRequest";
 import ChangeSearchResults from "./libs/changeSearchResults";
 import CacheService from "../../services/cacheService/cacheService";
-import SearchService from "../../repositories/searchService/searchService";
+import SearchService from "../../services/searchService/searchService";
 
 @Route("search")
 @Tags("Search")
