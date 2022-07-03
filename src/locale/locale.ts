@@ -43,4 +43,8 @@ export default class Locale {
     static createThereIsNoObjectText(objectName: string): string {
         return `There is no any ${objectName}`;
     }
+
+    static createAlreadyExistsText(objectName: string): string {
+        return `Object ${objectName} already exists`;
+    }
 }
