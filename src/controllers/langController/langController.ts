@@ -25,7 +25,7 @@ export class LangController extends Controller {
     }
 
     @Post("new")
-    @Security("apiKey", ["contributor"])
+    @Security("api_key", ["contributor"])
     @Response<{ lang: string }>(200, "OK")
     @Response<ErrorResponse>(422, "Error")
     public async postLang(@Body() request: PostLangRequest) {
@@ -34,7 +34,7 @@ export class LangController extends Controller {
     }
 
     @Get("all")
-    @Security("apiKey", ["client"])
+    @Security("api_key", ["client"])
     @Response<{ langs: string[] }>(200, "OK")
     @Response<ErrorResponse>(404, "Error")
     public async getLangs() {
@@ -43,7 +43,7 @@ export class LangController extends Controller {
     }
 
     @Delete("{lang}")
-    @Security("apiKey", ["contributor"])
+    @Security("api_key", ["contributor"])
     @Response<{ lang: string }>(200, "OK")
     @Response<ErrorResponse>(404, "Error")
     public async deleteLang(@Path("lang") lang: string) {

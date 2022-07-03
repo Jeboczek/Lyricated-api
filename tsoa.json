@@ -9,7 +9,12 @@
       "api_key": {
         "type": "apiKey",
         "name": "Authorization",
-        "in": "header"
+        "in": "header",
+        "scopes": {
+          "contributor": "It allows you to modify (Create, Update, Delete) the content of the application. E.g. Movies, Languages etc.",
+          "client": "It allows you to access application data. This permission should be the only one for the end user.",
+          "admin": "It allows you to add new keys and permissions. It also allows you to assign permissions keys."
+        }
       }
     },
     "outputDirectory": "src",

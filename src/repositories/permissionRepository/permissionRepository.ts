@@ -93,4 +93,9 @@ export default class PermissionRepository {
             undefined
         );
     }
+
+    async thereIsSomeKeyInTheDatabase(): Promise<boolean> {
+        const numberOfKeys = await KeyModel.count();
+        return numberOfKeys !== 0;
+    }
 }

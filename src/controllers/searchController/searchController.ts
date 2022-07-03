@@ -17,7 +17,7 @@ export class SearchController extends Controller {
     }
 
     @Post("")
-    @Security("apiKey", ["client"])
+    @Security("api_key", ["client"])
     @Response<SearchResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Error")
     async search(@Body() options: SearchRequest) {

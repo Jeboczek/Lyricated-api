@@ -29,7 +29,7 @@ export class CurseController extends Controller {
     }
 
     @Post("add")
-    @Security("apiKey", ["contributor"])
+    @Security("api_key", ["contributor"])
     @Response<CurseResponse>(200, "OK")
     public async postCurse(@Body() request: PostCurseRequest) {
         const newCurse = await this.repo.createCurse(request);
@@ -37,7 +37,7 @@ export class CurseController extends Controller {
     }
 
     @Get("find")
-    @Security("apiKey", ["client"])
+    @Security("api_key", ["client"])
     @Response<{ curses: CurseResponse[] }>(200, "OK")
     public async getCurses(
         @Query("only_lang") onlyLang?: string
@@ -51,7 +51,7 @@ export class CurseController extends Controller {
     }
 
     @Get("{id}")
-    @Security("apiKey", ["client"])
+    @Security("api_key", ["client"])
     @Response<CurseResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Error")
     public async getCurse(@Path("id") id: number) {
@@ -60,7 +60,7 @@ export class CurseController extends Controller {
     }
 
     @Put("{id}")
-    @Security("apiKey", ["contributor"])
+    @Security("api_key", ["contributor"])
     @Response<CurseResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Error")
     public async putCurse(
@@ -72,7 +72,7 @@ export class CurseController extends Controller {
     }
 
     @Delete("{id}")
-    @Security("apiKey", ["contributor"])
+    @Security("api_key", ["contributor"])
     @Response<CurseResponse>(200, "OK")
     @Response<ErrorResponse>(404, "Error")
     public async deleteCurse(@Path("id") id: number) {

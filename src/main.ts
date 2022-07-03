@@ -28,6 +28,9 @@ async function initializePermissionService(): Promise<PermissionService> {
     const service = PermissionService.getInstance(repo);
     await service.addAllDefaultPermissions();
 
+    const key = await service.createAdminKeyIfThereIsNoKeys();
+    if (key) console.log(`YOUR SUPER ADMIN KEY: ${key.key}`);
+
     console.log("Permission initialized.");
 
     return service;

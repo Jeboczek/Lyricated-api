@@ -28,7 +28,7 @@ export class LyricSentenceController extends Controller {
     }
 
     @Post("new")
-    @Security("apiKey", ["contributor"])
+    @Security("api_key", ["contributor"])
     @Response<LyricSentenceResponse>(200, "OK")
     @Response<ErrorResponse>(400, "Error")
     public async createLyricSentence(
@@ -40,7 +40,7 @@ export class LyricSentenceController extends Controller {
     }
 
     @Get("{id}")
-    @Security("apiKey", ["client"])
+    @Security("api_key", ["client"])
     @Response<LyricSentenceResponse>(200, "OK")
     @Response<ErrorResponse>(400, "Error")
     public async getLyricSentence(@Path("id") id: number) {
@@ -50,7 +50,7 @@ export class LyricSentenceController extends Controller {
     }
 
     @Put("{id}")
-    @Security("apiKey", ["contributor"])
+    @Security("api_key", ["contributor"])
     @Response<PutLyricSentenceRequest>(200, "OK")
     @Response<ErrorResponse>(400, "Error")
     public async putLyricSentence(
@@ -63,7 +63,7 @@ export class LyricSentenceController extends Controller {
     }
 
     @Delete("{id}")
-    @Security("apiKey", ["contributor"])
+    @Security("api_key", ["contributor"])
     @Response<LyricSentenceResponse>(200, "OK")
     @Response<ErrorResponse>(400, "Error")
     public async deleteMovie(@Path("id") id: number) {

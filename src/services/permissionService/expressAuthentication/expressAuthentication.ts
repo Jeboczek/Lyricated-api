@@ -7,10 +7,10 @@ export async function expressAuthentication(
     securityName: string,
     scopes?: string[]
 ): Promise<any> {
-    if (securityName === "apiKey") {
+    if (securityName === "api_key") {
         const service = PermissionService.getInstance();
-        const key = request.headers["Authentication"];
-        if (key && key.length === 64 && typeof key === "string") {
+        const key = request.headers["authorization"];
+        if (key && key.length == 64) {
             for (const permission of scopes ?? []) {
                 if (
                     !(await service.checkIfKeyHavePermission(key, permission))
@@ -20,7 +20,7 @@ export async function expressAuthentication(
                     );
                 }
             }
-            await Promise.resolve();
+            return;
         }
         throw new AuthenticationError(
             "The key, or the absence of a key, prevents you from accessing the content."

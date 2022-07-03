@@ -43,6 +43,16 @@ export default class PermissionService {
         return key;
     }
 
+    async createAdminKeyIfThereIsNoKeys(): Promise<KeyModel | undefined> {
+        if (!(await this.repo.thereIsSomeKeyInTheDatabase())) {
+            return await this.createNewKey("Super Admin", [
+                "admin",
+                "client",
+                "contributor",
+            ]);
+        }
+    }
+
     async checkIfKeyHavePermission(
         key: string,
         permission: string
