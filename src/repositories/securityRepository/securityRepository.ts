@@ -45,8 +45,8 @@ export default class SecurityRepository {
     }
 
     async assignPermissionToKey(
-        permissionName: string,
-        key: string
+        key: string,
+        permissionName: string
     ): Promise<KeyToPermissionModel> {
         // Check if Permission and Key exists
         const permissionModel = await PermissionModel.findOne({
@@ -55,9 +55,7 @@ export default class SecurityRepository {
             },
         });
         if (permissionModel === null)
-            throw new UpdateError(
-                Locale.createThereIsNoObjectText("Permission")
-            );
+            throw new UpdateError(Locale.createNotFoundErrorText("Permission"));
         const keyModel = await KeyModel.findOne({
             where: { key },
         });
@@ -126,14 +124,21 @@ export default class SecurityRepository {
     async deletePermissionFromKey(
         key: string,
         permission: string
-    ): Promise<void> {
+    ): Promise<PermissionModel> {
         const keyModel = await this.getKey(key);
+        const permissionModel = await this.getPermission(permission);
+        const keyToPermission = await KeyToPermissionModel.findOne({
+            where: { keyId: keyModel.id, permissionId: permissionModel.id },
+        });
+
+        if (keyToPermission === null)
+            throw new DeleteError(
+                Locale.createNotFoundErrorText("KeyToPermission")
+            );
 
         try {
-            keyModel.permissions = keyModel.permissions.filter(
-                (e) => e.name !== permission
-            );
-            await keyModel.save();
+            await keyToPermission.destroy();
+            return permissionModel;
         } catch (e) {
             throw new UpdateError(Locale.createUpdateErrorText("Key"));
         }

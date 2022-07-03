@@ -38,7 +38,7 @@ export default class SecurityService {
     async createNewKey(name: string, permissions: string[]): Promise<KeyModel> {
         const key = await this.repo.createNewKey(name);
         for (const permission of permissions) {
-            await this.repo.assignPermissionToKey(permission, key.key);
+            await this.repo.assignPermissionToKey(key.key, permission);
         }
         return key;
     }

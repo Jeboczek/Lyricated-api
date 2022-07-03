@@ -94,8 +94,10 @@ export class SecurityController extends Controller {
         @Path("key") key: string,
         @Path("permission") permission: string
     ) {
-        await this.repo.deletePermissionFromKey(key, permission);
-        const permissionModel = await this.repo.getPermission(permission);
+        const permissionModel = await this.repo.deletePermissionFromKey(
+            key,
+            permission
+        );
 
         return PermissionResponse.fromModel(permissionModel);
     }

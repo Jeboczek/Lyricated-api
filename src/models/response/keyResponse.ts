@@ -11,9 +11,12 @@ export default class KeyResponse {
 
         resp.key = e.key;
         resp.name = e.name;
-        resp.permissions = e.permissions.map((e) =>
-            PermissionResponse.fromModel(e)
-        );
+
+        resp.permissions = [];
+        if (e.permissions)
+            resp.permissions = e.permissions.map((e) =>
+                PermissionResponse.fromModel(e)
+            );
 
         return resp;
     }
