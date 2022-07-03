@@ -2498,6 +2498,55 @@
 				}
 			}
 		},
+		"/security/key": {
+			"get": {
+				"operationId": "GetKeys",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"keys": {
+											"items": {
+												"$ref": "#/components/schemas/KeyResponse"
+											},
+											"type": "array"
+										}
+									},
+									"required": [
+										"keys"
+									],
+									"type": "object"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Security"
+				],
+				"security": [
+					{
+						"api_key": [
+							"admin"
+						]
+					}
+				],
+				"parameters": []
+			}
+		},
 		"/security/key/{key}/permission/{permission}": {
 			"put": {
 				"operationId": "SetPermission",

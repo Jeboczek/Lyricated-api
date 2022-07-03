@@ -41,7 +41,7 @@ export class SecurityController extends Controller {
         };
     }
 
-    @Get("/key/{key}")
+    @Get("key/{key}")
     @Security("api_key", ["admin"])
     @Response<KeyResponse>(200, "OK")
     @Response<ErrorResponse>(400, "Error")
@@ -51,7 +51,7 @@ export class SecurityController extends Controller {
         return KeyResponse.fromModel(keyModel);
     }
 
-    @Delete("/key/{key}")
+    @Delete("key/{key}")
     @Security("api_key", ["admin"])
     @Response<KeyResponse>(200, "OK")
     @Response<ErrorResponse>(400, "Error")
@@ -61,7 +61,7 @@ export class SecurityController extends Controller {
         return KeyResponse.fromModel(keyModel);
     }
 
-    @Post("/key/new")
+    @Post("key/new")
     @Security("api_key", ["admin"])
     @Response<KeyResponse>(200, "OK")
     @Response<ErrorResponse>(400, "Error")
@@ -70,6 +70,16 @@ export class SecurityController extends Controller {
         const keyModel = await this.repo.createNewKey(name);
 
         return KeyResponse.fromModel(keyModel);
+    }
+
+    @Get("key")
+    @Security("api_key", ["admin"])
+    @Response<{ keys: KeyResponse[] }>(200, "OK")
+    @Response<ErrorResponse>(400, "Error")
+    public async getKeys() {
+        const keyModels = await this.repo.getKeys();
+
+        return { keys: keyModels.map((e) => KeyResponse.fromModel(e)) };
     }
 
     @Put("key/{key}/permission/{permission}")

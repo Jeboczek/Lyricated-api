@@ -154,4 +154,8 @@ export default class SecurityRepository {
             throw new DeleteError(Locale.createDeleteErrorText("Key"));
         }
     }
+
+    async getKeys(): Promise<KeyModel[]> {
+        return await KeyModel.findAll({ include: [PermissionModel] });
+    }
 }

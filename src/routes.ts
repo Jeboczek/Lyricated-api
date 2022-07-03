@@ -1290,6 +1290,31 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/security/key',
+            authenticateMiddleware([{"api_key":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(SecurityController)),
+            ...(fetchMiddlewares<RequestHandler>(SecurityController.prototype.getKeys)),
+
+            function SecurityController_getKeys(request: any, response: any, next: any) {
+            const args = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SecurityController();
+
+
+              const promise = controller.getKeys.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.put('/security/key/:key/permission/:permission',
             authenticateMiddleware([{"api_key":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(SecurityController)),
