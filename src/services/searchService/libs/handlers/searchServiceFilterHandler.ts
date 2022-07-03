@@ -1,16 +1,16 @@
-import SearchRepositoryAbstractHandler from "./searchRepositoryAbstractHandler";
-import SearchRepositoryState from "../../interfaces/searchRepositoryState";
-import SearchRepositoryResult from "../../interfaces/searchRepositoryResult";
+import SearchServiceAbstractHandler from "./searchServiceAbstractHandler";
+import SearchServiceState from "../../interfaces/searchServiceState";
+import SearchServiceResult from "../../interfaces/searchServiceResult";
 import CurseRepository from "../../../curseRepository/curseRepository";
 
-export default class SearchRepositoryFilterHandler extends SearchRepositoryAbstractHandler {
+export default class SearchServiceFilterHandler extends SearchServiceAbstractHandler {
     handlerName = "filter";
 
     private async _hideCurses(
-        result: SearchRepositoryResult[],
+        result: SearchServiceResult[],
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         hideCurses?: boolean
-    ): Promise<SearchRepositoryResult[]> {
+    ): Promise<SearchServiceResult[]> {
         if (hideCurses) {
             const repo = new CurseRepository();
             const curses = await repo.getCurses();
@@ -36,32 +36,32 @@ export default class SearchRepositoryFilterHandler extends SearchRepositoryAbstr
     }
 
     private _hideMovies(
-        result: SearchRepositoryResult[],
+        result: SearchServiceResult[],
         hideMovies?: boolean
-    ): SearchRepositoryResult[] {
+    ): SearchServiceResult[] {
         if (hideMovies)
             return result.filter((e) => e.lyricModel.episodeId !== null);
         return result;
     }
 
     private _hideSeries(
-        result: SearchRepositoryResult[],
+        result: SearchServiceResult[],
         hideSeries?: boolean
-    ): SearchRepositoryResult[] {
+    ): SearchServiceResult[] {
         if (hideSeries)
             return result.filter((e) => e.lyricModel.episodeId === null);
         return result;
     }
 
-    private _onlyMovieId(result: SearchRepositoryResult[], movieId?: number) {
+    private _onlyMovieId(result: SearchServiceResult[], movieId?: number) {
         if (movieId)
             return result.filter((e) => e.lyricModel.movieId === movieId);
         return result;
     }
 
     public async handle(
-        state: SearchRepositoryState
-    ): Promise<SearchRepositoryState> {
+        state: SearchServiceState
+    ): Promise<SearchServiceState> {
         this._beforeHandle();
         const {
             only_movie_id: onlyMovieId,

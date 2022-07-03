@@ -1,4 +1,4 @@
-export default class SimilarMatcher {
+export default class SearchServiceSimilarMatcher {
     public static get(searchPhase: string, regrexFlags = ""): RegExp {
         if (searchPhase.length === 4)
             return new RegExp(

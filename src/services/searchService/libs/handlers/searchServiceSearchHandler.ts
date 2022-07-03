@@ -1,36 +1,25 @@
 import LyricModel from "../../../../models/database/api/lyricModel";
 import LyricSentenceModel from "../../../../models/database/api/translations/lyricSentenceModel";
-import SearchRepositoryState from "../../interfaces/searchRepositoryState";
-import SearchRepositoryAbstractHandler from "./searchRepositoryAbstractHandler";
-import MainMatcher from "../matchers/mainMatcher";
-import SimilarMatcher from "../matchers/similarMatcher";
+import SearchServiceState from "../../interfaces/searchServiceState";
+import SearchServiceAbstractHandler from "./searchServiceAbstractHandler";
+import SearchServiceMainMatcher from "../matchers/searchServiceMainMatcher";
+import SearchServiceSimilarMatcher from "../matchers/searchServiceSimilarMatcher";
 import { Op } from "sequelize";
 import MovieModel from "../../../../models/database/api/movieModel";
 import EpisodeModel from "../../../../models/database/api/episodeModel";
 import MovieNameModel from "../../../../models/database/api/translations/movieNameModel";
-import SearchRepositoryResult from "../../interfaces/searchRepositoryResult";
+import SearchServiceResult from "../../interfaces/searchServiceResult";
 
-export interface SearchRepositoryOptions {
-    searchPhase: string;
-    fromLang: string;
-    toLang: string;
-}
-
-export interface SearchRepositorySearchResults {
-    mainResults: LyricModel[];
-    similarResults: LyricModel[];
-}
-
-interface SearchRepositoryResultGetterOptions {
+interface SearchServiceResultGetterOptions {
     fromLang: string;
     lyrics: LyricModel[];
 }
 
-export default class SearchRepositorySearchHandler extends SearchRepositoryAbstractHandler {
+export default class SearchServiceSearchHandler extends SearchServiceAbstractHandler {
     handlerName = "search";
 
     private async _getResults(
-        options: SearchRepositoryResultGetterOptions,
+        options: SearchServiceResultGetterOptions,
         regExp: RegExp
     ): Promise<LyricModel[]> {
         const { lyrics, fromLang } = options;
@@ -103,8 +92,8 @@ export default class SearchRepositorySearchHandler extends SearchRepositoryAbstr
     }
 
     public async handle(
-        state: SearchRepositoryState
-    ): Promise<SearchRepositoryState> {
+        state: SearchServiceState
+    ): Promise<SearchServiceState> {
         this._beforeHandle();
         const {
             from_lang_id: fromLang,
@@ -123,10 +112,10 @@ export default class SearchRepositorySearchHandler extends SearchRepositoryAbstr
         lyrics = lyrics.filter((e) => e.sentences.length === 2);
 
         // Split to main and similar results
-        const mainRegExp = MainMatcher.get(searchPhase);
-        const similarRegExp = SimilarMatcher.get(searchPhase);
+        const mainRegExp = SearchServiceMainMatcher.get(searchPhase);
+        const similarRegExp = SearchServiceSimilarMatcher.get(searchPhase);
 
-        const resultGetterOptions: SearchRepositoryResultGetterOptions = {
+        const resultGetterOptions: SearchServiceResultGetterOptions = {
             fromLang,
             lyrics,
         };
@@ -141,7 +130,7 @@ export default class SearchRepositorySearchHandler extends SearchRepositoryAbstr
                     lyricModel: lyric,
                     fromHighlights: [],
                     toHighlights: [],
-                } as SearchRepositoryResult;
+                } as SearchServiceResult;
             });
 
             // If data from the first Promise are fetched, write to state.mains

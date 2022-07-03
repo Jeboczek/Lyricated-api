@@ -3,17 +3,17 @@ import ErrorResponse from "../../models/response/errors/errorResponse";
 import SearchResponse from "../../models/response/searchResponse";
 import SearchRequest from "../../models/request/searchRequest";
 import ChangeSearchResults from "./libs/changeSearchResults";
-import SearchRepository from "../../repositories/searchRepository/searchRepository";
 import CacheService from "../../services/cacheService/cacheService";
+import SearchService from "../../repositories/searchService/searchService";
 
 @Route("search")
 @Tags("Search")
 export class SearchController extends Controller {
-    private repo: SearchRepository;
+    private service: SearchService;
 
-    constructor(repo?: SearchRepository) {
+    constructor(service?: SearchService) {
         super();
-        this.repo = repo ?? new SearchRepository();
+        this.service = service ?? new SearchService();
     }
 
     @Post("")
@@ -32,7 +32,7 @@ export class SearchController extends Controller {
         }
         options.search_phase = options.search_phase.toLowerCase();
 
-        const searchResult = await this.repo.search(options);
+        const searchResult = await this.service.search(options);
 
         const {
             from_lang_id: fromLang,

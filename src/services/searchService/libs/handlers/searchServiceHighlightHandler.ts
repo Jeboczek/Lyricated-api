@@ -1,12 +1,12 @@
 import HighlightResponse from "../../../../models/response/highlightResponse";
 import LyricSentenceModel from "../../../../models/database/api/translations/lyricSentenceModel";
 import LyricModel from "../../../../models/database/api/lyricModel";
-import SearchRepositoryState from "../../interfaces/searchRepositoryState";
-import SearchRepositoryAbstractHandler from "./searchRepositoryAbstractHandler";
-import MainMatcher from "../matchers/mainMatcher";
-import SimilarMatcher from "../matchers/similarMatcher";
+import SearchServiceState from "../../interfaces/searchServiceState";
+import SearchServiceAbstractHandler from "./searchServiceAbstractHandler";
+import SearchServiceMainMatcher from "../matchers/searchServiceMainMatcher";
+import SearchServiceSimilarMatcher from "../matchers/searchServiceSimilarMatcher";
 
-export default class SearchRepositoryHighlightHandler extends SearchRepositoryAbstractHandler {
+export default class SearchServiceHighlightHandler extends SearchServiceAbstractHandler {
     handlerName = "highlight";
 
     highlightSpecifiedByLangSentence(
@@ -35,8 +35,8 @@ export default class SearchRepositoryHighlightHandler extends SearchRepositoryAb
     }
 
     public async handle(
-        state: SearchRepositoryState
-    ): Promise<SearchRepositoryState> {
+        state: SearchServiceState
+    ): Promise<SearchServiceState> {
         this._beforeHandle();
         const {
             from_lang_id: fromLang,
@@ -47,8 +47,8 @@ export default class SearchRepositoryHighlightHandler extends SearchRepositoryAb
         for (const [i, results] of [state.mains, state.similar].entries()) {
             let r: RegExp;
             // If result is main not similar
-            if (i === 0) r = MainMatcher.get(phase, "g");
-            else r = SimilarMatcher.get(phase, "g");
+            if (i === 0) r = SearchServiceMainMatcher.get(phase, "g");
+            else r = SearchServiceSimilarMatcher.get(phase, "g");
 
             for (const result of results) {
                 // Highlight from results
@@ -60,7 +60,7 @@ export default class SearchRepositoryHighlightHandler extends SearchRepositoryAb
                 );
 
                 for (const word of state.translations) {
-                    const tR = MainMatcher.get(word, "g");
+                    const tR = SearchServiceMainMatcher.get(word, "g");
                     const highlights = this.highlightSpecifiedByLangSentence(
                         result.lyricModel,
                         word,

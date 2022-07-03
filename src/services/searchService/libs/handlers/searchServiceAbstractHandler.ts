@@ -1,13 +1,13 @@
-import SearchRepositoryState from "../../interfaces/searchRepositoryState";
+import SearchServiceState from "../../interfaces/searchServiceState";
 
-export default abstract class SearchRepositoryAbstractHandler {
-    private nextHandler: SearchRepositoryAbstractHandler;
+export default abstract class SearchServiceAbstractHandler {
+    private nextHandler: SearchServiceAbstractHandler;
     private startTime: DOMHighResTimeStamp;
     public abstract handlerName: string;
 
     public setNext(
-        handler: SearchRepositoryAbstractHandler
-    ): SearchRepositoryAbstractHandler {
+        handler: SearchServiceAbstractHandler
+    ): SearchServiceAbstractHandler {
         this.nextHandler = handler;
         return handler;
     }
@@ -16,7 +16,7 @@ export default abstract class SearchRepositoryAbstractHandler {
         this.startTime = performance.now();
     }
 
-    protected _afterHandle(state: SearchRepositoryState) {
+    protected _afterHandle(state: SearchServiceState) {
         const endTime = performance.now();
         const ms = Math.round((endTime - this.startTime) * 100) / 100;
         state.handlersTime.push({
@@ -26,8 +26,8 @@ export default abstract class SearchRepositoryAbstractHandler {
     }
 
     public async handle(
-        state: SearchRepositoryState
-    ): Promise<SearchRepositoryState> {
+        state: SearchServiceState
+    ): Promise<SearchServiceState> {
         if (this.nextHandler) {
             return await this.nextHandler.handle(state);
         }

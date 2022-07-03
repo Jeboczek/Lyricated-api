@@ -1,11 +1,11 @@
-import SearchRepositoryAbstractHandler from "./searchRepositoryAbstractHandler";
-import SearchRepositoryState from "../../interfaces/searchRepositoryState";
+import SearchServiceAbstractHandler from "./searchServiceAbstractHandler";
+import SearchServiceState from "../../interfaces/searchServiceState";
 import TranslateService from "../../../../services/translateService/translateService";
 
-export default class SearchRepositoryTranslationsHandler extends SearchRepositoryAbstractHandler {
+export default class SearchServiceTranslationsHandler extends SearchServiceAbstractHandler {
     handlerName = "translate";
 
-    public async handle(state: SearchRepositoryState) {
+    public async handle(state: SearchServiceState) {
         this._beforeHandle();
         const {
             search_phase: phase,

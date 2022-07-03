@@ -1,9 +1,9 @@
-import SearchRepositorySorter from "./searchRepositorySorter";
-import SearchRepositoryResult from "../../interfaces/searchRepositoryResult";
+import SearchServiceSorter from "./searchServiceSorter";
+import SearchServiceResult from "../../interfaces/searchServiceResult";
 
-export default class SearchRepositoryBestMatchSorter extends SearchRepositorySorter {
+export default class SearchServiceBestMatchSorter extends SearchServiceSorter {
     private _calculateBestMatchValueForResult(
-        result: SearchRepositoryResult
+        result: SearchServiceResult
     ): number {
         const firstSentence = result.lyricModel.sentences[0];
         const secondSentence = result.lyricModel.sentences[1];
@@ -16,7 +16,7 @@ export default class SearchRepositoryBestMatchSorter extends SearchRepositorySor
         );
     }
 
-    sort(results: SearchRepositoryResult[]): SearchRepositoryResult[] {
+    sort(results: SearchServiceResult[]): SearchServiceResult[] {
         return results.sort((a, b) => {
             const aValue = this._calculateBestMatchValueForResult(a);
             const bValue = this._calculateBestMatchValueForResult(b);
