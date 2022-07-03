@@ -753,6 +753,7 @@
 						}
 					}
 				},
+				"description": "It allows to add a curse to the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"Curse"
 				],
@@ -802,6 +803,7 @@
 						}
 					}
 				},
+				"description": "It allows to find the curse words that exist in the database.\nThe only_lang option is optional, it allows you to get curse words only for a specific language.\nYou need \"client\" permission to use this endpoint.",
 				"tags": [
 					"Curse"
 				],
@@ -849,6 +851,7 @@
 						}
 					}
 				},
+				"description": "It allows you to get the Curse specified with id.\nYou need \"client\" permission to use this endpoint.",
 				"tags": [
 					"Curse"
 				],
@@ -895,6 +898,7 @@
 						}
 					}
 				},
+				"description": "It allows you to update a Curse that is already in the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"Curse"
 				],
@@ -951,6 +955,7 @@
 						}
 					}
 				},
+				"description": "It allows you to delete a Curse that is already in the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"Curse"
 				],

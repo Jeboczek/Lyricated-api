@@ -28,6 +28,10 @@ export class CurseController extends Controller {
         this.repo = repo ?? new CurseRepository();
     }
 
+    /**
+     * It allows to add a curse to the database.
+     * You need "contributor" permission to use this endpoint.
+     **/
     @Post("add")
     @Security("api_key", ["contributor"])
     @Response<CurseResponse>(200, "OK")
@@ -36,6 +40,11 @@ export class CurseController extends Controller {
         return CurseResponse.fromModel(newCurse);
     }
 
+    /**
+     * It allows to find the curse words that exist in the database.
+     * The only_lang option is optional, it allows you to get curse words only for a specific language.
+     * You need "client" permission to use this endpoint.
+     **/
     @Get("find")
     @Security("api_key", ["client"])
     @Response<{ curses: CurseResponse[] }>(200, "OK")
@@ -50,6 +59,10 @@ export class CurseController extends Controller {
         };
     }
 
+    /**
+     * It allows you to get the Curse specified with id.
+     * You need "client" permission to use this endpoint.
+     **/
     @Get("{id}")
     @Security("api_key", ["client"])
     @Response<CurseResponse>(200, "OK")
@@ -59,6 +72,10 @@ export class CurseController extends Controller {
         return CurseResponse.fromModel(curse);
     }
 
+    /**
+     * It allows you to update a Curse that is already in the database.
+     * You need "contributor" permission to use this endpoint.
+     **/
     @Put("{id}")
     @Security("api_key", ["contributor"])
     @Response<CurseResponse>(200, "OK")
@@ -71,6 +88,10 @@ export class CurseController extends Controller {
         return CurseResponse.fromModel(updatedCurse);
     }
 
+    /**
+     * It allows you to delete a Curse that is already in the database.
+     * You need "contributor" permission to use this endpoint.
+     **/
     @Delete("{id}")
     @Security("api_key", ["contributor"])
     @Response<CurseResponse>(200, "OK")
