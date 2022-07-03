@@ -116,11 +116,11 @@
 						"type": "number",
 						"format": "double"
 					},
-					"netflixId": {
+					"netflix_id": {
 						"type": "number",
 						"format": "double"
 					},
-					"movieId": {
+					"movie_id": {
 						"type": "number",
 						"format": "double"
 					}
@@ -128,8 +128,8 @@
 				"required": [
 					"episode",
 					"season",
-					"netflixId",
-					"movieId"
+					"netflix_id",
+					"movie_id"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -144,7 +144,7 @@
 						"type": "number",
 						"format": "double"
 					},
-					"netflixId": {
+					"netflix_id": {
 						"type": "number",
 						"format": "double"
 					}
@@ -152,7 +152,7 @@
 				"required": [
 					"episode",
 					"season",
-					"netflixId"
+					"netflix_id"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -309,7 +309,7 @@
 						"type": "number",
 						"format": "double"
 					},
-					"movieId": {
+					"movie_id": {
 						"type": "number",
 						"format": "double"
 					},
@@ -318,7 +318,7 @@
 						"format": "double",
 						"nullable": true
 					},
-					"episodeId": {
+					"episode_id": {
 						"type": "number",
 						"format": "double",
 						"nullable": true
@@ -326,9 +326,9 @@
 				},
 				"required": [
 					"seconds",
-					"movieId",
+					"movie_id",
 					"quality",
-					"episodeId"
+					"episode_id"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -339,7 +339,7 @@
 						"type": "number",
 						"format": "double"
 					},
-					"movieId": {
+					"movie_id": {
 						"type": "number",
 						"format": "double"
 					},
@@ -348,7 +348,7 @@
 						"format": "double",
 						"nullable": true
 					},
-					"episodeId": {
+					"episode_id": {
 						"type": "number",
 						"format": "double",
 						"nullable": true
@@ -356,9 +356,9 @@
 				},
 				"required": [
 					"seconds",
-					"movieId",
+					"movie_id",
 					"quality",
-					"episodeId"
+					"episode_id"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -458,7 +458,7 @@
 					"content": {
 						"type": "string"
 					},
-					"movieId": {
+					"movie_id": {
 						"type": "number",
 						"format": "double"
 					}
@@ -466,7 +466,7 @@
 				"required": [
 					"lang",
 					"content",
-					"movieId"
+					"movie_id"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -2358,98 +2358,6 @@
 				"parameters": []
 			}
 		},
-		"/security/key/{key}": {
-			"delete": {
-				"operationId": "DeleteKey",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/KeyResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Error",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/ErrorResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Security"
-				],
-				"security": [
-					{
-						"api_key": [
-							"admin"
-						]
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "key",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			},
-			"get": {
-				"operationId": "GetKey",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/KeyResponse"
-								}
-							}
-						}
-					},
-					"400": {
-						"description": "Error",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/ErrorResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Security"
-				],
-				"security": [
-					{
-						"api_key": [
-							"admin"
-						]
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "key",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
 		"/security/key/all": {
 			"get": {
 				"operationId": "GetKeys",
@@ -2545,6 +2453,98 @@
 						}
 					}
 				}
+			}
+		},
+		"/security/key/{key}": {
+			"get": {
+				"operationId": "GetKey",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/KeyResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Security"
+				],
+				"security": [
+					{
+						"api_key": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "key",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "DeleteKey",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/KeyResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Security"
+				],
+				"security": [
+					{
+						"api_key": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "key",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/security/key/{key}/permission/{permission}": {

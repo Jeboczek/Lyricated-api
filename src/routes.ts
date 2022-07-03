@@ -83,8 +83,8 @@ const models: TsoaRoute.Models = {
         "properties": {
             "episode": {"dataType":"double","required":true},
             "season": {"dataType":"double","required":true},
-            "netflixId": {"dataType":"double","required":true},
-            "movieId": {"dataType":"double","required":true},
+            "netflix_id": {"dataType":"double","required":true},
+            "movie_id": {"dataType":"double","required":true},
         },
         "additionalProperties": false,
     },
@@ -94,7 +94,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "episode": {"dataType":"double","required":true},
             "season": {"dataType":"double","required":true},
-            "netflixId": {"dataType":"double","required":true},
+            "netflix_id": {"dataType":"double","required":true},
         },
         "additionalProperties": false,
     },
@@ -158,9 +158,9 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "seconds": {"dataType":"double","required":true},
-            "movieId": {"dataType":"double","required":true},
+            "movie_id": {"dataType":"double","required":true},
             "quality": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
-            "episodeId": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
+            "episode_id": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
         },
         "additionalProperties": false,
     },
@@ -169,9 +169,9 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "seconds": {"dataType":"double","required":true},
-            "movieId": {"dataType":"double","required":true},
+            "movie_id": {"dataType":"double","required":true},
             "quality": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
-            "episodeId": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
+            "episode_id": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"required":true},
         },
         "additionalProperties": false,
     },
@@ -225,7 +225,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "lang": {"dataType":"string","required":true},
             "content": {"dataType":"string","required":true},
-            "movieId": {"dataType":"double","required":true},
+            "movie_id": {"dataType":"double","required":true},
         },
         "additionalProperties": false,
     },
@@ -1212,32 +1212,6 @@ export function RegisterRoutes(app: express.Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.delete('/security/key/:key',
-            authenticateMiddleware([{"api_key":["admin"]}]),
-            ...(fetchMiddlewares<RequestHandler>(SecurityController)),
-            ...(fetchMiddlewares<RequestHandler>(SecurityController.prototype.deleteKey)),
-
-            function SecurityController_deleteKey(request: any, response: any, next: any) {
-            const args = {
-                    key: {"in":"path","name":"key","required":true,"dataType":"string"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new SecurityController();
-
-
-              const promise = controller.deleteKey.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, undefined, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/security/key/all',
             authenticateMiddleware([{"api_key":["admin"]}]),
             ...(fetchMiddlewares<RequestHandler>(SecurityController)),
@@ -1309,6 +1283,32 @@ export function RegisterRoutes(app: express.Router) {
 
 
               const promise = controller.getKey.apply(controller, validatedArgs as any);
+              promiseHandler(controller, promise, response, undefined, next);
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/security/key/:key',
+            authenticateMiddleware([{"api_key":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(SecurityController)),
+            ...(fetchMiddlewares<RequestHandler>(SecurityController.prototype.deleteKey)),
+
+            function SecurityController_deleteKey(request: any, response: any, next: any) {
+            const args = {
+                    key: {"in":"path","name":"key","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+
+                const controller = new SecurityController();
+
+
+              const promise = controller.deleteKey.apply(controller, validatedArgs as any);
               promiseHandler(controller, promise, response, undefined, next);
             } catch (err) {
                 return next(err);

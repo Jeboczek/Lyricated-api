@@ -73,7 +73,7 @@ export default class MovieNameRepository {
     async createMovieName(
         request: PostMovieNameRequest
     ): Promise<MovieNameModel> {
-        const { lang, content, movieId } = request;
+        const { lang, content, movie_id: movieId } = request;
 
         await this._checkIfLangModelExists(lang);
         await this._checkIfMovieModelExists(movieId);
@@ -82,7 +82,7 @@ export default class MovieNameRepository {
             const movieName = MovieNameModel.build({
                 lang,
                 content,
-                movieId,
+                movie_id: movieId,
             });
             return await movieName.save();
         } catch (e) {

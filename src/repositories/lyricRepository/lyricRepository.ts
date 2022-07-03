@@ -121,7 +121,12 @@ export default class LyricRepository {
         if (lyric === null)
             throw new UpdateError(Locale.createNotFoundErrorText("Lyric"));
 
-        const { seconds, quality, movieId, episodeId } = newData;
+        const {
+            seconds,
+            quality,
+            movie_id: movieId,
+            episode_id: episodeId,
+        } = newData;
 
         await this._checkIfAllDependenciesExists(movieId, episodeId);
 
@@ -129,8 +134,8 @@ export default class LyricRepository {
             return lyric.update({
                 seconds,
                 quality,
-                movieId,
-                episodeId,
+                movie_id: movieId,
+                episode_id: episodeId,
             });
         } catch (e) {
             throw new UpdateError(Locale.createUpdateErrorText("Lyric"));
@@ -138,7 +143,12 @@ export default class LyricRepository {
     }
 
     async createLyric(data: PostLyricRequest): Promise<LyricModel> {
-        const { seconds, quality, movieId, episodeId } = data;
+        const {
+            seconds,
+            quality,
+            movie_id: movieId,
+            episode_id: episodeId,
+        } = data;
 
         await this._checkIfAllDependenciesExists(movieId, episodeId);
 
@@ -146,8 +156,8 @@ export default class LyricRepository {
             const lyric = LyricModel.build({
                 seconds,
                 quality,
-                movieId,
-                episodeId,
+                movie_id: movieId,
+                episode_id: episodeId,
             });
             await lyric.save();
             return await lyric.reload({

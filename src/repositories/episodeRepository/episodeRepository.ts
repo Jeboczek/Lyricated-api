@@ -25,13 +25,13 @@ export default class EpisodeRepository {
         if (episodeModel === null)
             throw new UpdateError(Locale.createNotFoundErrorText("Episode"));
 
-        const { season, episode, netflixId } = request;
+        const { season, episode, netflix_id: netflixId } = request;
 
         try {
             return await episodeModel.update({
                 episode,
                 season,
-                netflixId,
+                netflix_id: netflixId,
             });
         } catch (e) {
             throw new UpdateError(Locale.createUpdateErrorText("Episode"));
@@ -52,14 +52,19 @@ export default class EpisodeRepository {
     }
 
     async createEpisode(request: PostEpisodeRequest): Promise<EpisodeModel> {
-        const { episode, season, netflixId, movieId } = request;
+        const {
+            episode,
+            season,
+            netflix_id: netflixId,
+            movie_id: movieId,
+        } = request;
 
         try {
             return await EpisodeModel.create({
                 episode,
                 season,
-                netflixId,
-                movieId,
+                netflix_id: netflixId,
+                movie_id: movieId,
             });
         } catch (e) {
             throw new CreateError(

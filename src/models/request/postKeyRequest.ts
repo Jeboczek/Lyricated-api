@@ -1,5 +1,3 @@
-interface PostKeyRequest {
+export default interface PostKeyRequest {
     name: string;
 }
-
-export default PostKeyRequest;

@@ -1,6 +1,6 @@
 export default interface PutLyricRequest {
     seconds: number;
-    movieId: number;
+    movie_id: number;
     quality: number | null;
-    episodeId: number | null;
+    episode_id: number | null;
 }

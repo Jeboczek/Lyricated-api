@@ -1,6 +1,6 @@
 export default interface PostEpisodeRequest {
     episode: number;
     season: number;
-    netflixId: number;
-    movieId: number;
+    netflix_id: number;
+    movie_id: number;
 }
