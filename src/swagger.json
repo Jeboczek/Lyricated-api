@@ -1157,7 +1157,7 @@
 						}
 					}
 				},
-				"description": "It allows you to delete a Episode that is already in the database.\nYou need \"contributor\" permission to use this endpoint.",
+				"description": "It allows you to delete an Episode that is already in the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"Episode"
 				],
@@ -1214,6 +1214,7 @@
 						}
 					}
 				},
+				"description": "It allows to add a new Lang to the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"Lang"
 				],
@@ -1273,6 +1274,7 @@
 						}
 					}
 				},
+				"description": "It allows to get all Lang's that are in the database.\nYou need \"client\" permission to use this endpoint.",
 				"tags": [
 					"Lang"
 				],
@@ -1319,6 +1321,7 @@
 						}
 					}
 				},
+				"description": "It allows you to delete a Lang that is already in the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"Lang"
 				],

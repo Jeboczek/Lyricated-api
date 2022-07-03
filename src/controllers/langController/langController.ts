@@ -24,6 +24,10 @@ export class LangController extends Controller {
         this.repo = repo ?? new LangRepository();
     }
 
+    /**
+     * It allows to add a new Lang to the database.
+     * You need "contributor" permission to use this endpoint.
+     **/
     @Post("new")
     @Security("api_key", ["contributor"])
     @Response<{ lang: string }>(200, "OK")
@@ -33,6 +37,10 @@ export class LangController extends Controller {
         return { lang: langModel.id };
     }
 
+    /**
+     * It allows to get all Lang's that are in the database.
+     * You need "client" permission to use this endpoint.
+     */
     @Get("all")
     @Security("api_key", ["client"])
     @Response<{ langs: string[] }>(200, "OK")
@@ -42,6 +50,10 @@ export class LangController extends Controller {
         return { langs: langModels.map((e) => e.id) };
     }
 
+    /**
+     * It allows you to delete a Lang that is already in the database.
+     * You need "contributor" permission to use this endpoint.
+     **/
     @Delete("{lang}")
     @Security("api_key", ["contributor"])
     @Response<{ lang: string }>(200, "OK")
