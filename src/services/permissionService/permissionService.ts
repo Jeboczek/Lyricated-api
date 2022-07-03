@@ -1,6 +1,5 @@
 import PermissionRepository from "../../repositories/permissionRepository/permissionRepository";
 import KeyModel from "../../models/database/security/keyModel";
-import PermissionModel from "../../models/database/security/permissionModel";
 
 export default class PermissionService {
     private static instance: PermissionService;
@@ -19,10 +18,6 @@ export default class PermissionService {
             PermissionService.instance = new PermissionService(repo);
         }
         return PermissionService.instance;
-    }
-
-    async getAllPermissions(): Promise<PermissionModel[]> {
-        return this.repo.getAllPermissions();
     }
 
     async addAllDefaultPermissions() {
