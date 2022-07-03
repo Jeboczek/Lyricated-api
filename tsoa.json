@@ -5,6 +5,13 @@
     "src/**/*Controller.ts"
   ],
   "spec": {
+    "securityDefinitions": {
+      "api_key": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    },
     "outputDirectory": "src",
     "specVersion": 3,
     "version": "v2 node",
