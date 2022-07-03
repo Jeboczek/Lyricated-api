@@ -5,6 +5,7 @@ import Locale from "../../locale/locale";
 import PermissionModel from "../../models/database/security/permissionModel";
 import UpdateError from "../../exceptions/updateError";
 import KeyToPermissionModel from "../../models/database/security/relationships/keyToPermissionModel";
+import CheckError from "../../exceptions/checkError";
 
 export default class PermissionRepository {
     async createNewKey(name: string, length = 64): Promise<KeyModel> {
@@ -73,5 +74,23 @@ export default class PermissionRepository {
                 Locale.createCreateErrorText("KeyToPermission")
             );
         }
+    }
+
+    async checkIfKeyHavePermission(
+        key: string,
+        permissionName: string
+    ): Promise<boolean> {
+        const keyModel = await KeyModel.findOne({
+            where: { key },
+            include: [PermissionModel],
+        });
+
+        if (keyModel === null)
+            throw new CheckError(Locale.createThereIsNoObjectText("Key"));
+
+        return (
+            keyModel.permissions.find((e) => e.name === permissionName) !==
+            undefined
+        );
     }
 }
