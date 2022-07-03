@@ -10,6 +10,9 @@ import LyricModel from "../../models/database/api/lyricModel";
 import LyricSentenceModel from "../../models/database/api/translations/lyricSentenceModel";
 import ErrorModel from "../../models/database/error/errorModel";
 import CurseModel from "../../models/database/api/curseModel";
+import KeyModel from "../../models/database/security/keyModel";
+import KeyToPermissionModel from "../../models/database/security/relationships/keyToPermissionModel";
+import PermissionModel from "../../models/database/security/permissionModel";
 
 export default class DatabaseService {
     private static instance: DatabaseService;
@@ -32,6 +35,9 @@ export default class DatabaseService {
                 EpisodeModel,
                 ErrorModel,
                 CurseModel,
+                KeyModel,
+                KeyToPermissionModel,
+                PermissionModel,
             ],
             define: {
                 timestamps: false,

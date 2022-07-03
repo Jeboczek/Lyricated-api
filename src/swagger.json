@@ -673,7 +673,7 @@
 	},
 	"info": {
 		"title": "lyricated-api",
-		"version": "v2 node",
+		"version": "v2 javascript",
 		"description": "API for Lyricated app.",
 		"license": {
 			"name": "ISC"

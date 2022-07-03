@@ -18,6 +18,9 @@ import { MovieController } from './controllers/movieController/movieController';
 import { MovieNameController } from './controllers/movieNameController/movieNameController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { SearchController } from './controllers/searchController/searchController';
+import { expressAuthentication } from './services/permissionService/expressAuthentication/expressAuthentication';
+// @ts-ignore - no great way to install types from subpackage
+const promiseAny = require('promise.any');
 import type { RequestHandler } from 'express';
 import * as express from 'express';
 

@@ -14,10 +14,11 @@
     },
     "outputDirectory": "src",
     "specVersion": 3,
-    "version": "v2 node",
+    "version": "v2 javascript",
     "description": "API for Lyricated app."
   },
   "routes": {
+    "authenticationModule": "src/services/permissionService/expressAuthentication/expressAuthentication.ts",
     "routesDir": "src"
   }
 }

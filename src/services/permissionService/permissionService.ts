@@ -1,5 +1,4 @@
 import PermissionRepository from "../../repositories/permissionRepository/permissionRepository";
-import { Permission } from "./types/permission";
 import KeyModel from "../../models/database/security/keyModel";
 
 export default class PermissionService {
@@ -36,10 +35,7 @@ export default class PermissionService {
         );
     }
 
-    async createNewKey(
-        name: string,
-        permissions: Permission[]
-    ): Promise<KeyModel> {
+    async createNewKey(name: string, permissions: string[]): Promise<KeyModel> {
         const key = await this.repo.createNewKey(name);
         for (const permission of permissions) {
             await this.repo.assignPermissionToKey(permission, key.key);
@@ -49,7 +45,7 @@ export default class PermissionService {
 
     async checkIfKeyHavePermission(
         key: string,
-        permission: Permission
+        permission: string
     ): Promise<boolean> {
         return await this.repo.checkIfKeyHavePermission(key, permission);
     }

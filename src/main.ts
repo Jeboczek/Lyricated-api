@@ -9,6 +9,8 @@ import SwaggerDoc from "./swagger.json";
 import errorHandler from "./middlewares/errorHandler/errorHandler";
 import CacheService from "./services/cacheService/cacheService";
 import CacheConfig from "./config/cacheConfig";
+import PermissionService from "./services/permissionService/permissionService";
+import PermissionRepository from "./repositories/permissionRepository/permissionRepository";
 
 dotenv.config();
 
@@ -19,6 +21,16 @@ async function initializeDatabaseService(): Promise<DatabaseService> {
     console.log("Database initialized.");
 
     return databaseService;
+}
+
+async function initializePermissionService(): Promise<PermissionService> {
+    const repo = new PermissionRepository();
+    const service = PermissionService.getInstance(repo);
+    await service.addAllDefaultPermissions();
+
+    console.log("Permission initialized.");
+
+    return service;
 }
 
 async function initializeCacheService(): Promise<CacheService | undefined> {
@@ -50,6 +62,7 @@ function initializeExpress(): Express {
 (async () => {
     await initializeDatabaseService();
     await initializeCacheService();
+    await initializePermissionService();
     const app = initializeExpress();
 
     const PORT = process.env.PORT || 8080;
