@@ -75,18 +75,6 @@ export default class SecurityRepository {
         }
     }
 
-    async checkIfKeyHavePermission(
-        key: string,
-        permissionName: string
-    ): Promise<boolean> {
-        const keyModel = await this.getKey(key);
-
-        return (
-            keyModel.permissions.find((e) => e.name === permissionName) !==
-            undefined
-        );
-    }
-
     async getAllPermissions(): Promise<PermissionModel[]> {
         return await PermissionModel.findAll();
     }

@@ -57,6 +57,11 @@ export default class SecurityService {
         key: string,
         permission: string
     ): Promise<boolean> {
-        return await this.repo.checkIfKeyHavePermission(key, permission);
+        const keyModel = await this.repo.getKey(key);
+
+        return (
+            keyModel.permissions.find((e) => e.name === permission) !==
+            undefined
+        );
     }
 }
