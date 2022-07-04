@@ -27,6 +27,10 @@ export class MovieNameController extends Controller {
         this.repo = repo ?? new MovieNameRepository();
     }
 
+    /**
+     * It allows to add a new MovieName to the database.
+     * You need "contributor" permission to use this endpoint.
+     **/
     @Post("new")
     @Security("api_key", ["contributor"])
     @Response<MovieNameResponse>(200, "OK")
@@ -37,6 +41,10 @@ export class MovieNameController extends Controller {
         return MovieNameResponse.fromModel(movieName);
     }
 
+    /**
+     * It allows you to get the MovieName specified with id.
+     * You need "client" permission to use this endpoint.
+     **/
     @Get("{id}")
     @Security("api_key", ["client"])
     @Response<MovieNameResponse>(200, "OK")
@@ -47,6 +55,10 @@ export class MovieNameController extends Controller {
         return MovieNameResponse.fromModel(movieName);
     }
 
+    /**
+     * It allows you to update a MovieName that is already in the database.
+     * You need "contributor" permission to use this endpoint.
+     **/
     @Put("{id}")
     @Security("api_key", ["contributor"])
     @Response<MovieNameResponse>(200, "OK")
@@ -60,6 +72,10 @@ export class MovieNameController extends Controller {
         return MovieNameResponse.fromModel(movieName);
     }
 
+    /**
+     * It allows you to delete a MovieName that is already in the database.
+     * You need "contributor" permission to use this endpoint.
+     **/
     @Delete("{id}")
     @Security("api_key", ["contributor"])
     @Response<MovieNameResponse>(200, "OK")

@@ -2117,6 +2117,7 @@
 						}
 					}
 				},
+				"description": "It allows to add a new MovieName to the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"MovieName"
 				],
@@ -2165,6 +2166,7 @@
 						}
 					}
 				},
+				"description": "It allows you to get the MovieName specified with id.\nYou need \"client\" permission to use this endpoint.",
 				"tags": [
 					"MovieName"
 				],
@@ -2211,6 +2213,7 @@
 						}
 					}
 				},
+				"description": "It allows you to update a MovieName that is already in the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"MovieName"
 				],
@@ -2267,6 +2270,7 @@
 						}
 					}
 				},
+				"description": "It allows you to delete a MovieName that is already in the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"MovieName"
 				],
