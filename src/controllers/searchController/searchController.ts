@@ -16,6 +16,11 @@ export class SearchController extends Controller {
         this.service = service ?? new SearchService();
     }
 
+    /**
+     * Allows you to search using the given phrase.
+     * All options under "filter_options" are optional. They can be not included or set to null.
+     * You need "client" permission to use this endpoint.
+     */
     @Post("")
     @Security("api_key", ["client"])
     @Response<SearchResponse>(200, "OK")

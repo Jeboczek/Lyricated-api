@@ -2317,6 +2317,7 @@
 						}
 					}
 				},
+				"description": "Allows you to search using the given phrase.\nAll options under \"filter_options\" are optional. They can be not included or set to null.\nYou need \"client\" permission to use this endpoint.",
 				"tags": [
 					"Search"
 				],
