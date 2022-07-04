@@ -24,7 +24,7 @@ export class SearchController extends Controller {
     @Post("")
     @Security("api_key", ["client"])
     @Response<SearchResponse>(200, "OK")
-    @Response<ErrorResponse>(404, "Error")
+    @Response<ErrorResponse>(400, "Error")
     async search(@Body() options: SearchRequest) {
         let cacheService: CacheService | undefined;
         if (CacheService.isCacheEnabled && !options.dont_use_cache) {
@@ -32,7 +32,7 @@ export class SearchController extends Controller {
             if (await cacheService.checkIfRequestIsInCache(options)) {
                 return JSON.parse(
                     await cacheService.getRequestFromCache(options)
-                );
+                ) as SearchResponse;
             }
         }
         options.search_phase = options.search_phase.toLowerCase();
@@ -53,7 +53,7 @@ export class SearchController extends Controller {
             handlers_time: searchResult.handlersTime,
             main_results: ChangeSearchResults.change(searchResult.mains),
             similar_results: ChangeSearchResults.change(searchResult.similar),
-        };
+        } as SearchResponse;
         if (cacheService !== undefined)
             await cacheService.saveRequestResponseInCache(options, toReturn);
         return toReturn;

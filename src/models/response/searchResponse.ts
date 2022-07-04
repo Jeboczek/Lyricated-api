@@ -1,7 +1,7 @@
 import SearchResultResponse from "./searchResultResponse";
 import HandlerTimeResponse from "./handlerTimeResponse";
 
-export default class SearchResponse {
+export default interface SearchResponse {
     from_lang_id: string;
     to_lang_id: string;
     search_phase: string;
