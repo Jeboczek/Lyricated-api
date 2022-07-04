@@ -1369,6 +1369,7 @@
 						}
 					}
 				},
+				"description": "It allows to add a new Lyric to the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"Lyric"
 				],
@@ -1424,6 +1425,7 @@
 						}
 					}
 				},
+				"description": "It allows to get the first Lyric without quality set.\nYou need \"client\" permission to use this endpoint.",
 				"tags": [
 					"Lyric"
 				],
@@ -1462,6 +1464,7 @@
 						}
 					}
 				},
+				"description": "It allows you to get random Lyric from the database.\nThere are also additional parameters for filtering quality which are optional.\nYou need \"client\" permission to use this endpoint.",
 				"tags": [
 					"Lyric"
 				],
@@ -1528,6 +1531,7 @@
 						}
 					}
 				},
+				"description": "It allows you to get the Lyric specified with id.\nYou need \"client\" permission to use this endpoint.",
 				"tags": [
 					"Lyric"
 				],
@@ -1574,6 +1578,7 @@
 						}
 					}
 				},
+				"description": "It allows you to update a Lyric that is already in the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"Lyric"
 				],
@@ -1630,6 +1635,7 @@
 						}
 					}
 				},
+				"description": "It allows you to delete a Curse that is already in the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"Lyric"
 				],

@@ -28,6 +28,10 @@ export class LyricController extends Controller {
         this.repo = repo ?? new LyricRepository();
     }
 
+    /**
+     * It allows to add a new Lyric to the database.
+     * You need "contributor" permission to use this endpoint.
+     **/
     @Post("new")
     @Security("api_key", ["contributor"])
     @Response<LyricResponse>(200, "OK")
@@ -37,6 +41,10 @@ export class LyricController extends Controller {
         return LyricResponse.fromModel(lyric);
     }
 
+    /**
+     * It allows to get the first Lyric without quality set.
+     * You need "client" permission to use this endpoint.
+     **/
     @Get("without-quality")
     @Security("api_key", ["client"])
     @Response<LyricResponse>(200, "OK")
@@ -53,6 +61,11 @@ export class LyricController extends Controller {
         return err;
     }
 
+    /**
+     * It allows you to get random Lyric from the database.
+     * There are also additional parameters for filtering quality which are optional.
+     * You need "client" permission to use this endpoint.
+     **/
     @Get("random")
     @Security("api_key", ["client"])
     @Response<LyricResponse>(200, "OK")
@@ -71,6 +84,10 @@ export class LyricController extends Controller {
         return LyricResponse.fromModel(randomLyric);
     }
 
+    /**
+     * It allows you to get the Lyric specified with id.
+     * You need "client" permission to use this endpoint.
+     **/
     @Get("{id}")
     @Security("api_key", ["client"])
     @Response<LyricResponse>(200, "OK")
@@ -80,6 +97,10 @@ export class LyricController extends Controller {
         return LyricResponse.fromModel(movie);
     }
 
+    /**
+     * It allows you to update a Lyric that is already in the database.
+     * You need "contributor" permission to use this endpoint.
+     **/
     @Put("{id}")
     @Security("api_key", ["contributor"])
     @Response<LyricResponse>(200, "OK")
@@ -92,6 +113,10 @@ export class LyricController extends Controller {
         return LyricResponse.fromModel(lyric);
     }
 
+    /**
+     * It allows you to delete a Lyric that is already in the database.
+     * You need "contributor" permission to use this endpoint.
+     **/
     @Delete("{id}")
     @Security("api_key", ["contributor"])
     @Response<LyricResponse>(200, "OK")
