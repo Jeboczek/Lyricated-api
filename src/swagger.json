@@ -1274,7 +1274,7 @@
 						}
 					}
 				},
-				"description": "It allows to get all Lang's that are in the database.\nYou need \"client\" permission to use this endpoint.",
+				"description": "It allows to get all Lang that are in the database.\nYou need \"client\" permission to use this endpoint.",
 				"tags": [
 					"Lang"
 				],
@@ -1635,7 +1635,7 @@
 						}
 					}
 				},
-				"description": "It allows you to delete a Curse that is already in the database.\nYou need \"contributor\" permission to use this endpoint.",
+				"description": "It allows you to delete a Lyric that is already in the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"Lyric"
 				],
@@ -1684,6 +1684,7 @@
 						}
 					}
 				},
+				"description": "It allows to add a new LyricSentence to the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"LyricSentence"
 				],
@@ -1732,6 +1733,7 @@
 						}
 					}
 				},
+				"description": "It allows you to get the LyricSentence specified with id.\nYou need \"client\" permission to use this endpoint.",
 				"tags": [
 					"LyricSentence"
 				],
@@ -1778,6 +1780,7 @@
 						}
 					}
 				},
+				"description": "It allows you to update a LyricSentence that is already in the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"LyricSentence"
 				],
@@ -1834,6 +1837,7 @@
 						}
 					}
 				},
+				"description": "It allows you to delete a LyricSentence that is already in the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"LyricSentence"
 				],

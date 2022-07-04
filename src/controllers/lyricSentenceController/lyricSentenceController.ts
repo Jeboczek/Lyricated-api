@@ -27,6 +27,10 @@ export class LyricSentenceController extends Controller {
         this.repo = repo ?? new LyricSentenceRepository();
     }
 
+    /**
+     * It allows to add a new LyricSentence to the database.
+     * You need "contributor" permission to use this endpoint.
+     **/
     @Post("new")
     @Security("api_key", ["contributor"])
     @Response<LyricSentenceResponse>(200, "OK")
@@ -39,6 +43,10 @@ export class LyricSentenceController extends Controller {
         return LyricSentenceResponse.fromModel(lyricSentence);
     }
 
+    /**
+     * It allows you to get the LyricSentence specified with id.
+     * You need "client" permission to use this endpoint.
+     **/
     @Get("{id}")
     @Security("api_key", ["client"])
     @Response<LyricSentenceResponse>(200, "OK")
@@ -49,6 +57,10 @@ export class LyricSentenceController extends Controller {
         return LyricSentenceResponse.fromModel(lyricSentence);
     }
 
+    /**
+     * It allows you to update a LyricSentence that is already in the database.
+     * You need "contributor" permission to use this endpoint.
+     **/
     @Put("{id}")
     @Security("api_key", ["contributor"])
     @Response<PutLyricSentenceRequest>(200, "OK")
@@ -62,6 +74,10 @@ export class LyricSentenceController extends Controller {
         return LyricSentenceResponse.fromModel(lyricSentence);
     }
 
+    /**
+     * It allows you to delete a LyricSentence that is already in the database.
+     * You need "contributor" permission to use this endpoint.
+     **/
     @Delete("{id}")
     @Security("api_key", ["contributor"])
     @Response<LyricSentenceResponse>(200, "OK")

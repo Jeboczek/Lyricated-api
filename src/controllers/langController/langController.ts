@@ -38,7 +38,7 @@ export class LangController extends Controller {
     }
 
     /**
-     * It allows to get all Lang's that are in the database.
+     * It allows to get all Lang that are in the database.
      * You need "client" permission to use this endpoint.
      */
     @Get("all")
