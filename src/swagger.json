@@ -738,7 +738,7 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/curse/add": {
+		"/curse/new": {
 			"post": {
 				"operationId": "PostCurse",
 				"responses": {
@@ -1887,6 +1887,7 @@
 						}
 					}
 				},
+				"description": "It allows you to search for movies from the database.\nThe \"type\" parameter is set to either \"only_movies\" or \"only_series\".\nYou need \"client\" permission to use this endpoint.",
 				"tags": [
 					"Movie"
 				],
@@ -1924,6 +1925,7 @@
 						}
 					}
 				},
+				"description": "It allows to add a new Movie to the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"Movie"
 				],
@@ -1972,6 +1974,7 @@
 						}
 					}
 				},
+				"description": "It allows you to get the Movie specified with id.\nYou need \"client\" permission to use this endpoint.",
 				"tags": [
 					"Movie"
 				],
@@ -2008,6 +2011,7 @@
 						}
 					}
 				},
+				"description": "It allows you to update a Movie that is already in the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"Movie"
 				],
@@ -2064,6 +2068,7 @@
 						}
 					}
 				},
+				"description": "It allows you to delete a Movie that is already in the database.\nYou need \"contributor\" permission to use this endpoint.",
 				"tags": [
 					"Movie"
 				],

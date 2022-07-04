@@ -29,6 +29,11 @@ export class MovieController extends Controller {
         this.repo = repo ?? new MovieRepository();
     }
 
+    /**
+     * It allows you to search for movies from the database.
+     * The "type" parameter is set to either "only_movies" or "only_series".
+     * You need "client" permission to use this endpoint.
+     **/
     @Get("find")
     @Security("api_key", ["client"])
     @Response<MovieResponse>(200, "OK")
@@ -40,6 +45,10 @@ export class MovieController extends Controller {
         return { movies: movies.map((e) => MovieResponse.fromModel(e)) };
     }
 
+    /**
+     * It allows to add a new Movie to the database.
+     * You need "contributor" permission to use this endpoint.
+     **/
     @Post("new")
     @Security("api_key", ["contributor"])
     @Response<MovieResponse>(200, "OK")
@@ -49,6 +58,10 @@ export class MovieController extends Controller {
         return MovieResponse.fromModel(movie);
     }
 
+    /**
+     * It allows you to get the Movie specified with id.
+     * You need "client" permission to use this endpoint.
+     **/
     @Get("{id}")
     @Security("api_key", ["client"])
     @Response<MovieResponse>(200, "OK")
@@ -59,6 +72,10 @@ export class MovieController extends Controller {
         return MovieResponse.fromModel(movie);
     }
 
+    /**
+     * It allows you to update a Movie that is already in the database.
+     * You need "contributor" permission to use this endpoint.
+     **/
     @Put("{id}")
     @Security("api_key", ["contributor"])
     @Response<MovieResponse>(200, "OK")
@@ -71,6 +88,10 @@ export class MovieController extends Controller {
         return MovieResponse.fromModel(updatedMovie);
     }
 
+    /**
+     * It allows you to delete a Movie that is already in the database.
+     * You need "contributor" permission to use this endpoint.
+     **/
     @Delete("{id}")
     @Security("api_key", ["contributor"])
     @Response<MovieResponse>(200, "OK")

@@ -32,7 +32,7 @@ export class CurseController extends Controller {
      * It allows to add a new Curse to the database.
      * You need "contributor" permission to use this endpoint.
      **/
-    @Post("add")
+    @Post("new")
     @Security("api_key", ["contributor"])
     @Response<CurseResponse>(200, "OK")
     public async postCurse(@Body() request: PostCurseRequest) {
