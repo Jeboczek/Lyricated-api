@@ -10,10 +10,6 @@ export default class Locale {
         }`;
     }
 
-    static createIdNotFoundText(objectName: string): string {
-        return `"There is no ${objectName} with the given id"`;
-    }
-
     static createCreateErrorText(
         objectName: string,
         additionalText?: string
