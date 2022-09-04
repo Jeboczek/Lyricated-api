@@ -632,7 +632,7 @@
 			},
 			"SearchRequest": {
 				"properties": {
-					"search_phase": {
+					"search_phrase": {
 						"type": "string"
 					},
 					"from_lang_id": {
@@ -652,7 +652,7 @@
 					}
 				},
 				"required": [
-					"search_phase",
+					"search_phrase",
 					"from_lang_id",
 					"to_lang_id",
 					"filter_options",

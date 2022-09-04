@@ -302,7 +302,7 @@ const models: TsoaRoute.Models = {
     "SearchRequest": {
         "dataType": "refObject",
         "properties": {
-            "search_phase": {"dataType":"string","required":true},
+            "search_phrase": {"dataType":"string","required":true},
             "from_lang_id": {"dataType":"string","required":true},
             "to_lang_id": {"dataType":"string","required":true},
             "filter_options": {"ref":"SearchRequestFilterOptions","required":true},

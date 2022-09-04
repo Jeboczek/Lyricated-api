@@ -8,7 +8,7 @@ export default class SearchServiceTranslationsHandler extends SearchServiceAbstr
     public async handle(state: SearchServiceState) {
         this._beforeHandle();
         const {
-            search_phase: phase,
+            search_phrase: phase,
             from_lang_id: fromLang,
             to_lang_id: toLang,
         } = state.request;
@@ -22,7 +22,7 @@ export default class SearchServiceTranslationsHandler extends SearchServiceAbstr
         );
 
         state.translations = state.translations.filter(
-            (e) => e !== state.request.search_phase.toLowerCase()
+            (e) => e !== state.request.search_phrase.toLowerCase()
         );
 
         this._afterHandle(state);

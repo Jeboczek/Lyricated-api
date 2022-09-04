@@ -1,7 +1,7 @@
 import SortingMode from "../enums/sortingMode";
 
 export default interface SearchRequest {
-    search_phase: string;
+    search_phrase: string;
     from_lang_id: string;
     to_lang_id: string;
     filter_options: SearchRequestFilterOptions;

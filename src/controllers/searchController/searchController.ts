@@ -35,14 +35,14 @@ export class SearchController extends Controller {
                 ) as SearchResponse;
             }
         }
-        options.search_phase = options.search_phase.toLowerCase();
+        options.search_phrase = options.search_phrase.toLowerCase();
 
         const searchResult = await this.service.search(options);
 
         const {
             from_lang_id: fromLang,
             to_lang_id: toLang,
-            search_phase: phase,
+            search_phrase: phase,
         } = options;
 
         const toReturn = {

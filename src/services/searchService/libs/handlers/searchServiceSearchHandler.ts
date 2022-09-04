@@ -97,7 +97,7 @@ export default class SearchServiceSearchHandler extends SearchServiceAbstractHan
         this._beforeHandle();
         const {
             from_lang_id: fromLang,
-            search_phase: searchPhase,
+            search_phrase: searchPhase,
             to_lang_id: toLang,
         } = state.request;
 

@@ -41,7 +41,7 @@ export default class SearchServiceHighlightHandler extends SearchServiceAbstract
         const {
             from_lang_id: fromLang,
             to_lang_id: toLang,
-            search_phase: phase,
+            search_phrase: phase,
         } = state.request;
 
         for (const [i, results] of [state.mains, state.similar].entries()) {
