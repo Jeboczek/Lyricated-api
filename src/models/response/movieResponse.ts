@@ -1,4 +1,4 @@
-import MovieNameResponse from "./translations/movieNameResponse";
+import MovieTitleResponse from "./translations/movieTitleResponse";
 import MovieModel from "../database/api/movieModel";
 import EpisodeResponse from "./episodeResponse";
 
@@ -8,7 +8,7 @@ export default class MovieResponse {
     type: "movie" | "serie";
     netflix_id?: number;
     minutes: number;
-    movie_names: MovieNameResponse[];
+    movie_titles: MovieTitleResponse[];
     episodes: EpisodeResponse[];
 
     static fromModel(model: MovieModel): MovieResponse {
@@ -23,8 +23,8 @@ export default class MovieResponse {
         resp.type = episodes.length === 0 ? "movie" : "serie";
         resp.netflix_id = netflixId;
         resp.minutes = minutes;
-        resp.movie_names = movieNames?.map((e) =>
-            MovieNameResponse.fromModel(e)
+        resp.movie_titles = movieNames?.map((e) =>
+            MovieTitleResponse.fromModel(e)
         );
         resp.episodes = episodes.map((e) => EpisodeResponse.fromModel(e));
 

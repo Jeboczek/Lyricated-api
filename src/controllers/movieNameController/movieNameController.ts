@@ -13,7 +13,7 @@ import {
 } from "tsoa";
 import ErrorResponse from "../../models/response/errors/errorResponse";
 import MovieNameRepository from "../../repositories/movieNameRepository/movieNameRepository";
-import MovieNameResponse from "../../models/response/translations/movieNameResponse";
+import MovieTitleResponse from "../../models/response/translations/movieTitleResponse";
 import PutMovieNameRequest from "../../models/request/putMovieNameRequest";
 import PostMovieNameRequest from "../../models/request/postMovieNameRequest";
 
@@ -33,12 +33,12 @@ export class MovieNameController extends Controller {
      **/
     @Post("new")
     @Security("api_key", ["contributor"])
-    @Response<MovieNameResponse>(200, "OK")
+    @Response<MovieTitleResponse>(200, "OK")
     @Response<ErrorResponse>(400, "Error")
     public async postMovieName(@Body() request: PostMovieNameRequest) {
         const movieName = await this.repo.createMovieName(request);
 
-        return MovieNameResponse.fromModel(movieName);
+        return MovieTitleResponse.fromModel(movieName);
     }
 
     /**
@@ -47,12 +47,12 @@ export class MovieNameController extends Controller {
      **/
     @Get("{id}")
     @Security("api_key", ["client"])
-    @Response<MovieNameResponse>(200, "OK")
+    @Response<MovieTitleResponse>(200, "OK")
     @Response<ErrorResponse>(400, "Error")
     public async getMovieName(@Path("id") id: number) {
         const movieName = await this.repo.getMovieName(id);
 
-        return MovieNameResponse.fromModel(movieName);
+        return MovieTitleResponse.fromModel(movieName);
     }
 
     /**
@@ -61,7 +61,7 @@ export class MovieNameController extends Controller {
      **/
     @Put("{id}")
     @Security("api_key", ["contributor"])
-    @Response<MovieNameResponse>(200, "OK")
+    @Response<MovieTitleResponse>(200, "OK")
     @Response<ErrorResponse>(400, "Error")
     public async putMovieName(
         @Path("id") id: number,
@@ -69,7 +69,7 @@ export class MovieNameController extends Controller {
     ) {
         const movieName = await this.repo.updateMovieName(id, request);
 
-        return MovieNameResponse.fromModel(movieName);
+        return MovieTitleResponse.fromModel(movieName);
     }
 
     /**
@@ -78,11 +78,11 @@ export class MovieNameController extends Controller {
      **/
     @Delete("{id}")
     @Security("api_key", ["contributor"])
-    @Response<MovieNameResponse>(200, "OK")
+    @Response<MovieTitleResponse>(200, "OK")
     @Response<ErrorResponse>(400, "Error")
     public async deleteMovieName(@Path("id") id: number) {
         const movieName = await this.repo.deleteMovieName(id);
 
-        return MovieNameResponse.fromModel(movieName);
+        return MovieTitleResponse.fromModel(movieName);
     }
 }
