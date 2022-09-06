@@ -274,7 +274,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "from_lang_id": {"dataType":"string","required":true},
             "to_lang_id": {"dataType":"string","required":true},
-            "search_phase": {"dataType":"string","required":true},
+            "search_phrase": {"dataType":"string","required":true},
             "translations": {"dataType":"array","array":{"dataType":"string"},"required":true},
             "main_results": {"dataType":"array","array":{"dataType":"refObject","ref":"SearchResultResponse"},"required":true},
             "similar_results": {"dataType":"array","array":{"dataType":"refObject","ref":"SearchResultResponse"},"required":true},

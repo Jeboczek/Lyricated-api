@@ -1,23 +1,23 @@
 export default class SearchServiceSimilarMatcher {
-    public static get(searchPhase: string, regrexFlags = ""): RegExp {
-        if (searchPhase.length === 4)
+    public static get(searchPhrase: string, regrexFlags = ""): RegExp {
+        if (searchPhrase.length === 4)
             return new RegExp(
-                `\\b\\S${searchPhase}\\S*|\\b\\S?${searchPhase}?[^${searchPhase.slice(
+                `\\b\\S${searchPhrase}\\S*|\\b\\S?${searchPhrase}?[^${searchPhrase.slice(
                     -1
                 )}.,?! ]\\S*`,
                 regrexFlags
             );
 
-        if (searchPhase.length > 4)
+        if (searchPhrase.length > 4)
             return new RegExp(
-                `\\b\\S${searchPhase}\\S*|\\b\\S?${searchPhase}?[^${searchPhase.slice(
+                `\\b\\S${searchPhrase}\\S*|\\b\\S?${searchPhrase}?[^${searchPhrase.slice(
                     -1
-                )}.,?! ]\\S*|\\b${searchPhase.slice(0, -1)}\\b`,
+                )}.,?! ]\\S*|\\b${searchPhrase.slice(0, -1)}\\b`,
                 regrexFlags
             );
 
         return new RegExp(
-            `"\\b\\S${searchPhase}\\S?[^\\s]*|\\b\\S?${searchPhase}[^.,?! ][^\\s]*"`,
+            `"\\b\\S${searchPhrase}\\S?[^\\s]*|\\b\\S?${searchPhrase}[^.,?! ][^\\s]*"`,
             regrexFlags
         );
     }

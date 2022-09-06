@@ -45,9 +45,9 @@ export default class SearchServiceSearchHandler extends SearchServiceAbstractHan
     private async _getLyricsFromDatabase(
         fromLang: string,
         toLang: string,
-        searchPhase: string
+        searchPhrase: string
     ): Promise<LyricModel[]> {
-        let idsWithPhase = (
+        let idsWithPhrase = (
             await LyricModel.findAll({
                 include: [
                     {
@@ -57,7 +57,7 @@ export default class SearchServiceSearchHandler extends SearchServiceAbstractHan
                                 [Op.eq]: fromLang,
                             },
                             content: {
-                                [Op.like]: `%${searchPhase.slice(0, -1)}%`,
+                                [Op.like]: `%${searchPhrase.slice(0, -1)}%`,
                             },
                         },
                     },
@@ -67,14 +67,14 @@ export default class SearchServiceSearchHandler extends SearchServiceAbstractHan
             return e.id;
         });
 
-        if (idsWithPhase.length > 1000) {
-            idsWithPhase = idsWithPhase.slice(0, 1000);
+        if (idsWithPhrase.length > 1000) {
+            idsWithPhrase = idsWithPhrase.slice(0, 1000);
         }
 
         return await LyricModel.findAll({
             where: {
                 id: {
-                    [Op.in]: idsWithPhase,
+                    [Op.in]: idsWithPhrase,
                 },
             },
             include: [
@@ -97,7 +97,7 @@ export default class SearchServiceSearchHandler extends SearchServiceAbstractHan
         this._beforeHandle();
         const {
             from_lang_id: fromLang,
-            search_phrase: searchPhase,
+            search_phrase: searchPhrase,
             to_lang_id: toLang,
         } = state.request;
 
@@ -105,15 +105,15 @@ export default class SearchServiceSearchHandler extends SearchServiceAbstractHan
         let lyrics = await this._getLyricsFromDatabase(
             fromLang,
             toLang,
-            searchPhase
+            searchPhrase
         );
 
         //  Filter LyricModel's without 2 LyricSentence's
         lyrics = lyrics.filter((e) => e.sentences.length === 2);
 
         // Split to main and similar results
-        const mainRegExp = SearchServiceMainMatcher.get(searchPhase);
-        const similarRegExp = SearchServiceSimilarMatcher.get(searchPhase);
+        const mainRegExp = SearchServiceMainMatcher.get(searchPhrase);
+        const similarRegExp = SearchServiceSimilarMatcher.get(searchPhrase);
 
         const resultGetterOptions: SearchServiceResultGetterOptions = {
             fromLang,

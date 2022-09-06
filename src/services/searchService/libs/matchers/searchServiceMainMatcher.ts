@@ -1,5 +1,5 @@
 export default class SearchServiceMainMatcher {
-    public static get(searchPhase: string, regrexFlags = ""): RegExp {
-        return new RegExp(`\\b${searchPhase}\\b[^']`, regrexFlags);
+    public static get(searchPhrase: string, regrexFlags = ""): RegExp {
+        return new RegExp(`\\b${searchPhrase}\\b[^']`, regrexFlags);
     }
 }

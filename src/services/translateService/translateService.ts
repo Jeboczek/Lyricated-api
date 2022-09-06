@@ -16,7 +16,7 @@ export default class TranslateService {
     }
 
     async getTranslations(
-        phase: string,
+        phrase: string,
         fromLang: string,
         toLang: string
     ): Promise<string[]> {
@@ -29,7 +29,7 @@ export default class TranslateService {
                 target_lang: toLang,
                 mode: 0,
                 npage: 1,
-                source_text: phase,
+                source_text: phrase,
                 target_text: "",
             })
         ).data;

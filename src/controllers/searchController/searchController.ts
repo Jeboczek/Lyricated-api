@@ -42,13 +42,13 @@ export class SearchController extends Controller {
         const {
             from_lang_id: fromLang,
             to_lang_id: toLang,
-            search_phrase: phase,
+            search_phrase: phrase,
         } = options;
 
         const toReturn = {
             from_lang_id: fromLang,
             to_lang_id: toLang,
-            search_phase: phase,
+            search_phrase: phrase,
             translations: searchResult.translations,
             handlers_time: searchResult.handlersTime,
             main_results: ChangeSearchResults.change(searchResult.mains),

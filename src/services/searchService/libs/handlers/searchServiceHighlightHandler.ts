@@ -11,20 +11,20 @@ export default class SearchServiceHighlightHandler extends SearchServiceAbstract
 
     highlightSpecifiedByLangSentence(
         lyric: LyricModel,
-        searchPhase: string,
+        searchPhrase: string,
         lang: string,
         r: RegExp
     ): HighlightResponse[] {
         const lyricSentence = lyric.sentences.find((e) => e.langId === lang);
 
         if (lyricSentence !== undefined)
-            return this.highlight(lyricSentence, searchPhase, r);
+            return this.highlight(lyricSentence, searchPhrase, r);
         return [];
     }
 
     highlight(
         lyricSentence: LyricSentenceModel,
-        searchPhase: string,
+        searchPhrase: string,
         r: RegExp
     ): HighlightResponse[] {
         const matches = [...lyricSentence.content.toLowerCase().matchAll(r)];
@@ -41,20 +41,20 @@ export default class SearchServiceHighlightHandler extends SearchServiceAbstract
         const {
             from_lang_id: fromLang,
             to_lang_id: toLang,
-            search_phrase: phase,
+            search_phrase: phrase,
         } = state.request;
 
         for (const [i, results] of [state.mains, state.similar].entries()) {
             let r: RegExp;
             // If result is main not similar
-            if (i === 0) r = SearchServiceMainMatcher.get(phase, "g");
-            else r = SearchServiceSimilarMatcher.get(phase, "g");
+            if (i === 0) r = SearchServiceMainMatcher.get(phrase, "g");
+            else r = SearchServiceSimilarMatcher.get(phrase, "g");
 
             for (const result of results) {
                 // Highlight from results
                 result.fromHighlights = this.highlightSpecifiedByLangSentence(
                     result.lyricModel,
-                    phase,
+                    phrase,
                     fromLang,
                     r
                 );

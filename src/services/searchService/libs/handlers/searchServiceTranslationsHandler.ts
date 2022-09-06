@@ -8,7 +8,7 @@ export default class SearchServiceTranslationsHandler extends SearchServiceAbstr
     public async handle(state: SearchServiceState) {
         this._beforeHandle();
         const {
-            search_phrase: phase,
+            search_phrase: phrase,
             from_lang_id: fromLang,
             to_lang_id: toLang,
         } = state.request;
@@ -16,7 +16,7 @@ export default class SearchServiceTranslationsHandler extends SearchServiceAbstr
         const translationService = new TranslateService();
 
         state.translations = await translationService.getTranslations(
-            phase,
+            phrase,
             fromLang,
             toLang
         );

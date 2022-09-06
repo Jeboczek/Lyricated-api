@@ -563,7 +563,7 @@
 					"to_lang_id": {
 						"type": "string"
 					},
-					"search_phase": {
+					"search_phrase": {
 						"type": "string"
 					},
 					"translations": {
@@ -594,7 +594,7 @@
 				"required": [
 					"from_lang_id",
 					"to_lang_id",
-					"search_phase",
+					"search_phrase",
 					"translations",
 					"main_results",
 					"similar_results",
