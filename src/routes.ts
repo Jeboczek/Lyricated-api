@@ -107,10 +107,10 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "MovieNameResponse": {
+    "MovieTitleResponse": {
         "dataType": "refObject",
         "properties": {
-            "movie_name_id": {"dataType":"double","required":true},
+            "movie_title_id": {"dataType":"double","required":true},
             "lang": {"dataType":"string","required":true},
             "content": {"dataType":"string","required":true},
         },
@@ -125,7 +125,7 @@ const models: TsoaRoute.Models = {
             "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["movie"]},{"dataType":"enum","enums":["serie"]}],"required":true},
             "netflix_id": {"dataType":"double"},
             "minutes": {"dataType":"double","required":true},
-            "movie_names": {"dataType":"array","array":{"dataType":"refObject","ref":"MovieNameResponse"},"required":true},
+            "movie_titles": {"dataType":"array","array":{"dataType":"refObject","ref":"MovieTitleResponse"},"required":true},
             "episodes": {"dataType":"array","array":{"dataType":"refObject","ref":"EpisodeResponse"},"required":true},
         },
         "additionalProperties": false,

@@ -169,9 +169,9 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"MovieNameResponse": {
+			"MovieTitleResponse": {
 				"properties": {
-					"movie_name_id": {
+					"movie_title_id": {
 						"type": "number",
 						"format": "double"
 					},
@@ -183,7 +183,7 @@
 					}
 				},
 				"required": [
-					"movie_name_id",
+					"movie_title_id",
 					"lang",
 					"content"
 				],
@@ -214,9 +214,9 @@
 						"type": "number",
 						"format": "double"
 					},
-					"movie_names": {
+					"movie_titles": {
 						"items": {
-							"$ref": "#/components/schemas/MovieNameResponse"
+							"$ref": "#/components/schemas/MovieTitleResponse"
 						},
 						"type": "array"
 					},
@@ -232,7 +232,7 @@
 					"lang",
 					"type",
 					"minutes",
-					"movie_names",
+					"movie_titles",
 					"episodes"
 				],
 				"type": "object",
@@ -2101,7 +2101,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/MovieNameResponse"
+									"$ref": "#/components/schemas/MovieTitleResponse"
 								}
 							}
 						}
@@ -2150,7 +2150,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/MovieNameResponse"
+									"$ref": "#/components/schemas/MovieTitleResponse"
 								}
 							}
 						}
@@ -2197,7 +2197,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/MovieNameResponse"
+									"$ref": "#/components/schemas/MovieTitleResponse"
 								}
 							}
 						}
@@ -2254,7 +2254,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/MovieNameResponse"
+									"$ref": "#/components/schemas/MovieTitleResponse"
 								}
 							}
 						}
