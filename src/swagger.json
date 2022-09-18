@@ -656,8 +656,7 @@
 					"from_lang_id",
 					"to_lang_id",
 					"filter_options",
-					"sorting_mode",
-					"dont_use_cache"
+					"sorting_mode"
 				],
 				"type": "object",
 				"additionalProperties": false

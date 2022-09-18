@@ -6,7 +6,7 @@ export default interface SearchRequest {
     to_lang_id: string;
     filter_options: SearchRequestFilterOptions;
     sorting_mode: SortingMode;
-    dont_use_cache: boolean;
+    dont_use_cache?: boolean;
 }
 
 export interface SearchRequestFilterOptions {

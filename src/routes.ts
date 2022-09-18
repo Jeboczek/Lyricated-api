@@ -307,7 +307,7 @@ const models: TsoaRoute.Models = {
             "to_lang_id": {"dataType":"string","required":true},
             "filter_options": {"ref":"SearchRequestFilterOptions","required":true},
             "sorting_mode": {"ref":"SortingMode","required":true},
-            "dont_use_cache": {"dataType":"boolean","required":true},
+            "dont_use_cache": {"dataType":"boolean"},
         },
         "additionalProperties": false,
     },
